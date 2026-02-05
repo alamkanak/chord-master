@@ -1,148 +1,133 @@
 "use client";
 
-import Link from "next/link";
+import Navigation from "@/components/Navigation";
+import FeatureCard from "@/components/FeatureCard";
+import Button from "@/components/Button";
+import Container from "@/components/Container";
+import Badge from "@/components/Badge";
+import StatCard from "@/components/StatCard";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen w-full bg-white">
+    <Container variant="page">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700" />
-            <span className="text-lg font-bold text-slate-900">Chord Master</span>
-          </div>
-          <div className="text-sm text-slate-600">Learn Guitar the Smart Way</div>
-        </div>
-      </nav>
+      <Navigation subtitle="Master chord changes with AI-guided drills" />
 
       {/* Hero Section */}
-      <div className="mx-auto max-w-6xl px-6 py-20">
-        <div className="space-y-8 text-center">
-          <div className="space-y-4">
-            <h1 className="text-5xl font-bold text-slate-900 md:text-6xl">
+      <Container className="py-24">
+        <div className="space-y-12">
+          <div className="space-y-6 text-center">
+            <Badge animated icon={<span className="w-2 h-2 rounded-full bg-blue-600" />}>
+              Introducing Chord Master
+            </Badge>
+            
+            <h1 className="text-6xl md:text-7xl font-bold tracking-tight text-slate-900">
               Master Chord Changes
+              <span className="block bg-linear-to-r from-blue-600 via-blue-600 to-blue-700 bg-clip-text text-transparent">
+                in Just 60 Seconds
+              </span>
             </h1>
-            <p className="mx-auto max-w-2xl text-xl text-slate-600">
-              Scientific practice drills to build muscle memory and speed. Perfect for beginners.
+            
+            <p className="mx-auto max-w-3xl text-xl text-slate-600 leading-relaxed">
+              Scientific practice drills designed to build muscle memory faster. Practice smooth chord transitions with our intelligent timing system. Perfect for absolute beginners.
             </p>
           </div>
 
-          {/* Features Grid */}
-          <div className="mt-16 grid gap-6 md:grid-cols-3">
-            <FeatureCard
-              icon="🎸"
-              title="Chord Practice"
-              description="Select multiple chords and practice smooth transitions with a 1-minute timed drill"
-            />
-            <FeatureCard
-              icon="🎯"
-              title="Focused Training"
-              description="Built specifically for beginners to develop finger placement and change speed"
-            />
-            <FeatureCard
-              icon="📱"
-              title="Practice Anywhere"
-              description="Works on mobile like a native app. Save to your home screen and practice offline"
-            />
-          </div>
-
-          {/* CTA Button */}
-          <div className="mt-12">
-            <Link
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Button
               href="/chords"
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-4 text-lg font-bold text-white shadow-xl hover:shadow-2xl transition-all hover:scale-105"
+              variant="primary"
+              size="lg"
+              icon={
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
+              }
             >
-              Practice Chord Changing
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-            </Link>
+              Start Practicing
+            </Button>
+            <Button variant="secondary" size="lg">
+              Learn More
+            </Button>
           </div>
+        </div>
+
+        {/* Features Grid */}
+        <div className="mt-24 grid gap-6 md:grid-cols-3">
+          <FeatureCard
+            icon="🎸"
+            title="Smart Practice Drills"
+            description="AI-timed chord transitions that adapt to your speed. Master 16 essential beginner chords with focused repetition."
+          />
+          <FeatureCard
+            icon="⚡"
+            title="Progressive Training"
+            description="Start with 2 chords and build up to 8. Smooth transitions matter more than speed at first."
+          />
+          <FeatureCard
+            icon="📱"
+            title="Works Everywhere"
+            description="Install as a web app on any device. Practice offline anytime, anywhere without friction."
+          />
+        </div>
+
+        {/* Stats Section */}
+        <div className="mt-24 grid grid-cols-3 gap-6 rounded-2xl bg-white border border-slate-200/50 p-8 shadow-sm">
+          <StatCard value="16" label="Beginner Chords" />
+          <StatCard value="1m" label="Timed Drills" />
+          <StatCard value="∞" label="Free Practice" />
         </div>
 
         {/* Upcoming Features Section */}
-        <div className="mt-24 rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-slate-100 p-8">
-          <h2 className="mb-6 text-center text-2xl font-bold text-slate-900">
-            Coming Soon
-          </h2>
-          <div className="grid gap-4 md:grid-cols-2">
-            <UpcomingFeature
+        <div className="mt-24">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-slate-900">Coming Soon</h2>
+            <p className="text-slate-600 mt-2">More features to accelerate your guitar journey</p>
+          </div>
+          
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <FeatureCard
               icon="🎵"
-              title="Practice Session Builder"
-              description="Create custom practice sessions with multiple exercises and track progress"
+              title="Session Builder"
+              description="Create custom practice routines"
+              size="md"
             />
-            <UpcomingFeature
-              icon="🎪"
+            <FeatureCard
+              icon="💪"
               title="Finger Gym"
-              description="Exercises to build finger strength and flexibility"
+              description="Build finger strength exercises"
+              size="md"
             />
-            <UpcomingFeature
+            <FeatureCard
               icon="🎶"
-              title="Song Follow-Along"
-              description="Practice chords in the context of real songs"
+              title="Song Practice"
+              description="Learn chords in real songs"
+              size="md"
             />
-            <UpcomingFeature
+            <FeatureCard
               icon="🥁"
-              title="Beat Sync"
-              description="Practice chord changes in rhythm with different tempos"
+              title="Tempo Sync"
+              description="Practice with adjustable BPM"
+              size="md"
             />
           </div>
         </div>
-      </div>
+      </Container>
 
       {/* Footer */}
-      <footer className="mt-20 border-t border-slate-200 bg-slate-50 py-8 text-center text-sm text-slate-600">
-        <p>Built with ❤️ for absolute beginners learning guitar</p>
-      </footer>
-    </div>
-  );
-}
-
-function FeatureCard({
-  icon,
-  title,
-  description,
-}: {
-  icon: string;
-  title: string;
-  description: string;
-}) {
-  return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-6 hover:border-slate-300 hover:shadow-lg transition-all">
-      <div className="text-4xl mb-4">{icon}</div>
-      <h3 className="mb-2 text-lg font-bold text-slate-900">{title}</h3>
-      <p className="text-slate-600">{description}</p>
-    </div>
-  );
-}
-
-function UpcomingFeature({
-  icon,
-  title,
-  description,
-}: {
-  icon: string;
-  title: string;
-  description: string;
-}) {
-  return (
-    <div className="flex gap-4">
-      <div className="text-2xl flex-shrink-0">{icon}</div>
-      <div>
-        <h3 className="font-semibold text-slate-900">{title}</h3>
-        <p className="text-sm text-slate-600">{description}</p>
-      </div>
-    </div>
+      <Footer />
+    </Container>
   );
 }

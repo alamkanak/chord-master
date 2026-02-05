@@ -1,6 +1,6 @@
 export function playBeep(freq: number, duration: number): void {
   try {
-    const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+    const AudioContext = window.AudioContext || (window as unknown as { webkitAudioContext: typeof window.AudioContext }).webkitAudioContext;
     const ctx = new AudioContext();
     const o = ctx.createOscillator();
     const g = ctx.createGain();
@@ -11,7 +11,7 @@ export function playBeep(freq: number, duration: number): void {
     g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
     o.start();
     o.stop(ctx.currentTime + duration);
-  } catch (e) {
+  } catch {
     // Audio context not available
   }
 }

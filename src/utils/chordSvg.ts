@@ -1,4 +1,4 @@
-interface ChordData {
+export interface ChordData {
   name: string;
   fingers: [number, number, number][];
   muted: number[];

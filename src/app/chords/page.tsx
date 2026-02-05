@@ -1,24 +1,58 @@
 "use client";
 
-import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import Navigation from "@/components/Navigation";
+import Button from "@/components/Button";
+import Container from "@/components/Container";
 import chordsData from "@/data/chords.json";
-import { createChordSVG } from "@/utils/chordSvg";
+import { createChordSVG, type ChordData } from "@/utils/chordSvg";
 import { playBeep } from "@/utils/audio";
-
-interface Chord {
-  name: string;
-  fingers: [number, number, number][];
-  muted: number[];
-  open: number[];
-}
 
 export default function ChordsPage() {
   const [selectedNames, setSelectedNames] = useState<string[]>([]);
   const [mode, setMode] = useState<"select" | "prep" | "drill">("select");
   const [prepCountdown, setPrepCountdown] = useState(5);
   const [drillTime, setDrillTime] = useState(60);
-  const chords: Chord[] = chordsData.chords;
+  const chords = chordsData.chords as ChordData[];
+
+  const endDrill = useCallback(() => {
+    setMode("select");
+    setDrillTime(60);
+  }, []);
+
+  const toggleChord = useCallback((name: string) => {
+    setSelectedNames((prev) => {
+      if (prev.includes(name)) {
+        return prev.filter((n) => n !== name);
+      } else if (prev.length < 8) {
+        return [...prev, name];
+      }
+      return prev;
+    });
+  }, []);
+
+  const startDrill = useCallback(() => {
+    if (selectedNames.length >= 2) {
+      setPrepCountdown(5);
+      setDrillTime(60);
+      setMode("prep");
+    }
+  }, [selectedNames.length]);
+
+  const randomizeAndStart = useCallback(() => {
+    // Select random number between 2-8 chords
+    const count = Math.floor(Math.random() * 7) + 2;
+    const shuffled = [...chords].sort(() => Math.random() - 0.5);
+    const randomChords = shuffled.slice(0, count).map((c) => c.name);
+    setSelectedNames(randomChords);
+    setPrepCountdown(5);
+    setDrillTime(60);
+    setMode("prep");
+  }, [chords]);
+
+  const clearAll = useCallback(() => {
+    setSelectedNames([]);
+  }, []);
 
   // Prep phase countdown
   useEffect(() => {
@@ -33,8 +67,11 @@ export default function ChordsPage() {
 
       return () => clearTimeout(timer);
     } else if (prepCountdown === 0) {
-      playBeep(880, 0.2);
-      setMode("drill");
+      const timer = setTimeout(() => {
+        playBeep(880, 0.2);
+        setMode("drill");
+      }, 0);
+      return () => clearTimeout(timer);
     }
   }, [mode, prepCountdown]);
 
@@ -55,184 +92,122 @@ export default function ChordsPage() {
 
       return () => clearTimeout(timer);
     } else if (drillTime === 0) {
-      playBeep(523, 0.5);
-      endDrill();
+      const timer = setTimeout(() => {
+        playBeep(523, 0.5);
+        endDrill();
+      }, 0);
+      return () => clearTimeout(timer);
     }
-  }, [mode, drillTime]);
-
-  const toggleChord = (name: string) => {
-    setSelectedNames((prev) => {
-      if (prev.includes(name)) {
-        return prev.filter((n) => n !== name);
-      } else if (prev.length < 8) {
-        return [...prev, name];
-      }
-      return prev;
-    });
-  };
-
-  const startDrill = () => {
-    if (selectedNames.length >= 2) {
-      setPrepCountdown(5);
-      setDrillTime(60);
-      setMode("prep");
-    }
-  };
-
-  const randomizeAndStart = () => {
-    // Select random number between 2-8 chords
-    const count = Math.floor(Math.random() * 7) + 2;
-    const shuffled = [...chords].sort(() => Math.random() - 0.5);
-    const randomChords = shuffled.slice(0, count).map((c) => c.name);
-    setSelectedNames(randomChords);
-    setPrepCountdown(5);
-    setDrillTime(60);
-    setMode("prep");
-  };
-
-  const endDrill = () => {
-    setMode("select");
-    setDrillTime(60);
-  };
-
-  const clearAll = () => {
-    setSelectedNames([]);
-  };
-
-  // Render grid size class based on number of chords
-  const getGridClass = (count: number) => {
-    if (count === 0) return "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5";
-    const gridMap: { [key: number]: string } = {
-      2: "grid-cols-2",
-      3: "grid-cols-3",
-      4: "grid-cols-2",
-      5: "grid-cols-3",
-      6: "grid-cols-3",
-      7: "grid-cols-4",
-      8: "grid-cols-4",
-    };
-    return gridMap[count] || "grid-cols-3";
-  };
+  }, [mode, drillTime, endDrill]);
 
   if (mode === "select") {
     return (
-      <div className="min-h-screen w-full bg-white">
+      <Container variant="page">
         {/* Navigation */}
-        <nav className="sticky top-0 z-40 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
-          <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-            <Link href="/" className="flex items-center gap-2 hover:opacity-75 transition-opacity">
-              <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700" />
-              <span className="text-lg font-bold text-slate-900">Chord Master</span>
-            </Link>
-            <div className="text-sm font-medium text-slate-600">Chord Practice</div>
-          </div>
-        </nav>
+        <Navigation subtitle="Select chords to practice" zIndex="z-40" />
 
         {/* Header */}
-        <div className="mx-auto max-w-6xl px-6 py-4 md:py-8">
+        <Container className="py-8 md:py-12">
           <div className="space-y-2">
-            <h1 className="text-4xl font-bold text-slate-900">Select Chords</h1>
-            <p className="text-slate-600">
-              Pick 2 to 8 chords to practice. Then click Start Drill to begin your one-minute
-              training session.
+            <h1 className="text-4xl md:text-5xl font-bold text-slate-900">Select Chords to Practice</h1>
+            <p className="text-base md:text-lg text-slate-600 max-w-2xl">
+              Choose 2 to 8 chords, then start a one-minute drill to practice smooth transitions.
             </p>
           </div>
-        </div>
+        </Container>
 
         {/* Selection Bar - Sticky */}
-        <div className="sticky top-16 z-30 border-b border-slate-200 bg-white/90 backdrop-blur-md">
-          <div className="mx-auto max-w-6xl px-6 pb-4 pt-0">
+        <div className="sticky top-16 z-30 border-b border-slate-200/50 bg-white/40 backdrop-blur-md">
+          <div className="mx-auto max-w-7xl px-6 py-4">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div className="flex flex-wrap gap-2" id="selected-chord-list">
                 {selectedNames.length === 0 ? (
-                  <span className="text-slate-400 font-medium py-2">
-                    Select 2-8 chords to start
+                  <span className="text-slate-400 font-medium py-2 text-sm">
+                    Select 2-8 chords to get started
                   </span>
                 ) : (
                   selectedNames.map((name) => (
-                    <button
+                    <Button
                       key={name}
                       onClick={() => toggleChord(name)}
-                      className="inline-flex items-center gap-2 rounded-lg bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700 border border-blue-200 hover:bg-blue-200 transition-colors cursor-pointer"
+                      variant="pill"
+                      size="sm"
+                      selected
                     >
                       {name}
-                      <span className="text-lg leading-none">×</span>
-                    </button>
+                      <span className="text-base leading-none hover:text-blue-900">×</span>
+                    </Button>
                   ))
                 )}
               </div>
 
-              <div className="flex gap-3 w-full md:w-auto">
-                <button
-                  onClick={clearAll}
-                  className="flex-1 md:flex-none px-4 py-3 text-slate-700 font-bold rounded-xl border border-slate-300 hover:bg-slate-50 transition-colors cursor-pointer"
-                >
+              <div className="flex gap-2 w-full md:w-auto">
+                <Button onClick={clearAll} variant="secondary" size="sm" className="flex-1 md:flex-none">
                   Clear
-                </button>
-                <button
-                  onClick={randomizeAndStart}
-                  className="flex-1 md:flex-none px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold rounded-xl transition-all cursor-pointer"
-                >
+                </Button>
+                <Button onClick={randomizeAndStart} variant="secondary-gray" size="sm" className="flex-1 md:flex-none">
                   Random
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={startDrill}
                   disabled={selectedNames.length < 2}
-                  className="flex-1 md:flex-none bg-gradient-to-r from-blue-600 to-blue-700 hover:shadow-lg text-white font-bold py-3 px-4 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md cursor-pointer"
+                  variant="primary"
+                  size="sm"
+                  className="flex-1 md:flex-none disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Start Drill
-                </button>
+                </Button>
               </div>
             </div>
           </div>
         </div>
 
         {/* Chord Grid */}
-        <div className="mx-auto max-w-6xl px-6 py-8">
+        <Container className="py-10">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {chords.map((chord) => (
-              <button
+              <Button
                 key={chord.name}
                 onClick={() => toggleChord(chord.name)}
-                className={`rounded-2xl border-2 p-4 transition-all cursor-pointer ${
-                  selectedNames.includes(chord.name)
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-slate-200 bg-white hover:border-slate-300"
-                }`}
+                variant="chord-selector"
+                selected={selectedNames.includes(chord.name)}
+                className="block w-full"
               >
                 <div
                   dangerouslySetInnerHTML={{
                     __html: createChordSVG(chord),
                   }}
                 />
-              </button>
+              </Button>
             ))}
           </div>
-        </div>
-      </div>
+        </Container>
+      </Container>
     );
   }
 
   // Prep phase
   if (mode === "prep") {
     return (
-      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-900 text-white">
-        <div className="space-y-8 text-center">
-          <h2 className="text-3xl font-bold">Get your guitar ready!</h2>
-          <div className="text-9xl font-black text-yellow-400 tabular-nums">
+      <Container variant="fullscreen">
+        <div className="space-y-6 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold">Get ready to practice!</h2>
+          <div className="text-8xl md:text-9xl font-black text-blue-400 tabular-nums animate-pulse">
             {prepCountdown}
           </div>
-          <p className="text-lg text-slate-300">
-            Seconds until the 1-minute drill starts
+          <p className="text-lg md:text-xl text-slate-300">
+            Starting your 1-minute drill in {prepCountdown} {prepCountdown === 1 ? 'second' : 'seconds'}
           </p>
         </div>
-      </div>
+      </Container>
     );
   }
 
   // Drill phase
   if (mode === "drill") {
-    const selectedChords = chords.filter((c) => selectedNames.includes(c.name));
+    const selectedChords = selectedNames
+      .map((name) => chords.find((c) => c.name === name))
+      .filter((c): c is ChordData => c !== undefined);
 
     const getArenaGridClass = (count: number) => {
       const gridMap: { [key: number]: string } = {
@@ -248,36 +223,37 @@ export default function ChordsPage() {
     };
 
     return (
-      <div className="fixed inset-0 z-50 flex flex-col bg-slate-900 text-white overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 z-40 border-b border-slate-800 bg-slate-900/95 backdrop-blur px-6 py-4">
+        <div className="sticky top-0 z-40 border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl px-6 py-6">
           <div className="flex items-center justify-between gap-4">
-            <div className="text-5xl md:text-6xl font-black text-blue-400 tabular-nums">
-              {String(drillTime).padStart(2, "0")}:00
+            <div className="flex flex-col">
+              <div className="text-sm font-medium text-slate-400 uppercase tracking-wide mb-1">Time Remaining</div>
+              <div className="text-6xl md:text-7xl font-black text-blue-400 tabular-nums">
+                {String(drillTime).padStart(2, "0")}s
+              </div>
             </div>
-            <div className="hidden md:block text-slate-400 font-bold uppercase tracking-widest text-sm text-center flex-1">
-              Practice Transitions Between All Chords
+            <div className="hidden md:flex flex-col items-center gap-2 flex-1">
+              <div className="text-sm font-medium text-slate-400 uppercase tracking-wide">Practice Mode</div>
+              <div className="text-lg font-semibold text-slate-300">Smooth Chord Transitions</div>
             </div>
-            <button
-              onClick={endDrill}
-              className="px-6 py-3 bg-slate-800 hover:bg-red-600 text-white rounded-xl font-bold transition-colors flex-shrink-0 cursor-pointer"
-            >
-              End Session
-            </button>
+            <Button onClick={endDrill} variant="danger" size="md" className="shrink-0">
+              End
+            </Button>
           </div>
         </div>
 
         {/* Chords Grid */}
         <div className="flex-1 flex items-center justify-center p-6">
           <div
-            className={`grid gap-3 md:gap-6 w-full max-w-7xl ${getArenaGridClass(
+            className={`grid gap-3 md:gap-6 w-full max-w-6xl ${getArenaGridClass(
               selectedChords.length
             )}`}
           >
             {selectedChords.map((chord) => (
               <div
                 key={chord.name}
-                className="rounded-3xl bg-white text-slate-900 shadow-2xl p-4 md:p-8 flex items-center justify-center"
+                className="rounded-2xl bg-white text-slate-900 shadow-2xl p-4 md:p-8 flex items-center justify-center hover:shadow-blue-500/20 transition-all duration-300"
               >
                 <div
                   dangerouslySetInnerHTML={{
