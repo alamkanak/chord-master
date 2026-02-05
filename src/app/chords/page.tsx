@@ -10,12 +10,16 @@ import { playBeep } from "@/utils/audio";
 
 export default function ChordsPage() {
   const [selectedNames, setSelectedNames] = useState<string[]>([]);
-  const [mode, setMode] = useState<"select" | "prep" | "drill">("select");
+  const [mode, setMode] = useState<"select" | "ready" | "prep" | "drill" | "finished">("select");
   const [prepCountdown, setPrepCountdown] = useState(5);
   const [drillTime, setDrillTime] = useState(60);
   const chords = chordsData.chords as ChordData[];
 
   const endDrill = useCallback(() => {
+    setMode("finished");
+  }, []);
+
+  const backToSelect = useCallback(() => {
     setMode("select");
     setDrillTime(60);
   }, []);
@@ -35,9 +39,20 @@ export default function ChordsPage() {
     if (selectedNames.length >= 2) {
       setPrepCountdown(5);
       setDrillTime(60);
-      setMode("prep");
+      setMode("ready");
     }
   }, [selectedNames.length]);
+
+  const startPrep = useCallback(() => {
+    setPrepCountdown(5);
+    setMode("prep");
+  }, []);
+
+  const restartDrill = useCallback(() => {
+    setPrepCountdown(5);
+    setDrillTime(60);
+    setMode("prep");
+  }, []);
 
   const randomizeAndStart = useCallback(() => {
     // Select random number between 2-8 chords
@@ -47,7 +62,7 @@ export default function ChordsPage() {
     setSelectedNames(randomChords);
     setPrepCountdown(5);
     setDrillTime(60);
-    setMode("prep");
+    setMode("ready");
   }, [chords]);
 
   const clearAll = useCallback(() => {
@@ -186,6 +201,70 @@ export default function ChordsPage() {
     );
   }
 
+  // Ready phase (before starting drill)
+  if (mode === "ready") {
+    const selectedChords = selectedNames
+      .map((name) => chords.find((c) => c.name === name))
+      .filter((c): c is ChordData => c !== undefined);
+
+    const getArenaGridClass = (count: number) => {
+      const gridMap: { [key: number]: string } = {
+        2: "grid-cols-2",
+        3: "grid-cols-2 sm:grid-cols-3",
+        4: "grid-cols-2",
+        5: "grid-cols-2 sm:grid-cols-3",
+        6: "grid-cols-2 sm:grid-cols-3",
+        7: "grid-cols-2 sm:grid-cols-4",
+        8: "grid-cols-2 sm:grid-cols-4",
+      };
+      return gridMap[count] || "grid-cols-2";
+    };
+
+    return (
+      <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-y-auto">
+        {/* Header */}
+        <div className="sticky top-0 z-40 border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl px-6 py-6">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex flex-col items-center gap-2 flex-1">
+              <div className="text-sm font-medium text-slate-400 uppercase tracking-wide">Practice Mode</div>
+              <div className="text-lg font-semibold text-slate-300">Smooth Chord Transitions</div>
+            </div>
+            <Button onClick={backToSelect} variant="secondary" size="md" className="shrink-0 bg-white/10 hover:bg-white/20 text-white border-white/30">
+              Back
+            </Button>
+          </div>
+        </div>
+
+        {/* Chords Grid */}
+        <div className="flex-1 flex flex-col items-center justify-center p-6 gap-8">
+          <div
+            className={`grid gap-3 md:gap-6 w-full max-w-6xl ${getArenaGridClass(
+              selectedChords.length
+            )}`}
+          >
+            {selectedChords.map((chord) => (
+              <div
+                key={chord.name}
+                className="rounded-2xl bg-white text-slate-900 shadow-2xl p-4 md:p-8 flex items-center justify-center hover:shadow-blue-500/20 transition-all duration-300"
+              >
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: createChordSVG(chord, true),
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+          
+          {/* Start Button */}
+          <Button onClick={startPrep} variant="primary" size="lg" className="text-xl px-12 py-6">
+            Start Drill
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   // Prep phase
   if (mode === "prep") {
     return (
@@ -262,6 +341,72 @@ export default function ChordsPage() {
                 />
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Finished phase
+  if (mode === "finished") {
+    const selectedChords = selectedNames
+      .map((name) => chords.find((c) => c.name === name))
+      .filter((c): c is ChordData => c !== undefined);
+
+    const getArenaGridClass = (count: number) => {
+      const gridMap: { [key: number]: string } = {
+        2: "grid-cols-2",
+        3: "grid-cols-2 sm:grid-cols-3",
+        4: "grid-cols-2",
+        5: "grid-cols-2 sm:grid-cols-3",
+        6: "grid-cols-2 sm:grid-cols-3",
+        7: "grid-cols-2 sm:grid-cols-4",
+        8: "grid-cols-2 sm:grid-cols-4",
+      };
+      return gridMap[count] || "grid-cols-2";
+    };
+
+    return (
+      <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-y-auto">
+        {/* Header */}
+        <div className="sticky top-0 z-40 border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl px-6 py-6">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex flex-col items-center gap-2 flex-1">
+              <div className="text-sm font-medium text-slate-400 uppercase tracking-wide">Drill Complete!</div>
+              <div className="text-lg font-semibold text-green-400">Great job!</div>
+            </div>
+            <Button onClick={backToSelect} variant="secondary" size="md" className="shrink-0 bg-white/10 hover:bg-white/20 text-white border-white/30">
+              Back to Selection
+            </Button>
+          </div>
+        </div>
+
+        {/* Chords Grid */}
+        <div className="flex-1 flex flex-col items-center justify-center p-6 gap-8">
+          <div
+            className={`grid gap-3 md:gap-6 w-full max-w-6xl ${getArenaGridClass(
+              selectedChords.length
+            )}`}
+          >
+            {selectedChords.map((chord) => (
+              <div
+                key={chord.name}
+                className="rounded-2xl bg-white text-slate-900 shadow-2xl p-4 md:p-8 flex items-center justify-center hover:shadow-blue-500/20 transition-all duration-300"
+              >
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: createChordSVG(chord, true),
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+          
+          {/* Action Buttons */}
+          <div className="flex gap-4">
+            <Button onClick={restartDrill} variant="primary" size="lg" className="text-xl px-12 py-6">
+              Restart Drill
+            </Button>
           </div>
         </div>
       </div>

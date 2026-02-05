@@ -22,3 +22,10 @@ This is a Next.js project for building modern web applications with React.
 - `/src/components` - Reusable React components
 - `/public` - Static assets (images, icons, etc.)
 - `/src/styles` - Global styles and Tailwind configuration
+
+## Must follow instructions
+- Use type safe typescript
+- Use Tailwind CSS for styling
+- Use icon libs instead of using svg or images directly
+- Do not duplicate codes, create reusable components instead
+- Write clean and maintainable code
