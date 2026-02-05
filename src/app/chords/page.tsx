@@ -7,6 +7,7 @@ import Container from "@/components/Container";
 import chordsData from "@/data/chords.json";
 import { createChordSVG, type ChordData } from "@/utils/chordSvg";
 import { playBeep } from "@/utils/audio";
+import { useWakeLock } from "@/utils/useWakeLock";
 
 export default function ChordsPage() {
   const [selectedNames, setSelectedNames] = useState<string[]>([]);
@@ -14,15 +15,18 @@ export default function ChordsPage() {
   const [prepCountdown, setPrepCountdown] = useState(5);
   const [drillTime, setDrillTime] = useState(60);
   const chords = chordsData.chords as ChordData[];
+  const { requestWakeLock, releaseWakeLock } = useWakeLock();
 
   const endDrill = useCallback(() => {
+    releaseWakeLock();
     setMode("finished");
-  }, []);
+  }, [releaseWakeLock]);
 
   const backToSelect = useCallback(() => {
+    releaseWakeLock();
     setMode("select");
     setDrillTime(60);
-  }, []);
+  }, [releaseWakeLock]);
 
   const toggleChord = useCallback((name: string) => {
     setSelectedNames((prev) => {
@@ -44,15 +48,17 @@ export default function ChordsPage() {
   }, [selectedNames.length]);
 
   const startPrep = useCallback(() => {
+    requestWakeLock();
     setPrepCountdown(5);
     setMode("prep");
-  }, []);
+  }, [requestWakeLock]);
 
   const restartDrill = useCallback(() => {
+    requestWakeLock();
     setPrepCountdown(5);
     setDrillTime(60);
     setMode("prep");
-  }, []);
+  }, [requestWakeLock]);
 
   const randomizeAndStart = useCallback(() => {
     // Select random number between 2-8 chords
