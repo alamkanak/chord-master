@@ -6,7 +6,7 @@ import Button from "@/components/Button";
 import Container from "@/components/Container";
 import chordsData from "@/data/chords.json";
 import { createChordSVG, type ChordData } from "@/utils/chordSvg";
-import { playBeep } from "@/utils/audio";
+import { playBeep, initAudio } from "@/utils/audio";
 import { useWakeLock } from "@/utils/useWakeLock";
 
 export default function ChordsPage() {
@@ -47,14 +47,20 @@ export default function ChordsPage() {
     }
   }, [selectedNames.length]);
 
-  const startPrep = useCallback(() => {
-    requestWakeLock();
+  const startPrep = useCallback(async () => {
+    // Initialize audio from user gesture (required for iOS)
+    await initAudio();
+    // Request wake lock
+    await requestWakeLock();
     setPrepCountdown(5);
     setMode("prep");
   }, [requestWakeLock]);
 
-  const restartDrill = useCallback(() => {
-    requestWakeLock();
+  const restartDrill = useCallback(async () => {
+    // Initialize audio from user gesture (required for iOS)
+    await initAudio();
+    // Request wake lock
+    await requestWakeLock();
     setPrepCountdown(5);
     setDrillTime(60);
     setMode("prep");

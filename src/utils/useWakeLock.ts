@@ -22,6 +22,15 @@ export function useWakeLock() {
     }
 
     try {
+      // Release any existing wake lock first
+      if (wakeLockRef.current) {
+        try {
+          await wakeLockRef.current.release();
+        } catch (e) {
+          console.log("Previous wake lock already released");
+        }
+      }
+
       wakeLockRef.current = await navigator.wakeLock.request("screen");
       setIsActive(true);
       
@@ -35,7 +44,14 @@ export function useWakeLock() {
 
       return true;
     } catch (err) {
-      console.error("Failed to activate Wake Lock:", err);
+      const error = err as Error;
+      console.error("Failed to activate Wake Lock:", error.name, error.message);
+      
+      // Common iOS errors
+      if (error.name === "NotAllowedError") {
+        console.log("Wake Lock denied - may need user gesture or PWA mode");
+      }
+      
       setIsActive(false);
       return false;
     }
