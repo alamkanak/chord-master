@@ -1,0 +1,33 @@
+{
+  "name": "Chord Master - Learn Guitar",
+  "short_name": "Chord Master",
+  "description": "Master chord changes with scientific practice drills. Perfect for beginners.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%232563eb' width='192' height='192'/><text x='96' y='130' font-size='140' font-weight='bold' fill='white' text-anchor='middle'>♪</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%232563eb' width='192' height='192'/><text x='96' y='130' font-size='140' font-weight='bold' fill='white' text-anchor='middle'>♪</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 720'><rect fill='%23f1f5f9' width='540' height='720'/><text x='270' y='200' font-size='48' font-weight='bold' fill='%23164e63' text-anchor='middle'>Chord Master</text><text x='270' y='300' font-size='32' fill='%23475569' text-anchor='middle'>Practice Chord Changes</text></svg>",
+      "sizes": "540x720",
+      "form_factor": "narrow",
+      "type": "image/svg+xml"
+    }
+  ]
+}
