@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Navigation from "@/components/Navigation";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
+import DrillHeader from "@/components/DrillHeader";
 import chordsData from "@/data/chords.json";
 import { createChordSVG, type ChordData } from "@/utils/chordSvg";
 import { playBeep, initAudio } from "@/utils/audio";
@@ -235,17 +236,7 @@ export default function ChordsPage() {
     return (
       <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 z-40 border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl px-6 py-6">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex flex-col items-center gap-2 flex-1">
-              <div className="text-sm font-medium text-slate-400 uppercase tracking-wide">Practice Mode</div>
-              <div className="text-lg font-semibold text-slate-300">Smooth Chord Transitions</div>
-            </div>
-            <Button onClick={backToSelect} variant="secondary" size="md" className="shrink-0 bg-white/10 hover:bg-white/20 text-white border-white/30">
-              Back
-            </Button>
-          </div>
-        </div>
+        <DrillHeader mode="ready" onBack={backToSelect} />
 
         {/* Chords Grid */}
         <div className="flex-1 flex flex-col items-center justify-center p-6 gap-8">
@@ -279,18 +270,50 @@ export default function ChordsPage() {
 
   // Prep phase
   if (mode === "prep") {
+    const selectedChords = selectedNames
+      .map((name) => chords.find((c) => c.name === name))
+      .filter((c): c is ChordData => c !== undefined);
+
+    const getArenaGridClass = (count: number) => {
+      const gridMap: { [key: number]: string } = {
+        2: "grid-cols-2",
+        3: "grid-cols-2 sm:grid-cols-3",
+        4: "grid-cols-2",
+        5: "grid-cols-2 sm:grid-cols-3",
+        6: "grid-cols-2 sm:grid-cols-3",
+        7: "grid-cols-2 sm:grid-cols-4",
+        8: "grid-cols-2 sm:grid-cols-4",
+      };
+      return gridMap[count] || "grid-cols-2";
+    };
+
     return (
-      <Container variant="fullscreen">
-        <div className="space-y-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold">Get ready to practice!</h2>
-          <div className="text-8xl md:text-9xl font-black text-blue-400 tabular-nums animate-pulse">
-            {prepCountdown}
+      <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-y-auto">
+        {/* Header */}
+        <DrillHeader mode="prep" countdown={prepCountdown} onEnd={endDrill} />
+
+        {/* Chords Grid */}
+        <div className="flex-1 flex items-center justify-center p-6">
+          <div
+            className={`grid gap-3 md:gap-6 w-full max-w-6xl ${getArenaGridClass(
+              selectedChords.length
+            )}`}
+          >
+            {selectedChords.map((chord) => (
+              <div
+                key={chord.name}
+                className="rounded-2xl bg-white text-slate-900 shadow-2xl p-4 md:p-8 flex items-center justify-center hover:shadow-blue-500/20 transition-all duration-300"
+              >
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: createChordSVG(chord, true),
+                  }}
+                />
+              </div>
+            ))}
           </div>
-          <p className="text-lg md:text-xl text-slate-300">
-            Starting your 1-minute drill in {prepCountdown} {prepCountdown === 1 ? 'second' : 'seconds'}
-          </p>
         </div>
-      </Container>
+      </div>
     );
   }
 
@@ -316,23 +339,7 @@ export default function ChordsPage() {
     return (
       <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 z-40 border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl px-6 py-6">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex flex-col">
-              <div className="text-sm font-medium text-slate-400 uppercase tracking-wide mb-1">Time Remaining</div>
-              <div className="text-6xl md:text-7xl font-black text-blue-400 tabular-nums">
-                {String(drillTime).padStart(2, "0")}s
-              </div>
-            </div>
-            <div className="hidden md:flex flex-col items-center gap-2 flex-1">
-              <div className="text-sm font-medium text-slate-400 uppercase tracking-wide">Practice Mode</div>
-              <div className="text-lg font-semibold text-slate-300">Smooth Chord Transitions</div>
-            </div>
-            <Button onClick={endDrill} variant="danger" size="md" className="shrink-0">
-              End
-            </Button>
-          </div>
-        </div>
+        <DrillHeader mode="drill" timer={drillTime} onEnd={endDrill} />
 
         {/* Chords Grid */}
         <div className="flex-1 flex items-center justify-center p-6">
@@ -381,17 +388,7 @@ export default function ChordsPage() {
     return (
       <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 z-40 border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl px-6 py-6">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex flex-col items-center gap-2 flex-1">
-              <div className="text-sm font-medium text-slate-400 uppercase tracking-wide">Drill Complete!</div>
-              <div className="text-lg font-semibold text-green-400">Great job!</div>
-            </div>
-            <Button onClick={backToSelect} variant="secondary" size="md" className="shrink-0 bg-white/10 hover:bg-white/20 text-white border-white/30">
-              Back to Selection
-            </Button>
-          </div>
-        </div>
+        <DrillHeader mode="finished" onBack={backToSelect} />
 
         {/* Chords Grid */}
         <div className="flex-1 flex flex-col items-center justify-center p-6 gap-8">
