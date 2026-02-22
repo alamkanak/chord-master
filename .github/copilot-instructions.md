@@ -1,31 +1,94 @@
-<!-- Use this file to provide workspace-specific custom instructions to Copilot. For more details, visit https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->
-
 ## Project Overview
-This is a Next.js project for building modern web applications with React.
+This is a Next.js project to help beginners learn guitar. It includes practice exercises, chord libraries, interactive lessons, etc. It works well on both desktop and mobile devices, providing a seamless learning experience. It follows modern linear.app like design patterns.
 
-## Development Setup
-- TypeScript configuration
-- Tailwind CSS pre-configured
-- ESLint enabled
-- App Router pattern (modern Next.js)
-- src/ directory structure
-- Import alias: `@/*`
-
-## Key Commands
-- `npm run dev` - Start development server (localhost:3000)
-- `npm run build` - Build for production
-- `npm start` - Start production server
-- `npm run lint` - Run ESLint checks
+## Tech Stack
+- **Framework**: Next.js 16 with App Router (`src/app/`)
+- **Language**: TypeScript (strict mode)
+- **Styling**: Tailwind CSS v4 (via `@tailwindcss/postcss`)
+- **Fonts**: Geist Sans & Geist Mono (via `next/font/google`)
+- **Audio**: Web Audio API (no external audio files)
+- **Graphics**: Programmatic SVG generation (no image assets for chords)
+- **React**: v19 with hooks (`useState`, `useEffect`, `useCallback`)
+- **Import alias**: `@/*` → `./src/*`
 
 ## Project Structure
-- `/src/app` - Application pages and route handlers using App Router
-- `/src/components` - Reusable React components
-- `/public` - Static assets (images, icons, etc.)
-- `/src/styles` - Global styles and Tailwind configuration
+```
+src/
+├── app/
+│   ├── layout.tsx            # Root layout with PWA meta, fonts, theme-color
+│   ├── page.tsx              # Landing page (hero, features, coming soon)
+│   ├── globals.css           # Tailwind import, CSS variables, theme
+│   └── chords/
+│       └── page.tsx          # Chord selection & drill UI (5-phase state machine)
+├── components/               # Reusable UI components
+│   ├── ...
+├── data/
+│   └── chords.json           # Chord definitions (16 chords: G, D, C, E, A, Am, Em, Dm, G7, D7, A7, C7, E7, Am7, Dm7, B7)
+└── utils/
+    ├── audio.ts              # Web Audio API wrapper (initAudio, playBeep)
+    ├── chordSvg.ts           # SVG chord diagram generator (createChordSVG)
+    └── useWakeLock.ts        # Screen Wake Lock hook for practice sessions
+```
 
-## Must follow instructions
-- Use type safe typescript
-- Use Tailwind CSS for styling
-- Use icon libs instead of using svg or images directly
-- Do not duplicate codes, create reusable components instead
-- Write clean and maintainable code
+## Key Pages
+
+### Home Page (`/`)
+- Hero section with animated badge, headline, and CTA buttons
+- Feature cards grid highlighting chord practice, focused training, mobile support
+- "Coming Soon" section: Practice Session Builder, Finger Gym, Song Follow-Along, Beat Sync
+- Uses `Navigation`, `FeatureCard`, `Badge`, `Button`, `StatCard`, `Footer` components
+
+### Chord Practice Page (`/chords`)
+A 5-phase state machine:
+1. **select** — Grid of 16 chord diagrams; user picks 2–8 chords; sticky selection bar with removable pills
+2. **ready** — Fullscreen dark overlay showing selected chords with "Start Drill" button; initializes audio & wake lock
+3. **prep** — 5-second countdown with audio beeps (440Hz); "Get your guitar ready!" message
+4. **drill** — 60-second timed session; chord diagrams in adaptive grid; beeps in last 5 seconds; "End Session" button
+5. **finished** — "Drill Complete!" screen with restart option; wake lock released
+
+## Reusable Components
+
+You must use existing reusable components where applicable. If you need a new component, create it in `src/components/` and follow the existing patterns:
+- Define a clear props interface
+- Use Tailwind CSS for styling (no inline styles)
+- Use variant patterns for different styles (e.g., `primary`, `secondary` for buttons)
+- For icons, use Heroicons lib instead of raw SVGs or images
+- Ensure components are flexible and reusable across different pages
+
+## Utility Functions
+
+- **`initAudio()`** — Creates/resumes a singleton AudioContext (iOS/Safari compatible via `webkitAudioContext` fallback). Must be called from a user gesture.
+- **`playBeep(freq, duration)`** — Plays an oscillator tone with gain envelope. Handles suspended context.
+- **`createChordSVG(chord, isLarge?)`** — Returns SVG markup string for a chord diagram. `isLarge` flag for drill-mode sizing.
+- **`useWakeLock()`** — React hook returning `{ isSupported, isActive, requestWakeLock, releaseWakeLock }`. Auto-re-requests on tab refocus.
+
+If necessary, you can add more utility functions in `src/utils/`, but keep them focused and reusable.
+
+## Design System
+
+The design system is inspired by linear.app's clean, modern aesthetic:
+
+- **Colors**: Blue primary (`blue-600`/`blue-700`), slate grays for text/borders, yellow for countdown, red for muted strings
+- **Typography**: Geist font family, responsive heading sizes (3xl–7xl)
+- **Layout**: Mobile-first responsive design, adaptive grids based on chord count
+- **Interactions**: Scale animations on hover/active, backdrop blur on overlays, smooth transitions
+- **PWA**: Web manifest, apple-web-app meta, viewport lock, installable to home screen
+
+## Key Commands
+- `npm run dev` — Start development server (localhost:3000)
+- `npm run build` — Build for production
+- `npm start` — Start production server
+- `npm run lint` — Run ESLint checks
+
+## Development Guidelines
+- Use type-safe TypeScript — no `any` types
+- Use Tailwind CSS for all styling — no inline styles or CSS modules
+- Use Heroicons instead of raw SVGs or images in components
+- Create reusable components — avoid code duplication
+- Write clean, maintainable code with clear naming
+- Keep data in `json` files
+- Use `@/*` import alias for all project imports
+- Follow existing component patterns (props interfaces, variant patterns, Tailwind class composition)
+- Client components must have `"use client"` directive
+- Audio must be initialized from user gestures (iOS requirement)
+- For any drill practice, ensure wake lock is requested to prevent screen dimming

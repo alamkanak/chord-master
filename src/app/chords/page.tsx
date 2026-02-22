@@ -236,7 +236,7 @@ export default function ChordsPage() {
     return (
       <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-y-auto">
         {/* Header */}
-        <DrillHeader mode="ready" onBack={backToSelect} />
+        <DrillHeader mode="ready" title="Chord Transitions" onBack={backToSelect} />
 
         {/* Chords Grid */}
         <div className="flex-1 flex flex-col items-center justify-center p-6 gap-8">
@@ -290,7 +290,7 @@ export default function ChordsPage() {
     return (
       <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-y-auto">
         {/* Header */}
-        <DrillHeader mode="prep" countdown={prepCountdown} onEnd={endDrill} />
+        <DrillHeader mode="prep" title="Chord Transitions" countdown={prepCountdown} onEnd={endDrill} />
 
         {/* Chords Grid */}
         <div className="flex-1 flex items-center justify-center p-6">
@@ -339,7 +339,7 @@ export default function ChordsPage() {
     return (
       <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-y-auto">
         {/* Header */}
-        <DrillHeader mode="drill" timer={drillTime} onEnd={endDrill} />
+        <DrillHeader mode="drill" title="Chord Transitions" timer={drillTime} onEnd={endDrill} />
 
         {/* Chords Grid */}
         <div className="flex-1 flex items-center justify-center p-6">
@@ -388,7 +388,7 @@ export default function ChordsPage() {
     return (
       <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-y-auto">
         {/* Header */}
-        <DrillHeader mode="finished" onBack={backToSelect} />
+        <DrillHeader mode="finished" title="Chord Transitions" onBack={backToSelect} />
 
         {/* Chords Grid */}
         <div className="flex-1 flex flex-col items-center justify-center p-6 gap-8">

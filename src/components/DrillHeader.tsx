@@ -4,6 +4,7 @@ interface DrillHeaderProps {
   mode: "select" | "ready" | "prep" | "drill" | "finished";
   countdown?: number;
   timer?: number;
+  title?: string;
   onBack?: () => void;
   onEnd?: () => void;
 }
@@ -12,6 +13,7 @@ export default function DrillHeader({
   mode,
   countdown = 0,
   timer = 0,
+  title = "Practice Drill",
   onBack,
   onEnd,
 }: DrillHeaderProps) {
@@ -19,6 +21,15 @@ export default function DrillHeader({
   if (mode === "select") {
     return null;
   }
+
+  const formatTimer = (seconds: number) => {
+    if (seconds > 59) {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return `${m}:${String(s).padStart(2, "0")}`;
+    }
+    return `${String(seconds).padStart(2, "0")}s`;
+  };
 
   return (
     <div className="sticky top-0 z-40 border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl">
@@ -42,7 +53,7 @@ export default function DrillHeader({
                   Time Remaining
                 </div>
                 <div className="text-5xl md:text-6xl font-black text-blue-400 tabular-nums leading-none">
-                  {String(timer).padStart(2, "0")}s
+                  {formatTimer(timer)}
                 </div>
               </>
             )}
@@ -69,7 +80,7 @@ export default function DrillHeader({
               Practice Mode
             </div>
             <div className="text-lg font-semibold text-slate-300">
-              Smooth Chord Transitions
+              {title}
             </div>
           </div>
 

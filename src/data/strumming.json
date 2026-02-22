@@ -1,0 +1,88 @@
+{
+  "patterns": [
+    {
+      "id": "all-down",
+      "name": "All Downstrokes",
+      "difficulty": "beginner",
+      "description": "Simple quarter note downstrokes. The most basic pattern.",
+      "ticks": ["D", null, "D", null, "D", null, "D", null]
+    },
+    {
+      "id": "straight-eighths",
+      "name": "Straight Eighths",
+      "difficulty": "beginner",
+      "description": "Alternating down and up strokes on every eighth note.",
+      "ticks": ["D", "u", "D", "u", "D", "u", "D", "u"]
+    },
+    {
+      "id": "island-strum",
+      "name": "Island Strum",
+      "difficulty": "beginner",
+      "description": "The classic island/campfire strum. D DU UD — works with almost any song.",
+      "ticks": ["D", null, "D", "u", null, "u", "D", "u"]
+    },
+    {
+      "id": "old-faithful",
+      "name": "Old Faithful",
+      "difficulty": "beginner",
+      "description": "D DU UDU — the most common rock/pop strumming pattern.",
+      "ticks": ["D", null, "D", "u", null, "u", "D", "u"]
+    },
+    {
+      "id": "folk-strum",
+      "name": "Folk Strum",
+      "difficulty": "beginner",
+      "description": "D D DU — simple pattern great for folk and country songs.",
+      "ticks": ["D", null, "D", null, "D", "u", "D", null]
+    },
+    {
+      "id": "pop-rock",
+      "name": "Pop Rock",
+      "difficulty": "intermediate",
+      "description": "D DU UDU — energetic pattern used in pop and rock music.",
+      "ticks": ["D", null, "D", "u", "u", null, "D", "u"]
+    },
+    {
+      "id": "country-boom-chicka",
+      "name": "Boom-Chicka",
+      "difficulty": "intermediate",
+      "description": "D DUD DU — classic country/bluegrass boom-chicka pattern.",
+      "ticks": ["D", null, "D", "u", "D", null, "D", "u"]
+    },
+    {
+      "id": "reggae-skank",
+      "name": "Reggae Skank",
+      "difficulty": "intermediate",
+      "description": "Upstrokes on the offbeats — the signature reggae feel.",
+      "ticks": [null, "u", null, "u", null, "u", null, "u"]
+    },
+    {
+      "id": "ballad-strum",
+      "name": "Ballad Strum",
+      "difficulty": "beginner",
+      "description": "D D DU DU — gentle pattern perfect for slow ballads.",
+      "ticks": ["D", null, "D", null, "D", "u", "D", "u"]
+    },
+    {
+      "id": "driving-rock",
+      "name": "Driving Rock",
+      "difficulty": "intermediate",
+      "description": "D DU D DU — driving rhythm great for upbeat rock songs.",
+      "ticks": ["D", null, "D", "u", "D", null, "D", "u"]
+    },
+    {
+      "id": "syncopated-pop",
+      "name": "Syncopated Pop",
+      "difficulty": "intermediate",
+      "description": "D UDU DU — syncopated pattern with a groovy feel.",
+      "ticks": ["D", null, "u", null, "D", "u", null, "u"]
+    },
+    {
+      "id": "acoustic-fingerstyle",
+      "name": "Acoustic Flow",
+      "difficulty": "intermediate",
+      "description": "D D U DU — flowing pattern for acoustic singer-songwriter style.",
+      "ticks": ["D", null, "D", null, "u", null, "D", "u"]
+    }
+  ]
+}

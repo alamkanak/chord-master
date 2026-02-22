@@ -6,7 +6,7 @@ export default function Footer() {
           Built with care for absolute beginners learning guitar
         </p>
         <p className="text-xs text-slate-500 mt-2">
-          © 2026 Chord Master. All rights reserved.
+          © 2026 Guitar Gym. All rights reserved.
         </p>
       </div>
     </footer>
