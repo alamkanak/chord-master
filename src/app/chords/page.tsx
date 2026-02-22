@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import DrillHeader from "@/components/DrillHeader";
+import SelectionBar from "@/components/SelectionBar";
 import chordsData from "@/data/chords.json";
 import { createChordSVG, type ChordData } from "@/utils/chordSvg";
 import { playBeep, initAudio } from "@/utils/audio";
@@ -14,6 +15,7 @@ export default function ChordsPage() {
   const [selectedNames, setSelectedNames] = useState<string[]>([]);
   const [mode, setMode] = useState<"select" | "ready" | "prep" | "drill" | "finished">("select");
   const [prepCountdown, setPrepCountdown] = useState(5);
+  const [drillDuration, setDrillDuration] = useState(60);
   const [drillTime, setDrillTime] = useState(60);
   const chords = chordsData.chords as ChordData[];
   const { requestWakeLock, releaseWakeLock } = useWakeLock();
@@ -26,7 +28,6 @@ export default function ChordsPage() {
   const backToSelect = useCallback(() => {
     releaseWakeLock();
     setMode("select");
-    setDrillTime(60);
   }, [releaseWakeLock]);
 
   const toggleChord = useCallback((name: string) => {
@@ -43,10 +44,10 @@ export default function ChordsPage() {
   const startDrill = useCallback(() => {
     if (selectedNames.length >= 2) {
       setPrepCountdown(5);
-      setDrillTime(60);
+      setDrillTime(drillDuration);
       setMode("ready");
     }
-  }, [selectedNames.length]);
+  }, [selectedNames.length, drillDuration]);
 
   const startPrep = useCallback(async () => {
     // Initialize audio from user gesture (required for iOS)
@@ -63,9 +64,9 @@ export default function ChordsPage() {
     // Request wake lock
     await requestWakeLock();
     setPrepCountdown(5);
-    setDrillTime(60);
+    setDrillTime(drillDuration);
     setMode("prep");
-  }, [requestWakeLock]);
+  }, [requestWakeLock, drillDuration]);
 
   const randomizeAndStart = useCallback(() => {
     // Select random number between 2-8 chords
@@ -74,9 +75,9 @@ export default function ChordsPage() {
     const randomChords = shuffled.slice(0, count).map((c) => c.name);
     setSelectedNames(randomChords);
     setPrepCountdown(5);
-    setDrillTime(60);
+    setDrillTime(drillDuration);
     setMode("ready");
-  }, [chords]);
+  }, [chords, drillDuration]);
 
   const clearAll = useCallback(() => {
     setSelectedNames([]);
@@ -139,56 +140,30 @@ export default function ChordsPage() {
           <div className="space-y-2">
             <h1 className="text-4xl md:text-5xl font-bold text-slate-900">Select Chords to Practice</h1>
             <p className="text-base md:text-lg text-slate-600 max-w-2xl">
-              Choose 2 to 8 chords, then start a one-minute drill to practice smooth transitions.
+              Choose 2 to 8 chords, then start a drill to practice smooth transitions.
             </p>
           </div>
         </Container>
 
         {/* Selection Bar - Sticky */}
-        <div className="sticky top-16 z-30 border-b border-slate-200/50 bg-white/40 backdrop-blur-md">
-          <div className="mx-auto max-w-7xl px-6 py-4">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div className="flex flex-wrap gap-2" id="selected-chord-list">
-                {selectedNames.length === 0 ? (
-                  <span className="text-slate-400 font-medium py-2 text-sm">
-                    Select 2-8 chords to get started
-                  </span>
-                ) : (
-                  selectedNames.map((name) => (
-                    <Button
-                      key={name}
-                      onClick={() => toggleChord(name)}
-                      variant="pill"
-                      size="sm"
-                      selected
-                    >
-                      {name}
-                      <span className="text-base leading-none hover:text-blue-900">×</span>
-                    </Button>
-                  ))
-                )}
-              </div>
-
-              <div className="flex gap-2 w-full md:w-auto">
-                <Button onClick={clearAll} variant="secondary" size="sm" className="flex-1 md:flex-none">
-                  Clear
-                </Button>
-                <Button onClick={randomizeAndStart} variant="secondary-gray" size="sm" className="flex-1 md:flex-none">
-                  Random
-                </Button>
-                <Button
-                  onClick={startDrill}
-                  disabled={selectedNames.length < 2}
-                  variant="primary"
-                  size="sm"
-                  className="flex-1 md:flex-none disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Start Drill
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <SelectionBar
+          selectedItems={selectedNames.map((name) => ({ key: name, label: name }))}
+          onRemove={toggleChord}
+          emptyText="Select 2-8 chords to get started"
+          drillDuration={drillDuration}
+          onDurationChange={(t) => {
+            setDrillDuration(t);
+            setDrillTime(t);
+          }}
+          minSelections={2}
+          onStartDrill={startDrill}
+          onClear={clearAll}
+          extraActions={
+            <Button onClick={randomizeAndStart} variant="secondary-gray" size="sm" className="flex-1 md:flex-none">
+              Random
+            </Button>
+          }
+        />
 
         {/* Chord Grid */}
         <Container className="py-10">

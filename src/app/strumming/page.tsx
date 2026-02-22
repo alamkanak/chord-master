@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import DrillHeader from "@/components/DrillHeader";
+import SelectionBar from "@/components/SelectionBar";
 import strummingData from "@/data/strumming.json";
 import { playBeep, initAudio } from "@/utils/audio";
 import { useWakeLock } from "@/utils/useWakeLock";
@@ -20,11 +21,11 @@ interface StrumPattern {
 }
 
 const BEAT_LABELS = ["1", "+", "2", "+", "3", "+", "4", "+"];
-const TIMER_OPTIONS = [60, 120, 180, 300]; // seconds
 
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
+  if (s === 0) return `${m} min`;
   return `${m}:${String(s).padStart(2, "0")}`;
 }
 
@@ -348,84 +349,24 @@ export default function StrummingPage() {
         </Container>
 
         {/* Selection Bar - Sticky */}
-        <div className="sticky top-16 z-30 border-b border-slate-200/50 bg-white/40 backdrop-blur-md">
-          <div className="mx-auto max-w-7xl px-6 py-4">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div className="flex flex-wrap gap-2">
-                {selectedIds.length === 0 ? (
-                  <span className="text-slate-400 font-medium py-2 text-sm">
-                    Select patterns to get started
-                  </span>
-                ) : (
-                  selectedIds.map((id) => {
-                    const pat = allPatterns.find((p) => p.id === id);
-                    return (
-                      <Button
-                        key={id}
-                        onClick={() => togglePattern(id)}
-                        variant="pill"
-                        size="sm"
-                        selected
-                      >
-                        {pat?.name ?? id}
-                        <span className="text-base leading-none hover:text-blue-900">
-                          ×
-                        </span>
-                      </Button>
-                    );
-                  })
-                )}
-              </div>
-
-              <div className="flex gap-2 w-full md:w-auto">
-                <Button
-                  onClick={clearAll}
-                  variant="secondary"
-                  size="sm"
-                  className="flex-1 md:flex-none"
-                >
-                  Clear
-                </Button>
-                <Button
-                  onClick={startDrill}
-                  disabled={selectedIds.length < 1}
-                  variant="primary"
-                  size="sm"
-                  className="flex-1 md:flex-none disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Start Drill
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <SelectionBar
+          selectedItems={selectedIds.map((id) => {
+            const pat = allPatterns.find((p) => p.id === id);
+            return { key: id, label: pat?.name ?? id };
+          })}
+          onRemove={togglePattern}
+          emptyText="Select patterns to get started"
+          drillDuration={drillDuration}
+          onDurationChange={(t) => {
+            setDrillDuration(t);
+            setDrillTime(t);
+          }}
+          minSelections={1}
+          onStartDrill={startDrill}
+          onClear={clearAll}
+        />
 
         <Container className="py-10">
-          {/* Timer Selection */}
-          <div className="mb-10">
-            <h2 className="text-lg font-semibold text-slate-900 mb-3">
-              Drill Duration
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              {TIMER_OPTIONS.map((t) => (
-                <button
-                  key={t}
-                  onClick={() => {
-                    setDrillDuration(t);
-                    setDrillTime(t);
-                  }}
-                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer active:scale-95 ${
-                    drillDuration === t
-                      ? "bg-blue-600 text-white shadow-lg"
-                      : "bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200"
-                  }`}
-                >
-                  {formatTime(t)}
-                </button>
-              ))}
-            </div>
-          </div>
-
           {/* Filter */}
           <div className="flex items-center gap-4 mb-6">
             <h2 className="text-lg font-semibold text-slate-900">
