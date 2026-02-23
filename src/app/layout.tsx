@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Chord Master - Learn Guitar",
+  title: "Guitar Gym - Learn Guitar",
   description: "Master chord changes with scientific practice drills. Perfect for beginners.",
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%232563eb' width='180' height='180'/><text x='90' y='110' font-size='120' font-weight='bold' fill='white' text-anchor='middle'>♪</text></svg>",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Chord Master",
+    title: "Guitar Gym",
   },
   viewport: {
     width: "device-width",

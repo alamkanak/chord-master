@@ -1,6 +1,6 @@
 {
-  "name": "Chord Master - Learn Guitar",
-  "short_name": "Chord Master",
+  "name": "Guitar Gym - Learn Guitar",
+  "short_name": "Guitar Gym",
   "description": "Master chord changes with scientific practice drills. Perfect for beginners.",
   "start_url": "/",
   "scope": "/",
@@ -24,7 +24,7 @@
   ],
   "screenshots": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 720'><rect fill='%23f1f5f9' width='540' height='720'/><text x='270' y='200' font-size='48' font-weight='bold' fill='%23164e63' text-anchor='middle'>Chord Master</text><text x='270' y='300' font-size='32' fill='%23475569' text-anchor='middle'>Practice Chord Changes</text></svg>",
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 720'><rect fill='%23f1f5f9' width='540' height='720'/><text x='270' y='200' font-size='48' font-weight='bold' fill='%23164e63' text-anchor='middle'>Guitar Gym</text><text x='270' y='300' font-size='32' fill='%23475569' text-anchor='middle'>Practice Chord Changes</text></svg>",
       "sizes": "540x720",
       "form_factor": "narrow",
       "type": "image/svg+xml"
