@@ -9,6 +9,7 @@ import SelectionBar from "@/components/SelectionBar";
 import strummingData from "@/data/strumming.json";
 import { playBeep, initAudio } from "@/utils/audio";
 import { useWakeLock } from "@/utils/useWakeLock";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 
 type Tick = "D" | "u" | null;
 
@@ -61,7 +62,7 @@ function PatternVisualizer({
   };
 
   const arrowSizes = {
-    sm: { w: 10, h: 10 },
+    sm: { w: 15, h: 15 },
     md: { w: 14, h: 14 },
     lg: { w: 20, h: 20 },
   };
@@ -88,25 +89,23 @@ function PatternVisualizer({
               {tickToDisplay(tick)}
             </span>
             {/* Always reserve space for arrow to keep labels aligned */}
-            <div className="mt-1 flex items-center justify-center" style={{ width: arrow.w, height: arrow.h }}>
+            <div className="mt-0.5 flex items-center justify-center" style={{ width: arrow.w, height: arrow.h }}>
               {tick && (
-                <svg
-                  className={tick === "D" ? "text-blue-400" : "text-emerald-400"}
-                  width={arrow.w}
-                  height={arrow.h}
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  {tick === "D" ? (
-                    <path d="M4 7l6 8 6-8H4z" />
-                  ) : (
-                    <path d="M4 13l6-8 6 8H4z" />
-                  )}
-                </svg>
+                tick === "D" ? (
+                  <ChevronDownIcon
+                    className="text-blue-400"
+                    style={{ width: arrow.w, height: arrow.h }}
+                  />
+                ) : (
+                  <ChevronUpIcon
+                    className="text-emerald-400"
+                    style={{ width: arrow.w, height: arrow.h }}
+                  />
+                )
               )}
             </div>
             <span
-              className={`${labelSize[size]} mt-1 font-mono ${
+              className={`${labelSize[size]} mt-0.5 font-mono ${
                 isDownbeat
                   ? "text-slate-500 font-semibold"
                   : "text-slate-400"
