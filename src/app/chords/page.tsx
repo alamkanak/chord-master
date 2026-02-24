@@ -9,7 +9,9 @@ import SelectionBar from "@/components/SelectionBar";
 import chordsData from "@/data/chords.json";
 import { createChordSVG, type ChordData } from "@/utils/chordSvg";
 import { playBeep, initAudio } from "@/utils/audio";
+import { playChordStrum } from "@/utils/guitarAudio";
 import { useWakeLock } from "@/utils/useWakeLock";
+import { SpeakerWaveIcon } from "@heroicons/react/24/solid";
 
 export default function ChordsPage() {
   const [selectedNames, setSelectedNames] = useState<string[]>([]);
@@ -129,6 +131,14 @@ export default function ChordsPage() {
     }
   }, [mode, drillTime, endDrill]);
 
+  const handlePlayChord = useCallback(
+    (e: React.MouseEvent, chord: ChordData) => {
+      e.stopPropagation(); // Don't toggle selection when clicking play
+      playChordStrum(chord, "down");
+    },
+    []
+  );
+
   if (mode === "select") {
     return (
       <Container variant="page">
@@ -169,19 +179,29 @@ export default function ChordsPage() {
         <Container className="py-10">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {chords.map((chord) => (
-              <Button
+              <div
                 key={chord.name}
                 onClick={() => toggleChord(chord.name)}
-                variant="chord-selector"
-                selected={selectedNames.includes(chord.name)}
-                className="block w-full"
+                className={`relative block w-full group rounded-xl border-2 p-4 transition-all duration-200 cursor-pointer ${
+                  selectedNames.includes(chord.name)
+                    ? "border-blue-500 bg-blue-50 shadow-lg"
+                    : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-md"
+                }`}
               >
                 <div
                   dangerouslySetInnerHTML={{
                     __html: createChordSVG(chord),
                   }}
                 />
-              </Button>
+                <button
+                  onClick={(e) => handlePlayChord(e, chord)}
+                  className="absolute top-2 right-2 p-1.5 rounded-full bg-slate-100 hover:bg-blue-100 text-slate-400 hover:text-blue-600 transition-all duration-200 cursor-pointer group/play"
+                  aria-label={`Play ${chord.name} chord`}
+                  title={`Play ${chord.name}`}
+                >
+                  <SpeakerWaveIcon className="h-4 w-4" />
+                </button>
+              </div>
             ))}
           </div>
         </Container>
