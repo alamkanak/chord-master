@@ -54,13 +54,12 @@ export default function LyricsDisplay({
     <div className="shrink-0 px-4 py-3 md:px-8 md:py-4">
 
       <div
-        className="max-w-2xl mx-auto text-center relative overflow-hidden"
-        style={{ height: "4.5rem" }}
+        className="max-w-2xl mx-auto text-center relative overflow-hidden h-14 md:h-[4.5rem]"
       >
         {animating ? (
           <div
             key={String(animationKey)}
-            className="absolute inset-x-0"
+            className="absolute inset-x-0 [--lyrics-row-h:1.75rem] md:[--lyrics-row-h:2.25rem]"
             style={{
               top: 0,
               animation: `lyrics-scroll-up 650ms cubic-bezier(0.4, 0, 0.2, 1) both`,
@@ -68,22 +67,19 @@ export default function LyricsDisplay({
             }}
           >
             <div
-              className="flex items-center justify-center"
-              style={{ height: "2.25rem" }}
+              className="flex items-center justify-center h-7 md:h-9"
             >
               <ActiveLine text={from.current} />
             </div>
 
             <div
-              className="flex items-center justify-center"
-              style={{ height: "2.25rem" }}
+              className="flex items-center justify-center h-7 md:h-9"
             >
               <ActiveLine text={from.next ?? currentLyrics} animateColor />
             </div>
 
             <div
-              className="flex items-center justify-center"
-              style={{ height: "2.25rem" }}
+              className="flex items-center justify-center h-7 md:h-9"
             >
               {nextLyrics != null ? (
                 <NextLine text={nextLyrics} />
@@ -95,15 +91,13 @@ export default function LyricsDisplay({
         ) : (
           <div className="absolute inset-x-0 top-0 flex flex-col">
             <div
-              className="flex items-center justify-center"
-              style={{ height: "2.25rem" }}
+              className="flex items-center justify-center h-7 md:h-9"
             >
               <ActiveLine text={displayed.current} />
             </div>
 
             <div
-              className="flex items-center justify-center"
-              style={{ height: "2.25rem" }}
+              className="flex items-center justify-center h-7 md:h-9"
             >
               {displayed.next != null && <NextLine text={displayed.next} />}
             </div>

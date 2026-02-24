@@ -27,10 +27,10 @@ body {
 
 /* Lyrics scroll animations */
 
-/* Scrolls the 3-row lyrics column up by exactly one row (2.25rem) */
+/* Scrolls the 3-row lyrics column up by exactly one row */
 @keyframes lyrics-scroll-up {
   from { transform: translateY(0); }
-  to   { transform: translateY(-2.25rem); }
+  to   { transform: translateY(calc(var(--lyrics-row-h) * -1)); }
 }
 
 /* Fades the next-line color from slate-500 to white as it becomes the active line */

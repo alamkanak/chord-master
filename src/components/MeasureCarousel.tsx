@@ -4,7 +4,6 @@ import { useRef, useEffect, useCallback, useState, type ReactNode } from "react"
 
 interface CarouselItem {
   key: string;
-  label?: string;
   content: ReactNode;
 }
 
@@ -118,12 +117,6 @@ export default function MeasureCarousel({
         >
           {items[activeIndex] && (
             <div className="rounded-2xl overflow-hidden">
-              {items[activeIndex].label && (
-                <div className="px-4 py-2 text-center border-b">
-                  <span className="text-[10px] font-bold uppercase tracking-widest">&nbsp;</span>
-                  <p className="text-sm font-semibold mt-0.5">{items[activeIndex].label}</p>
-                </div>
-              )}
               <div className="p-3 md:p-4 flex items-center justify-center">
                 {items[activeIndex].content}
               </div>
@@ -135,8 +128,6 @@ export default function MeasureCarousel({
         {items.map((item, i) => {
           const distance = Math.abs(i - activeIndex);
           const isActive = i === activeIndex;
-          const isPrev = i === activeIndex - 1;
-          const isNext = i === activeIndex + 1;
           const isVisible = distance <= 2;
 
           const scale = getScale(i);
@@ -170,32 +161,6 @@ export default function MeasureCarousel({
                     : "bg-white/90 shadow-lg"
                 }`}
               >
-                {/* Label badge */}
-                {item.label && (
-                  <div
-                    className={`px-4 py-2 text-center border-b transition-colors duration-500 ${
-                      isActive
-                        ? "border-blue-100 bg-blue-50/50"
-                        : "border-slate-100 bg-slate-50/50"
-                    }`}
-                  >
-                    <span
-                      className={`text-[10px] font-bold uppercase tracking-widest transition-colors duration-500 ${
-                        isActive ? "text-blue-600" : "text-slate-400"
-                      }`}
-                    >
-                      {isPrev ? "Previous" : isNext ? "Up Next" : isActive ? "Now Playing" : ""}
-                    </span>
-                    <p
-                      className={`text-sm font-semibold mt-0.5 transition-colors duration-500 ${
-                        isActive ? "text-slate-900" : "text-slate-500"
-                      }`}
-                    >
-                      {item.label}
-                    </p>
-                  </div>
-                )}
-
                 {/* Content */}
                 <div className="p-3 md:p-4 flex items-center justify-center">
                   {item.content}
@@ -209,7 +174,7 @@ export default function MeasureCarousel({
       {/* Subtitle / section info below */}
       {subtitle && (
         <div className="text-center mt-3">
-          <span className="text-xs font-medium text-slate-500">{subtitle}</span>
+          <span className="text-xs font-bold text-slate-400">{subtitle}</span>
         </div>
       )}
     </div>

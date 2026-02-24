@@ -695,14 +695,8 @@ export default function SongsPage() {
       const mChord = mIsStrum && m.chordId ? chordLib[m.chordId] : null;
       const mRiff = !mIsStrum && m.riffId ? riffLib[m.riffId] : null;
 
-      let label = "";
-      if (mChord) label = mChord.name;
-      else if (mRiff) label = mRiff.name;
-      else label = `Measure ${i + 1}`;
-
       return {
         key: `chord-${i}`,
-        label,
         content: mChord ? (
           <div
             className="w-full max-w-45 [&>svg]:max-w-full"
