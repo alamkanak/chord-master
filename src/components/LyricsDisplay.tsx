@@ -55,7 +55,7 @@ export default function LyricsDisplay({
 
       <div
         className="max-w-2xl mx-auto text-center relative overflow-hidden"
-        style={{ height: "5.5rem" }}
+        style={{ height: "4.5rem" }}
       >
         {animating ? (
           <div
@@ -69,23 +69,23 @@ export default function LyricsDisplay({
           >
             <div
               className="flex items-center justify-center"
-              style={{ height: "2.75rem" }}
+              style={{ height: "2.25rem" }}
             >
               <ActiveLine text={from.current} />
             </div>
 
             <div
               className="flex items-center justify-center"
-              style={{ height: "2.75rem" }}
+              style={{ height: "2.25rem" }}
             >
               <ActiveLine text={from.next ?? currentLyrics} animateColor />
             </div>
 
             <div
               className="flex items-center justify-center"
-              style={{ height: "2.75rem" }}
+              style={{ height: "2.25rem" }}
             >
-              {nextLyrics ? (
+              {nextLyrics != null ? (
                 <NextLine text={nextLyrics} />
               ) : (
                 <span />
@@ -96,16 +96,16 @@ export default function LyricsDisplay({
           <div className="absolute inset-x-0 top-0 flex flex-col">
             <div
               className="flex items-center justify-center"
-              style={{ height: "2.75rem" }}
+              style={{ height: "2.25rem" }}
             >
               <ActiveLine text={displayed.current} />
             </div>
 
             <div
               className="flex items-center justify-center"
-              style={{ height: "2.75rem" }}
+              style={{ height: "2.25rem" }}
             >
-              {displayed.next && <NextLine text={displayed.next} />}
+              {displayed.next != null && <NextLine text={displayed.next} />}
             </div>
           </div>
         )}
@@ -124,11 +124,7 @@ function ActiveLine({ text, animateColor }: { text: string; animateColor?: boole
           : { color: "white" }
       }
     >
-      {text || (
-        <span className="opacity-20 italic font-normal text-slate-400 text-base">
-          ··· Instrumental ···
-        </span>
-      )}
+      {text || "··· Instrumental ···"}
     </p>
   );
 }
@@ -136,7 +132,7 @@ function ActiveLine({ text, animateColor }: { text: string; animateColor?: boole
 function NextLine({ text }: { text: string }) {
   return (
     <p className="text-lg md:text-2xl lg:text-3xl font-bold leading-snug tracking-tight w-full text-center text-slate-500">
-      {text}
+      {text || "··· Instrumental ···"}
     </p>
   );
 }

@@ -483,12 +483,12 @@ export default function SongsPage() {
               <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">
                 Playback Speed
               </span>
-              <div className="flex gap-1.5">
+              <div className="flex flex-wrap justify-center gap-1.5 max-w-xs">
                 {SPEED_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
                     onClick={() => setPlaybackSpeed(opt.value)}
-                    className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer ${playbackSpeed === opt.value
+                    className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer ${playbackSpeed === opt.value
                       ? "bg-blue-600 text-white shadow-lg"
                       : "bg-slate-700/50 text-slate-300 hover:bg-slate-700"
                       }`}
@@ -527,11 +527,11 @@ export default function SongsPage() {
               <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">
                 Chords Used ({uniqueChords.length})
               </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                 {uniqueChords.map((chord) => (
                   <div
                     key={chord.name}
-                    className="rounded-xl bg-white text-slate-900 p-3 flex items-center justify-center aspect-square"
+                    className="rounded-xl bg-white text-slate-900 p-3 flex items-center justify-center h-36 sm:h-40 md:h-44"
                   >
                     <div
                       className="w-full h-full flex items-center justify-center [&>svg]:max-w-full [&>svg]:max-h-full"
@@ -705,7 +705,7 @@ export default function SongsPage() {
         label,
         content: mChord ? (
           <div
-            className="w-full max-w-50"
+            className="w-full max-w-45 [&>svg]:max-w-full"
             dangerouslySetInnerHTML={{
               __html: createChordSVG(mChord as ChordData, true),
             }}
@@ -809,7 +809,7 @@ export default function SongsPage() {
           />
 
           {/* Chord / Riff Carousel */}
-          <div className="shrink-0 py-2 md:py-4">
+          <div className="shrink-0 py-1 md:py-3">
             <MeasureCarousel
               items={chordCarouselItems}
               activeIndex={currentMeasureIdx}
@@ -817,27 +817,8 @@ export default function SongsPage() {
             />
           </div>
 
-          {/* Tick Progress Dots */}
-          <div className="shrink-0 flex items-center justify-center gap-1 px-4 py-2 h-8">
-            {Array.from({ length: ticksPerMeasure }, (_, i) => (
-              <div
-                key={i}
-                className="flex items-center justify-center w-3 h-3"
-              >
-                <div
-                  className={`rounded-full transition-all duration-150 ${i === currentTick
-                      ? "w-3 h-3 bg-blue-400 shadow-lg shadow-blue-400/50"
-                      : i < currentTick
-                        ? "w-2 h-2 bg-blue-400/40"
-                        : "w-2 h-2 bg-white/10"
-                    }`}
-                />
-              </div>
-            ))}
-          </div>
-
           {/* Pattern / Picking / Riff Slideshow */}
-          <div className="flex-1 min-h-0 flex items-start py-2 md:py-3">
+          <div className="flex-1 min-h-36 sm:min-h-44 flex items-start py-2 md:py-3 overflow-hidden">
             <div className="w-full max-w-2xl mx-auto">
               <PatternSlideshow
                 items={patternSlideshowItems}

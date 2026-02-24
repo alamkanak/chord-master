@@ -36,25 +36,25 @@ export default function PatternVisualizer({
   const sizeClasses = {
     sm: "text-base sm:text-lg",
     md: "text-xl sm:text-2xl",
-    lg: "text-2xl sm:text-4xl md:text-5xl",
+    lg: "text-xl sm:text-3xl md:text-5xl",
   };
 
   const tickSizeClasses = {
     sm: "min-w-0 flex-1 h-12 sm:h-14",
     md: "min-w-0 flex-1 h-14 sm:h-18",
-    lg: "min-w-0 flex-1 h-16 sm:h-24 md:h-28",
+    lg: "min-w-0 flex-1 h-14 sm:h-20 md:h-28",
   };
 
   const labelSize = {
     sm: "text-xs sm:text-sm",
     md: "text-sm sm:text-base",
-    lg: "text-sm sm:text-lg md:text-xl",
+    lg: "text-xs sm:text-base md:text-xl",
   };
 
   const arrowSizes = {
     sm: { w: 12, h: 12, smW: 15, smH: 15 },
     md: { w: 12, h: 12, smW: 14, smH: 14 },
-    lg: { w: 14, h: 14, smW: 20, smH: 20 },
+    lg: { w: 12, h: 12, smW: 18, smH: 18 },
   };
 
   const arrow = arrowSizes[size];
