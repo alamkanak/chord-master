@@ -215,17 +215,15 @@ export default function StrummingPage() {
             </h2>
             <div className="flex gap-1 bg-slate-100 rounded-lg p-1">
               {(["all", "beginner", "intermediate"] as const).map((level) => (
-                <button
+                <Button
                   key={level}
                   onClick={() => setFilterDifficulty(level)}
-                  className={`px-3 py-1 rounded-md text-xs font-semibold transition-all cursor-pointer ${
-                    filterDifficulty === level
-                      ? "bg-white text-slate-900 shadow-sm"
-                      : "text-slate-500 hover:text-slate-700"
-                  }`}
+                  variant="filter"
+                  size="sm"
+                  selected={filterDifficulty === level}
                 >
                   {level.charAt(0).toUpperCase() + level.slice(1)}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -299,14 +297,11 @@ export default function StrummingPage() {
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {customPatterns.map((pattern) => (
-                  <button
+                  <Button
                     key={pattern.id}
                     onClick={() => togglePattern(pattern.id)}
-                    className={`group text-left rounded-xl border-2 p-5 transition-all duration-200 cursor-pointer active:scale-[0.98] hover:scale-[1.02] ${
-                      selectedIds.includes(pattern.id)
-                        ? "border-blue-500 bg-blue-50 shadow-lg"
-                        : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-md"
-                    }`}
+                    variant="pattern-selector"
+                    selected={selectedIds.includes(pattern.id)}
                   >
                     <div className="flex items-start justify-between mb-3">
                       <h3 className="font-semibold text-slate-900 text-sm">
@@ -340,7 +335,7 @@ export default function StrummingPage() {
                       ticks={pattern.ticks as Tick[]}
                       size="sm"
                     />
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
@@ -349,29 +344,32 @@ export default function StrummingPage() {
           {/* Pattern Builder */}
           <div className="mb-20">
             {!showBuilder ? (
-              <button
+              <Button
                 onClick={() => setShowBuilder(true)}
-                className="w-full rounded-xl border-2 border-dashed border-slate-300 p-6 text-center hover:border-blue-400 hover:bg-blue-50/50 transition-all cursor-pointer group"
+                variant="secondary"
+                className="w-full rounded-xl border-2 border-dashed border-slate-300 p-6 text-center hover:border-blue-400 hover:bg-blue-50/50 group"
               >
-                <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">
-                  ✏️
+                <div className="flex flex-col items-center w-full">
+                  <div className="text-3xl mb-2">✏️</div>
+                  <div className="font-semibold text-slate-700 group-hover:text-blue-700">
+                    Build Your Own Pattern
+                  </div>
+                  <div className="text-sm text-slate-500 mt-1 font-normal">
+                    Create a custom strumming pattern
+                  </div>
                 </div>
-                <div className="font-semibold text-slate-700 group-hover:text-blue-700">
-                  Build Your Own Pattern
-                </div>
-                <div className="text-sm text-slate-500 mt-1">
-                  Create a custom strumming pattern
-                </div>
-              </button>
+              </Button>
             ) : (
               <div className="rounded-xl border-2 border-blue-200 bg-white p-6 shadow-lg">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold text-slate-900">
                     Pattern Builder
                   </h2>
-                  <button
+                  <Button
                     onClick={() => setShowBuilder(false)}
-                    className="text-slate-400 hover:text-slate-600 cursor-pointer"
+                    variant="icon"
+                    size="sm"
+                    className="text-slate-400 hover:text-slate-600 hover:bg-slate-100"
                   >
                     <svg
                       className="w-5 h-5"
@@ -386,7 +384,7 @@ export default function StrummingPage() {
                         d="M6 18L18 6M6 6l12 12"
                       />
                     </svg>
-                  </button>
+                  </Button>
                 </div>
 
                 <PatternBuilder ticks={customTicks} onChange={setCustomTicks} />

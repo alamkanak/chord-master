@@ -40,21 +40,24 @@ export default function DrillHeader({
           {/* Left: Back button or spacer */}
           <div className="w-10 shrink-0">
             {(mode === "ready" || mode === "finished") && onBack ? (
-              <button
+              <Button
                 onClick={onBack}
-                className="flex h-10 w-10 items-center justify-center rounded-full text-slate-400 hover:bg-white/10 hover:text-white transition-colors active:scale-90 cursor-pointer"
+                variant="icon"
+                size="sm"
                 aria-label="Back to selection"
               >
                 <ArrowLeftIcon className="h-5 w-5" />
-              </button>
+              </Button>
             ) : (mode === "prep" || mode === "drill") && onEnd ? (
-              <button
+              <Button
                 onClick={onEnd}
-                className="flex h-10 w-10 items-center justify-center rounded-full text-slate-400 hover:bg-white/10 hover:text-white transition-colors active:scale-90 cursor-pointer md:hidden"
+                variant="icon"
+                size="sm"
+                className="md:hidden"
                 aria-label="End drill"
               >
                 <ArrowLeftIcon className="h-5 w-5" />
-              </button>
+              </Button>
             ) : null}
           </div>
 

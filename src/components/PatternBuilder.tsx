@@ -1,5 +1,7 @@
 "use client";
 
+import Button from "./Button";
+
 type Tick = "D" | "u" | null;
 
 const BEAT_LABELS = ["1", "+", "2", "+", "3", "+", "4", "+"];
@@ -41,10 +43,11 @@ export default function PatternBuilder({
         {ticks.map((tick, i) => {
           const isDownbeat = i % 2 === 0;
           return (
-            <button
+            <Button
               key={i}
               onClick={() => cycleTick(i)}
-              className={`flex flex-col items-center justify-center min-w-0 flex-1 h-16 sm:h-18 md:h-22 rounded-lg border-2 transition-all duration-150 cursor-pointer active:scale-95 ${
+              variant="secondary"
+              className={`flex-col justify-center min-w-0 flex-1 h-16 sm:h-18 md:h-22 rounded-lg border-2 ${
                 tick === "D"
                   ? "border-blue-400 bg-blue-50 hover:bg-blue-100"
                   : tick === "u"
@@ -72,7 +75,7 @@ export default function PatternBuilder({
               >
                 {BEAT_LABELS[i]}
               </span>
-            </button>
+            </Button>
           );
         })}
       </div>

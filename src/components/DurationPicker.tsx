@@ -1,3 +1,5 @@
+import Button from "./Button";
+
 interface DurationPickerProps {
   value: number;
   onChange: (seconds: number) => void;
@@ -23,17 +25,15 @@ export default function DurationPicker({
       <span className="text-sm font-medium text-slate-500 mr-1">Duration:</span>
       <div className="flex gap-1.5">
         {options.map((t) => (
-          <button
+          <Button
             key={t}
             onClick={() => onChange(t)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer active:scale-95 ${
-              value === t
-                ? "bg-blue-600 text-white shadow-md"
-                : "bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200"
-            }`}
+            variant="duration"
+            size="sm"
+            selected={value === t}
           >
             {formatTime(t)}
-          </button>
+          </Button>
         ))}
       </div>
     </div>
