@@ -69,9 +69,7 @@ export default function PatternVisualizer({
         return (
           <div
             key={i}
-            className={`flex flex-col items-center justify-end ${tickSizeClasses[size]} ${
-              isActive ? "scale-110 transition-transform duration-100" : "transition-transform duration-100"
-            }`}
+            className={`flex flex-col items-center justify-end ${tickSizeClasses[size]} transition-transform duration-100`}
           >
             <span
               className={`${sizeClasses[size]} font-bold leading-none ${

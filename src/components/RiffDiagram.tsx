@@ -114,9 +114,9 @@ export default function RiffDiagram({
                       >
                         {note ? (
                           <span
-                            className={`${s.note} flex items-center justify-center rounded font-bold transition-all duration-150 ${
+                            className={`${s.note} flex items-center justify-center rounded font-bold transition-colors duration-150 ${
                               isActive
-                                ? "bg-amber-400 text-slate-900 scale-110 shadow-lg shadow-amber-400/40"
+                                ? "bg-amber-400 text-slate-900 ring-2 ring-amber-300 shadow-lg shadow-amber-400/40"
                                 : "bg-slate-800 text-white"
                             }`}
                           >

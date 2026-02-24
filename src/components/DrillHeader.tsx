@@ -6,6 +6,7 @@ interface DrillHeaderProps {
   countdown?: number;
   timer?: number;
   title?: string;
+  hideTimer?: boolean;
   onBack?: () => void;
   onEnd?: () => void;
 }
@@ -15,6 +16,7 @@ export default function DrillHeader({
   countdown = 0,
   timer = 0,
   title = "Practice Drill",
+  hideTimer = false,
   onBack,
   onEnd,
 }: DrillHeaderProps) {
@@ -90,9 +92,16 @@ export default function DrillHeader({
                 <span className="text-xs font-medium uppercase tracking-wider text-slate-500 hidden md:block">
                   {title}
                 </span>
-                <span className={`text-2xl md:text-4xl font-black tabular-nums leading-tight ${timer <= 5 ? "text-red-400" : "text-blue-400"}`}>
-                  {formatTimer(timer)}
-                </span>
+                {!hideTimer && (
+                  <span className={`text-2xl md:text-4xl font-black tabular-nums leading-tight ${timer <= 5 ? "text-red-400" : "text-blue-400"}`}>
+                    {formatTimer(timer)}
+                  </span>
+                )}
+                {hideTimer && (
+                  <span className="text-sm font-semibold text-slate-200 truncate max-w-full md:hidden">
+                    {title}
+                  </span>
+                )}
               </>
             )}
 

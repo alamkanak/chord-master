@@ -142,9 +142,9 @@ export default function PickingPatternVisualizer({
                       >
                         {isPlucked ? (
                           <span
-                            className={`${s.dot} flex items-center justify-center rounded-full font-bold transition-all duration-150 ${
+                            className={`${s.dot} flex items-center justify-center rounded-full font-bold transition-colors duration-150 ${
                               isActive
-                                ? "bg-amber-400 text-slate-900 scale-125 shadow-lg shadow-amber-400/40"
+                                ? "bg-amber-400 text-slate-900 ring-2 ring-amber-300 shadow-lg shadow-amber-400/40"
                                 : finger === "p"
                                 ? "bg-blue-500 text-white"
                                 : finger === "i"

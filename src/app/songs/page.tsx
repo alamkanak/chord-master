@@ -13,6 +13,9 @@ import Container from "@/components/Container";
 import DrillHeader from "@/components/DrillHeader";
 import PatternVisualizer from "@/components/PatternVisualizer";
 import PickingPatternVisualizer from "@/components/PickingPatternVisualizer";
+import MeasureCarousel from "@/components/MeasureCarousel";
+import PatternSlideshow from "@/components/PatternSlideshow";
+import LyricsDisplay from "@/components/LyricsDisplay";
 import type { PickingPattern } from "@/components/PickingPatternVisualizer";
 import RiffDiagram from "@/components/RiffDiagram";
 import songsData from "@/data/songs.json";
@@ -173,7 +176,6 @@ export default function SongsPage() {
 
   const totalMeasures = flatTimeline.length;
   const currentMeasure = flatTimeline[currentMeasureIdx] ?? null;
-  const nextMeasure = flatTimeline[currentMeasureIdx + 1] ?? null;
 
   const ticksPerMeasure = selectedSong
     ? selectedSong.beatsPerMeasure * selectedSong.ticksPerBeat
@@ -317,6 +319,10 @@ export default function SongsPage() {
     releaseWakeLock,
   ]);
 
+  // ----- Lyrics: derive text from current position -----
+  const liveCurrent = flatTimeline[currentMeasureIdx]?.lyrics ?? "";
+  const liveNext = flatTimeline[currentMeasureIdx + 1]?.lyrics ?? "";
+
   // ----- Helper: get unique chords for a song -----
   const getSongChords = (song: Song): string[] => {
     const chordSet = new Set<string>();
@@ -378,10 +384,10 @@ export default function SongsPage() {
                     </div>
                     <span
                       className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold border ${song.difficulty === "beginner"
-                          ? "bg-green-50 text-green-700 border-green-200"
-                          : song.difficulty === "intermediate"
-                            ? "bg-amber-50 text-amber-700 border-amber-200"
-                            : "bg-red-50 text-red-700 border-red-200"
+                        ? "bg-green-50 text-green-700 border-green-200"
+                        : song.difficulty === "intermediate"
+                          ? "bg-amber-50 text-amber-700 border-amber-200"
+                          : "bg-red-50 text-red-700 border-red-200"
                         }`}
                     >
                       {song.difficulty}
@@ -394,7 +400,7 @@ export default function SongsPage() {
                   </p>
 
                   {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-1.5 mb-4">
                     <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
                       {chords.length} Chords
                     </span>
@@ -417,7 +423,7 @@ export default function SongsPage() {
                   </div>
 
                   {/* Chord preview */}
-                  <div className="flex gap-2 flex-wrap">
+                  <div className="flex gap-1.5 flex-wrap">
                     {chords.map((chordName) => (
                       <span
                         key={chordName}
@@ -453,7 +459,7 @@ export default function SongsPage() {
     const sections = selectedSong.timeline.map((s) => s.section);
 
     return (
-      <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-b from-slate-950 via-slate-900 to-slate-950 text-white overflow-y-auto">
         <DrillHeader
           mode="ready"
           title={selectedSong.title}
@@ -477,14 +483,14 @@ export default function SongsPage() {
               <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">
                 Playback Speed
               </span>
-              <div className="flex gap-2">
+              <div className="flex gap-1.5">
                 {SPEED_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
                     onClick={() => setPlaybackSpeed(opt.value)}
                     className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer ${playbackSpeed === opt.value
-                        ? "bg-blue-600 text-white shadow-lg"
-                        : "bg-slate-700/50 text-slate-300 hover:bg-slate-700"
+                      ? "bg-blue-600 text-white shadow-lg"
+                      : "bg-slate-700/50 text-slate-300 hover:bg-slate-700"
                       }`}
                   >
                     {opt.label}
@@ -504,7 +510,7 @@ export default function SongsPage() {
               <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">
                 Song Structure
               </h3>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5">
                 {sections.map((s, i) => (
                   <span
                     key={i}
@@ -521,13 +527,14 @@ export default function SongsPage() {
               <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">
                 Chords Used ({uniqueChords.length})
               </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                 {uniqueChords.map((chord) => (
                   <div
                     key={chord.name}
-                    className="rounded-xl bg-white text-slate-900 p-4 flex items-center justify-center"
+                    className="rounded-xl bg-white text-slate-900 p-3 flex items-center justify-center aspect-square"
                   >
                     <div
+                      className="w-full h-full flex items-center justify-center [&>svg]:max-w-full [&>svg]:max-h-full"
                       dangerouslySetInnerHTML={{
                         __html: createChordSVG(chord as ChordData),
                       }}
@@ -543,7 +550,7 @@ export default function SongsPage() {
                 <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">
                   Strumming Patterns
                 </h3>
-                <div className="grid gap-3">
+                <div className="grid gap-2">
                   {uniquePatterns.map((pattern) => (
                     <div
                       key={pattern.id}
@@ -554,7 +561,7 @@ export default function SongsPage() {
                       </h4>
                       <PatternVisualizer
                         ticks={pattern.ticks as Tick[]}
-                        size="md"
+                        size="lg"
                       />
                     </div>
                   ))}
@@ -568,7 +575,7 @@ export default function SongsPage() {
                 <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">
                   Picking Patterns
                 </h3>
-                <div className="grid gap-3">
+                <div className="grid gap-2">
                   {uniquePickingPatterns.map((pattern) => (
                     <div
                       key={pattern.id}
@@ -579,7 +586,7 @@ export default function SongsPage() {
                       </h4>
                       <PickingPatternVisualizer
                         pattern={pattern as PickingPattern}
-                        size="md"
+                        size="lg"
                       />
                     </div>
                   ))}
@@ -593,13 +600,16 @@ export default function SongsPage() {
                 <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">
                   Riffs
                 </h3>
-                <div className="grid gap-3">
+                <div className="grid gap-2">
                   {uniqueRiffs.map((riff) => (
                     <div
                       key={riff.id}
                       className="rounded-xl bg-white text-slate-900"
                     >
-                      <RiffDiagram riff={riff as SongRiff} size="md" />
+                      <RiffDiagram
+                        riff={riff as SongRiff}
+                        size="md"
+                      />
                     </div>
                   ))}
                 </div>
@@ -646,7 +656,7 @@ export default function SongsPage() {
   // ============= PREP MODE =============
   if (mode === "prep") {
     return (
-      <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-b from-slate-950 via-slate-900 to-slate-950 text-white overflow-y-auto">
         <DrillHeader
           mode="prep"
           title={selectedSong.title}
@@ -679,316 +689,200 @@ export default function SongsPage() {
         (totalMeasures * ticksPerMeasure)) *
       100;
 
-    // Current content
-    const isStrum = currentMeasure.type === "strum" || currentMeasure.type === "picking";
-    const currentChord = isStrum
-      ? chordLib[currentMeasure.chordId!]
-      : null;
-    const currentStrumPattern = isStrum && currentMeasure.patternId
-      ? patternLib[currentMeasure.patternId]
-      : null;
-    const currentPickingPattern = isStrum && currentMeasure.patternId
-      ? pickingPatternLib[currentMeasure.patternId]
-      : null;
-    // A "strum" measure is either a strum pattern or a picking pattern
-    const isPicking = isStrum && !currentStrumPattern && !!currentPickingPattern;
-    const currentPattern = currentStrumPattern;
-    const currentRiff =
-      !isStrum && currentMeasure.riffId
-        ? riffLib[currentMeasure.riffId]
-        : null;
+    // Build carousel items for chord/riff display
+    const chordCarouselItems = flatTimeline.map((m, i) => {
+      const mIsStrum = m.type === "strum" || m.type === "picking";
+      const mChord = mIsStrum && m.chordId ? chordLib[m.chordId] : null;
+      const mRiff = !mIsStrum && m.riffId ? riffLib[m.riffId] : null;
 
-    // Next content
-    const nextIsStrum = nextMeasure?.type === "strum" || nextMeasure?.type === "picking";
-    const nextChord = nextIsStrum && nextMeasure?.chordId
-      ? chordLib[nextMeasure.chordId]
-      : null;
-    const nextRiffData =
-      nextMeasure && !nextIsStrum && nextMeasure.riffId
-        ? riffLib[nextMeasure.riffId]
-        : null;
+      let label = "";
+      if (mChord) label = mChord.name;
+      else if (mRiff) label = mRiff.name;
+      else label = `Measure ${i + 1}`;
 
-    // Active beat for riff or picking highlighting
-    const activeBeat = !isStrum
-      ? (currentTick / selectedSong.ticksPerBeat) + 1
-      : null;
-    const activePickingBeat = isPicking ? currentTick : null;
+      return {
+        key: `chord-${i}`,
+        label,
+        content: mChord ? (
+          <div
+            className="w-full max-w-50"
+            dangerouslySetInnerHTML={{
+              __html: createChordSVG(mChord as ChordData, true),
+            }}
+          />
+        ) : mRiff ? (
+          <div className="w-full">
+            <RiffDiagram
+              riff={mRiff as SongRiff}
+              size="sm"
+              activeBeat={i === currentMeasureIdx ? (currentTick / selectedSong.ticksPerBeat) + 1 : null}
+            />
+          </div>
+        ) : (
+          <div className="py-8 text-center text-slate-400 text-sm italic">
+            Instrumental
+          </div>
+        ),
+      };
+    });
+
+    // Build pattern slideshow items
+    const patternSlideshowItems = flatTimeline.map((m, i) => {
+      const mIsStrum = m.type === "strum" || m.type === "picking";
+      const mStrumPattern = mIsStrum && m.patternId ? patternLib[m.patternId] : null;
+      const mPickingPattern = mIsStrum && m.patternId ? pickingPatternLib[m.patternId] : null;
+      const mRiff = !mIsStrum && m.riffId ? riffLib[m.riffId] : null;
+      const isCurrentPicking = mIsStrum && !mStrumPattern && !!mPickingPattern;
+
+      let label = "";
+      if (mStrumPattern) label = mStrumPattern.name;
+      else if (mPickingPattern) label = mPickingPattern.name;
+      else if (mRiff) label = mRiff.name;
+      else label = "—";
+
+      return {
+        key: `pattern-${i}`,
+        label,
+        content: mStrumPattern ? (
+          <PatternVisualizer
+            ticks={mStrumPattern.ticks as Tick[]}
+            size="lg"
+            activeTick={i === currentMeasureIdx ? currentTick : null}
+          />
+        ) : isCurrentPicking && mPickingPattern ? (
+          <PickingPatternVisualizer
+            pattern={mPickingPattern as PickingPattern}
+            size="lg"
+            activeBeat={i === currentMeasureIdx ? currentTick : null}
+          />
+        ) : mRiff ? (
+          <RiffDiagram
+            riff={mRiff as SongRiff}
+            size="md"
+            activeBeat={i === currentMeasureIdx ? (currentTick / selectedSong.ticksPerBeat) + 1 : null}
+          />
+        ) : (
+          <div className="py-6 text-center text-slate-400 text-sm italic">
+            No pattern
+          </div>
+        ),
+      };
+    });
+
+    // Current section info
+    const sectionLabel = currentMeasure.sectionName;
+    const measureInSection = flatTimeline
+      .slice(0, currentMeasureIdx + 1)
+      .filter((m) => m.sectionName === sectionLabel).length;
+    const totalInSection = flatTimeline.filter(
+      (m) => m.sectionName === sectionLabel
+    ).length;
 
     return (
-      <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
-        {/* Compact Drill Header */}
-        <div className="sticky top-0 z-40 border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl">
-          <div className="px-3 py-2 md:px-6 md:py-3">
-            <div className="flex items-center justify-between gap-2 min-h-10">
-              {/* Back */}
-              <Button
-                onClick={endDrill}
-                variant="icon"
-                size="sm"
-                aria-label="End drill"
+      <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
+        {/* ─── Header ─── */}
+        <DrillHeader
+          mode="drill"
+          title={selectedSong.title}
+          onEnd={endDrill}
+          hideTimer
+        />
+
+        {/* Section badge below header */}
+        <div className="shrink-0 flex items-center justify-center gap-2 px-4 py-3 border-b border-slate-700/30">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-500/15 text-xs font-bold uppercase tracking-wider text-blue-400">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+            {sectionLabel}
+          </span>
+          <span className="text-xs text-slate-500 font-mono tabular-nums font-bold">
+            {measureInSection}/{totalInSection}
+          </span>
+        </div>
+
+        {/* ─── Main Content ─── */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {/* Lyrics Bar */}
+          <LyricsDisplay
+            currentLyrics={liveCurrent}
+            nextLyrics={liveNext}
+            animationKey={currentMeasureIdx}
+          />
+
+          {/* Chord / Riff Carousel */}
+          <div className="shrink-0 py-2 md:py-4">
+            <MeasureCarousel
+              items={chordCarouselItems}
+              activeIndex={currentMeasureIdx}
+              subtitle={`Measure ${currentMeasureIdx + 1} of ${totalMeasures}`}
+            />
+          </div>
+
+          {/* Tick Progress Dots */}
+          <div className="shrink-0 flex items-center justify-center gap-1 px-4 py-2 h-8">
+            {Array.from({ length: ticksPerMeasure }, (_, i) => (
+              <div
+                key={i}
+                className="flex items-center justify-center w-3 h-3"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </Button>
-
-              {/* Section label */}
-              <div className="flex flex-col items-center min-w-0">
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-blue-400">
-                  {currentMeasure.sectionName}
-                </span>
-                <span className="text-xs text-slate-400 truncate max-w-48">
-                  {selectedSong.title}
-                </span>
+                <div
+                  className={`rounded-full transition-all duration-150 ${i === currentTick
+                      ? "w-3 h-3 bg-blue-400 shadow-lg shadow-blue-400/50"
+                      : i < currentTick
+                        ? "w-2 h-2 bg-blue-400/40"
+                        : "w-2 h-2 bg-white/10"
+                    }`}
+                />
               </div>
+            ))}
+          </div>
 
-              {/* Speed badge */}
-              <span className="text-[10px] font-bold bg-slate-700/60 px-2 py-1 rounded-full text-slate-300">
-                {playbackSpeed}x
-              </span>
+          {/* Pattern / Picking / Riff Slideshow */}
+          <div className="flex-1 min-h-0 flex items-start py-2 md:py-3">
+            <div className="w-full max-w-2xl mx-auto">
+              <PatternSlideshow
+                items={patternSlideshowItems}
+                activeIndex={currentMeasureIdx}
+              />
             </div>
           </div>
         </div>
 
-        {/* Main Content Area */}
-        <div className="flex-1 overflow-y-auto">
-          <div className="max-w-3xl mx-auto px-3 py-4 md:px-6 md:py-6 space-y-4 md:space-y-6">
-            {/* Lyrics */}
-            <div className="rounded-2xl bg-slate-800/60 border border-slate-700/50 p-4 md:p-6 min-h-25 flex flex-col justify-center items-center text-center">
-              <p className="text-xl md:text-2xl lg:text-3xl font-bold text-white leading-relaxed">
-                {currentMeasure.lyrics || (
-                  <span className="opacity-30 italic font-normal text-slate-400">
-                    ··· Instrumental ···
-                  </span>
-                )}
-              </p>
-              {nextMeasure && nextMeasure.lyrics && (
-                <p className="text-sm text-slate-500 mt-3">
-                  {nextMeasure.lyrics}
-                </p>
-              )}
-            </div>
-
-            {/* Performance Content */}
-            {isPicking && currentChord && currentPickingPattern ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Current Chord */}
-                <div className="rounded-2xl bg-white text-slate-900 p-4 md:p-6">
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2 text-center">
-                    Current Chord
-                  </div>
-                  <div
-                    className="max-w-48 mx-auto"
-                    dangerouslySetInnerHTML={{
-                      __html: createChordSVG(
-                        currentChord as ChordData,
-                        true
-                      ),
-                    }}
-                  />
-                </div>
-
-                {/* Next Chord */}
-                <div className="rounded-2xl bg-white text-slate-900 p-4 md:p-6 flex flex-col">
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2 text-center">
-                    {nextMeasure ? "Up Next" : "Last Measure"}
-                  </div>
-                  {nextChord ? (
-                    <div className="max-w-48 mx-auto">
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: createChordSVG(
-                            nextChord as ChordData,
-                            true
-                          ),
-                        }}
-                      />
-                    </div>
-                  ) : (
-                    <div className="flex-1 flex items-center justify-center">
-                      <span className="text-sm text-slate-400 italic">
-                        End of song
-                      </span>
-                    </div>
-                  )}
-
-                  {nextMeasure && (
-                    <div className="mt-auto pt-3 border-t border-slate-200 flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase text-slate-400">
-                        Change in
-                      </span>
-                      <span className="text-sm font-mono font-bold text-blue-600">
-                        {ticksPerMeasure - currentTick} ticks
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Picking Pattern — full width below */}
-                <div className="md:col-span-2 rounded-2xl bg-white text-slate-900 p-4 md:p-6">
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-3 text-center">
-                    Picking Pattern — {currentPickingPattern.name}
-                  </div>
-                  <PickingPatternVisualizer
-                    pattern={currentPickingPattern as PickingPattern}
-                    size="lg"
-                    activeBeat={activePickingBeat}
-                  />
-                </div>
-              </div>
-            ) : isStrum && currentChord && currentPattern ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Current Chord */}
-                <div className="rounded-2xl bg-white text-slate-900 p-4 md:p-6">
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2 text-center">
-                    Current Chord
-                  </div>
-                  <div
-                    className="max-w-48 mx-auto"
-                    dangerouslySetInnerHTML={{
-                      __html: createChordSVG(
-                        currentChord as ChordData,
-                        true
-                      ),
-                    }}
-                  />
-                </div>
-
-                {/* Next Chord or Next Info */}
-                <div className="rounded-2xl bg-white text-slate-900 p-4 md:p-6 flex flex-col">
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2 text-center">
-                    {nextMeasure ? "Up Next" : "Last Measure"}
-                  </div>
-                  {nextChord ? (
-                    <div className="max-w-48 mx-auto">
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: createChordSVG(
-                            nextChord as ChordData,
-                            true
-                          ),
-                        }}
-                      />
-                    </div>
-                  ) : nextRiffData ? (
-                    <div className="rounded-2xl bg-white text-slate-900">
-                      <RiffDiagram
-                        riff={nextRiffData as SongRiff}
-                        size="sm"
-                      />
-                    </div>
-                  ) : (
-                    <div className="flex-1 flex items-center justify-center">
-                      <span className="text-sm text-slate-400 italic">
-                        End of song
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Ticks until change */}
-                  {nextMeasure && (
-                    <div className="mt-auto pt-3 border-t border-slate-200 flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase text-slate-400">
-                        Change in
-                      </span>
-                      <span className="text-sm font-mono font-bold text-blue-600">
-                        {ticksPerMeasure - currentTick} ticks
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Strumming Pattern — full width below */}
-                <div className="md:col-span-2 rounded-2xl bg-white text-slate-900 p-4 md:p-6">
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-3 text-center">
-                    Strumming Pattern — {currentPattern.name}
-                  </div>
-                  <PatternVisualizer
-                    ticks={currentPattern.ticks as Tick[]}
-                    size="lg"
-                    activeTick={currentTick}
-                  />
-                </div>
-              </div>
-            ) : currentRiff ? (
-              <div className="space-y-4">
-                {/* Riff display */}
-                <div className="rounded-2xl bg-white text-slate-900">
-                  <RiffDiagram
-                    riff={currentRiff as SongRiff}
-                    size="lg"
-                    activeBeat={activeBeat}
-                  />
-                </div>
-
-                {/* Next up */}
-                {nextMeasure && (
-                  <div className="rounded-2xl bg-white text-slate-900 p-4 md:p-6">
-                    <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2 text-center">
-                      Up Next
-                    </div>
-                    {nextChord ? (
-                      <div className="max-w-48 mx-auto">
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: createChordSVG(
-                              nextChord as ChordData
-                            ),
-                          }}
-                        />
-                      </div>
-                    ) : nextRiffData ? (
-                      <div className="rounded-2xl bg-white text-slate-900">
-                        <RiffDiagram
-                          riff={nextRiffData as SongRiff}
-                          size="sm"
-                        />
-                      </div>
-                    ) : (
-                      <span className="text-sm text-slate-400 italic block text-center">
-                        End of song
-                      </span>
-                    )}
-                  </div>
-                )}
-              </div>
-            ) : null}
-          </div>
-        </div>
-
-        {/* Bottom Controls */}
-        <div className="border-t border-slate-700/50 bg-slate-900/90 backdrop-blur-xl">
-          <div className="max-w-3xl mx-auto px-3 py-3 md:px-6 md:py-4 space-y-3">
+        {/* ─── Bottom Controls ─── */}
+        <div className="shrink-0 border-t border-white/6 bg-slate-950/80 backdrop-blur-2xl">
+          <div className="max-w-3xl mx-auto px-3 py-2.5 md:px-6 md:py-3 space-y-2.5">
             {/* Progress slider */}
             <div className="flex items-center gap-3">
-              <span className="text-[10px] font-mono text-slate-400 w-8 text-right">
+              <span className="text-xs font-bold font-mono text-slate-500 w-8 text-right tabular-nums">
                 {currentMeasureIdx + 1}
               </span>
-              <input
-                type="range"
-                min={0}
-                max={totalMeasures - 1}
-                value={currentMeasureIdx}
-                onChange={(e) => seekToMeasure(Number(e.target.value))}
-                className="flex-1 h-1.5 bg-slate-700 rounded-full appearance-none cursor-pointer accent-blue-500
-                  [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-500
-                  [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-blue-500 [&::-moz-range-thumb]:border-0"
-              />
-              <span className="text-[10px] font-mono text-slate-400 w-8">
+              <div className="flex-1 relative h-1.5 group">
+                <div className="absolute inset-0 rounded-full bg-white/6" />
+                <div
+                  className="absolute inset-y-0 left-0 rounded-full bg-linear-to-r from-blue-500 to-blue-400 transition-all duration-200"
+                  style={{ width: `${progressPercent}%` }}
+                />
+                <input
+                  type="range"
+                  min={0}
+                  max={totalMeasures - 1}
+                  value={currentMeasureIdx}
+                  onChange={(e) => seekToMeasure(Number(e.target.value))}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                />
+              </div>
+              <span className="text-xs font-bold font-mono text-slate-500 w-8 tabular-nums">
                 {totalMeasures}
               </span>
             </div>
 
-            {/* Playback controls */}
+            {/* Transport row */}
             <div className="flex items-center justify-between">
-              {/* Speed control */}
-              <div className="flex items-center gap-2">
+              {/* Left: Speed + Restart */}
+              <div className="flex items-center gap-1.5">
                 <select
                   value={playbackSpeed}
-                  onChange={(e) =>
-                    setPlaybackSpeed(Number(e.target.value))
-                  }
-                  className="bg-slate-700/60 text-slate-300 text-xs font-semibold rounded-lg px-2 py-1.5 border border-slate-600/50 cursor-pointer"
+                  onChange={(e) => setPlaybackSpeed(Number(e.target.value))}
+                  className="bg-white/6 text-slate-400 text-xs font-semibold rounded-lg px-2 py-1.5 border border-white/8 cursor-pointer focus:ring-1 focus:ring-blue-500/30 focus:outline-none"
                 >
                   {SPEED_OPTIONS.map((opt) => (
                     <option key={opt.value} value={opt.value}>
@@ -997,30 +891,28 @@ export default function SongsPage() {
                   ))}
                 </select>
                 <button
-                  onClick={() => {
-                    restartDrill();
-                  }}
-                  className="p-2 rounded-full hover:bg-slate-700/50 transition-colors cursor-pointer"
+                  onClick={() => restartDrill()}
+                  className="p-2 rounded-xl hover:bg-white/6 transition-colors cursor-pointer"
                   aria-label="Restart from beginning"
                 >
-                  <ArrowPathIcon className="h-4 w-4 text-slate-400" />
+                  <ArrowPathIcon className="h-4 w-4 text-slate-500" />
                 </button>
               </div>
 
-              {/* Transport controls */}
-              <div className="flex items-center gap-2">
+              {/* Center: Transport */}
+              <div className="flex items-center gap-1">
                 <button
                   onClick={skipBackward}
-                  className="p-2.5 rounded-full hover:bg-slate-700/50 transition-colors cursor-pointer"
+                  className="p-2.5 rounded-xl hover:bg-white/6 transition-colors cursor-pointer"
                   aria-label="Previous measure"
                 >
-                  <BackwardIcon className="h-5 w-5 text-slate-300" />
+                  <BackwardIcon className="h-5 w-5 text-slate-400" />
                 </button>
                 <button
                   onClick={togglePlayPause}
-                  className={`p-3.5 rounded-full transition-all cursor-pointer ${isPlaying
-                      ? "bg-amber-500/20 text-amber-400 hover:bg-amber-500/30"
-                      : "bg-blue-600 text-white hover:bg-blue-700"
+                  className={`p-3 rounded-2xl transition-all cursor-pointer ${isPlaying
+                      ? "bg-white/8 text-amber-400 hover:bg-white/12"
+                      : "bg-blue-600 text-white hover:bg-blue-500 shadow-lg shadow-blue-600/30"
                     }`}
                   aria-label={isPlaying ? "Pause" : "Play"}
                 >
@@ -1032,30 +924,22 @@ export default function SongsPage() {
                 </button>
                 <button
                   onClick={skipForward}
-                  className="p-2.5 rounded-full hover:bg-slate-700/50 transition-colors cursor-pointer"
+                  className="p-2.5 rounded-xl hover:bg-white/6 transition-colors cursor-pointer"
                   aria-label="Next measure"
                 >
-                  <ForwardIcon className="h-5 w-5 text-slate-300" />
+                  <ForwardIcon className="h-5 w-5 text-slate-400" />
                 </button>
               </div>
 
-              {/* Measure info */}
-              <div className="text-right">
-                <div className="text-[10px] font-bold text-slate-400 uppercase">
+              {/* Right: Measure info */}
+              <div className="text-right min-w-14">
+                <div className="text-xs font-bold text-slate-600 uppercase tracking-wider">
                   Measure
                 </div>
-                <div className="text-sm font-mono font-bold text-slate-300">
-                  {currentMeasureIdx + 1}/{totalMeasures}
+                <div className="text-sm font-mono font-bold text-slate-300 tabular-nums">
+                  {currentMeasureIdx + 1}<span className="text-slate-600">/</span>{totalMeasures}
                 </div>
               </div>
-            </div>
-
-            {/* Progress bar visual */}
-            <div className="w-full bg-slate-700 h-1 rounded-full overflow-hidden">
-              <div
-                className="bg-blue-500 h-full rounded-full transition-all duration-150"
-                style={{ width: `${progressPercent}%` }}
-              />
             </div>
           </div>
         </div>
@@ -1116,3 +1000,4 @@ export default function SongsPage() {
 
   return null;
 }
+
