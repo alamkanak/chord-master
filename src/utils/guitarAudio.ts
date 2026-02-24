@@ -193,3 +193,89 @@ export function playString(
   const frequency = getStringFrequency(stringNum, fret);
   playGuitarNote(ctx, frequency, ctx.currentTime, duration, volume);
 }
+
+type Tick = "D" | "u" | null;
+
+/**
+ * Play a percussive preview of a strumming pattern.
+ *
+ * Downstrokes are rendered as a low, chunky hit (muted strum);
+ * upstrokes as a brighter, thinner hit. Rests are silent.
+ * Tempo defaults to 100 BPM; each tick is an eighth note.
+ *
+ * No chord is needed — this is purely rhythmic so the user
+ * can hear the groove before practising it with real chords.
+ *
+ * @param ticks  – Pattern array from strumming.json
+ * @param bpm    – Tempo in beats per minute (quarter note = 1 beat)
+ * @param volume – Master volume 0–1 (default 0.18)
+ */
+export function playStrumPattern(
+  ticks: Tick[],
+  bpm: number = 100,
+  volume: number = 0.18
+): void {
+  const ctx = getAudioContext();
+  const eighthNoteDuration = 60 / bpm / 2; // seconds per eighth note
+  const now = ctx.currentTime;
+
+  ticks.forEach((tick, i) => {
+    if (tick === null) return;
+
+    const startTime = now + i * eighthNoteDuration;
+    const isDown = tick === "D";
+
+    // Downstroke: low muted strum (≈ 6 strings, lower pitch)
+    // Upstroke: brighter partial strum (≈ top 3 strings, higher pitch)
+    const baseFreq = isDown ? 196 : 330; // G3 vs E4
+    const noteDuration = isDown ? 0.15 : 0.10;
+    const gain = isDown ? volume : volume * 0.75;
+
+    // Create a short percussive "chunk" using noise-like oscillators
+    const master = ctx.createGain();
+    master.gain.setValueAtTime(0, startTime);
+    master.gain.linearRampToValueAtTime(gain, startTime + 0.003);
+    master.gain.exponentialRampToValueAtTime(0.001, startTime + noteDuration);
+    master.connect(ctx.destination);
+
+    // Layer 1: body tone
+    const osc1 = ctx.createOscillator();
+    osc1.type = "triangle";
+    osc1.frequency.setValueAtTime(baseFreq, startTime);
+    osc1.frequency.exponentialRampToValueAtTime(
+      baseFreq * 0.7,
+      startTime + noteDuration
+    );
+    osc1.connect(master);
+    osc1.start(startTime);
+    osc1.stop(startTime + noteDuration);
+
+    // Layer 2: attack click (higher, quieter)
+    const osc2 = ctx.createOscillator();
+    const clickGain = ctx.createGain();
+    osc2.type = "square";
+    osc2.frequency.setValueAtTime(baseFreq * 3, startTime);
+    clickGain.gain.setValueAtTime(0.3, startTime);
+    clickGain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.04);
+    osc2.connect(clickGain);
+    clickGain.connect(master);
+    osc2.start(startTime);
+    osc2.stop(startTime + noteDuration);
+
+    // Layer 3: subtle harmonic for realism
+    const osc3 = ctx.createOscillator();
+    const h3Gain = ctx.createGain();
+    osc3.type = "sine";
+    osc3.frequency.setValueAtTime(baseFreq * 2, startTime);
+    osc3.detune.setValueAtTime(Math.random() * 6 - 3, startTime);
+    h3Gain.gain.setValueAtTime(0.15, startTime);
+    h3Gain.gain.exponentialRampToValueAtTime(
+      0.001,
+      startTime + noteDuration * 0.6
+    );
+    osc3.connect(h3Gain);
+    h3Gain.connect(master);
+    osc3.start(startTime);
+    osc3.stop(startTime + noteDuration);
+  });
+}

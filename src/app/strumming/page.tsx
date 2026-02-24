@@ -10,7 +10,9 @@ import PatternVisualizer from "@/components/PatternVisualizer";
 import PatternBuilder from "@/components/PatternBuilder";
 import strummingData from "@/data/strumming.json";
 import { playBeep, initAudio } from "@/utils/audio";
+import { playStrumPattern } from "@/utils/guitarAudio";
 import { useWakeLock } from "@/utils/useWakeLock";
+import { SpeakerWaveIcon } from "@heroicons/react/24/solid";
 
 type Tick = "D" | "u" | null;
 
@@ -108,6 +110,16 @@ export default function StrummingPage() {
   const clearAll = useCallback(() => {
     setSelectedIds([]);
   }, []);
+
+  const handlePlayPattern = useCallback(
+    (e: React.MouseEvent, pattern: StrumPattern) => {
+      e.stopPropagation(); // Don't toggle selection when clicking play
+      initAudio().then(() => {
+        playStrumPattern(pattern.ticks);
+      });
+    },
+    []
+  );
 
   const addCustomPattern = useCallback(() => {
     // Check if pattern has at least one strum
@@ -235,7 +247,7 @@ export default function StrummingPage() {
               <button
                 key={pattern.id}
                 onClick={() => togglePattern(pattern.id)}
-                className={`group text-left rounded-xl border-2 p-5 transition-all duration-200 cursor-pointer active:scale-[0.98] hover:scale-[1.02] ${
+                className={`relative group text-left rounded-xl border-2 p-5 transition-all duration-200 cursor-pointer active:scale-[0.98] hover:scale-[1.02] ${
                   selectedIds.includes(pattern.id)
                     ? "border-blue-500 bg-blue-50 shadow-lg"
                     : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-md"
@@ -257,27 +269,14 @@ export default function StrummingPage() {
                     </span>
                   </div>
                   <div
-                    className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
-                      selectedIds.includes(pattern.id)
-                        ? "border-blue-500 bg-blue-500"
-                        : "border-slate-300"
-                    }`}
+                    onClick={(e) => handlePlayPattern(e, pattern)}
+                    role="button"
+                    tabIndex={0}
+                    className="p-1.5 rounded-full bg-slate-100 hover:bg-blue-100 text-slate-400 hover:text-blue-600 transition-all duration-200 cursor-pointer z-10"
+                    aria-label={`Play ${pattern.name} pattern`}
+                    title={`Play ${pattern.name}`}
                   >
-                    {selectedIds.includes(pattern.id) && (
-                      <svg
-                        className="w-3 h-3 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={3}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                    )}
+                    <SpeakerWaveIcon className="h-4 w-4" />
                   </div>
                 </div>
                 <div className="mb-3">
@@ -301,7 +300,7 @@ export default function StrummingPage() {
                   <button
                     key={pattern.id}
                     onClick={() => togglePattern(pattern.id)}
-                    className={`group text-left rounded-xl border-2 p-5 transition-all duration-200 cursor-pointer active:scale-[0.98] hover:scale-[1.02] ${
+                    className={`relative group text-left rounded-xl border-2 p-5 transition-all duration-200 cursor-pointer active:scale-[0.98] hover:scale-[1.02] ${
                       selectedIds.includes(pattern.id)
                         ? "border-blue-500 bg-blue-50 shadow-lg"
                         : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-md"
@@ -317,27 +316,14 @@ export default function StrummingPage() {
                         </span>
                       </div>
                       <div
-                        className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
-                          selectedIds.includes(pattern.id)
-                            ? "border-blue-500 bg-blue-500"
-                            : "border-slate-300"
-                        }`}
+                        onClick={(e) => handlePlayPattern(e, pattern)}
+                        role="button"
+                        tabIndex={0}
+                        className="p-1.5 rounded-full bg-slate-100 hover:bg-blue-100 text-slate-400 hover:text-blue-600 transition-all duration-200 cursor-pointer z-10"
+                        aria-label={`Play ${pattern.name} pattern`}
+                        title={`Play ${pattern.name}`}
                       >
-                        {selectedIds.includes(pattern.id) && (
-                          <svg
-                            className="w-3 h-3 text-white"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={3}
-                              d="M5 13l4 4L19 7"
-                            />
-                          </svg>
-                        )}
+                        <SpeakerWaveIcon className="h-4 w-4" />
                       </div>
                     </div>
                     <div className="mb-3">
