@@ -1,485 +1,6 @@
 {
   "songs": [
     {
-      "id": "boulevard-of-broken-dreams",
-      "title": "Boulevard of Broken Dreams",
-      "artist": "Green Day",
-      "album": "American Idiot",
-      "difficulty": "intermediate",
-      "capo": 1,
-      "bpm": 83,
-      "beatsPerMeasure": 4,
-      "ticksPerBeat": 2,
-      "description": "Green Day's iconic Grammy-winning track. Note the capo on the 1st fret and the specific power chords used in the outro.",
-      "tips": [
-        "Capo is on the 1st fret; all chord names are relative to the capo.",
-        "The verse uses a tremolo-heavy electric guitar sound—keep the strumming steady.",
-        "Pay close attention to the Outro; it introduces A/C# and D#5 which are different from the rest of the song.",
-        "The B7 in the chorus provides that classic tension before resolving back to Em."
-      ],
-      "library": {
-        "chords": {
-          "Em": {
-            "name": "Em",
-            "fingers": [
-              [5, 2, 2],
-              [4, 2, 3]
-            ],
-            "muted": [],
-            "open": [6, 3, 2, 1]
-          },
-          "G": {
-            "name": "G",
-            "fingers": [
-              [6, 3, 3],
-              [5, 2, 2],
-              [1, 3, 4]
-            ],
-            "muted": [],
-            "open": [4, 3, 2]
-          },
-          "D": {
-            "name": "D",
-            "fingers": [
-              [3, 2, 1],
-              [2, 3, 3],
-              [1, 2, 2]
-            ],
-            "muted": [6, 5],
-            "open": [4]
-          },
-          "A": {
-            "name": "A",
-            "fingers": [
-              [4, 2, 1],
-              [3, 2, 2],
-              [2, 2, 3]
-            ],
-            "muted": [6],
-            "open": [5, 1]
-          },
-          "C": {
-            "name": "C",
-            "fingers": [
-              [5, 3, 3],
-              [4, 2, 2],
-              [2, 1, 1]
-            ],
-            "muted": [6],
-            "open": [3, 1]
-          },
-          "B7": {
-            "name": "B7",
-            "fingers": [
-              [5, 2, 2],
-              [4, 1, 1],
-              [3, 2, 3],
-              [1, 2, 4]
-            ],
-            "muted": [6],
-            "open": [2]
-          },
-          "B": {
-            "name": "B",
-            "fingers": [
-              [5, 2, 1],
-              [4, 2, 1],
-              [3, 2, 1],
-              [2, 2, 1],
-              [1, 2, 1],
-              [4, 4, 2],
-              [3, 4, 3],
-              [2, 4, 4]
-            ],
-            "muted": [6],
-            "open": []
-          },
-          "A/C#": {
-            "name": "A/C#",
-            "fingers": [
-              [5, 4, 3],
-              [4, 2, 1],
-              [3, 2, 1],
-              [2, 2, 1],
-              [1, 2, 1],
-              [1, 5, 4]
-            ],
-            "muted": [6],
-            "open": []
-          },
-          "D#5": {
-            "name": "D#5",
-            "fingers": [
-              [4, 1, 1],
-              [3, 3, 3]
-            ],
-            "muted": [6, 5, 2, 1],
-            "open": []
-          }
-        },
-        "patterns": {
-          "verse-interlude": {
-            "id": "verse-interlude",
-            "name": "Verses & Interludes",
-            "ticks": ["D", null, "D", null, "D", "u", "D", "u"]
-          },
-          "chorus-strum": {
-            "id": "chorus-strum",
-            "name": "Chorus Strum",
-            "ticks": ["D", null, "D", "u", null, "u", "D", "u"]
-          }
-        },
-        "riffs": {}
-      },
-      "timeline": [
-        {
-          "section": "Intro",
-          "measures": [
-            {
-              "type": "strum",
-              "chordId": "Em",
-              "patternId": "verse-interlude",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "G",
-              "patternId": "verse-interlude",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "D",
-              "patternId": "verse-interlude",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "A",
-              "patternId": "verse-interlude",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "Em",
-              "patternId": "verse-interlude",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "G",
-              "patternId": "verse-interlude",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "D",
-              "patternId": "verse-interlude",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "A",
-              "patternId": "verse-interlude",
-              "lyrics": ""
-            }
-          ]
-        },
-        {
-          "section": "Verse 1",
-          "measures": [
-            {
-              "type": "strum",
-              "chordId": "Em",
-              "patternId": "verse-interlude",
-              "lyrics": "I walk a lonely road, the only one that I have"
-            },
-            {
-              "type": "strum",
-              "chordId": "G",
-              "patternId": "verse-interlude",
-              "lyrics": "ever known"
-            },
-            {
-              "type": "strum",
-              "chordId": "D",
-              "patternId": "verse-interlude",
-              "lyrics": "Don't know where it goes"
-            },
-            {
-              "type": "strum",
-              "chordId": "A",
-              "patternId": "verse-interlude",
-              "lyrics": "But it's home to me and I walk alone"
-            }
-          ]
-        },
-        {
-          "section": "Verse 2",
-          "measures": [
-            {
-              "type": "strum",
-              "chordId": "Em",
-              "patternId": "verse-interlude",
-              "lyrics": "I walk this empty street, on the boulevard of"
-            },
-            {
-              "type": "strum",
-              "chordId": "G",
-              "patternId": "verse-interlude",
-              "lyrics": "broken dreams"
-            },
-            {
-              "type": "strum",
-              "chordId": "D",
-              "patternId": "verse-interlude",
-              "lyrics": "Where the city sleeps, and I'm the"
-            },
-            {
-              "type": "strum",
-              "chordId": "A",
-              "patternId": "verse-interlude",
-              "lyrics": "only one and I walk alone"
-            }
-          ]
-        },
-        {
-          "section": "Pre-Chorus",
-          "measures": [
-            {
-              "type": "strum",
-              "chordId": "Em",
-              "patternId": "verse-interlude",
-              "lyrics": "I walk alone, I walk alone"
-            },
-            {
-              "type": "strum",
-              "chordId": "G",
-              "patternId": "verse-interlude",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "D",
-              "patternId": "verse-interlude",
-              "lyrics": "I walk alone, I walk a..."
-            },
-            {
-              "type": "strum",
-              "chordId": "A",
-              "patternId": "verse-interlude",
-              "lyrics": ""
-            }
-          ]
-        },
-        {
-          "section": "Chorus",
-          "measures": [
-            {
-              "type": "strum",
-              "chordId": "C",
-              "patternId": "chorus-strum",
-              "lyrics": "My shadow's the only one that walks beside me"
-            },
-            {
-              "type": "strum",
-              "chordId": "G",
-              "patternId": "chorus-strum",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "D",
-              "patternId": "chorus-strum",
-              "lyrics": "My shallow heart's the only thing that's beating"
-            },
-            {
-              "type": "strum",
-              "chordId": "Em",
-              "patternId": "chorus-strum",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "C",
-              "patternId": "chorus-strum",
-              "lyrics": "Sometimes I wish someone out there will find me"
-            },
-            {
-              "type": "strum",
-              "chordId": "G",
-              "patternId": "chorus-strum",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "D",
-              "patternId": "chorus-strum",
-              "lyrics": "Till then I walk alone"
-            },
-            {
-              "type": "strum",
-              "chordId": "B7",
-              "patternId": "chorus-strum",
-              "lyrics": ""
-            }
-          ]
-        },
-        {
-          "section": "Verse 3",
-          "measures": [
-            {
-              "type": "strum",
-              "chordId": "Em",
-              "patternId": "verse-interlude",
-              "lyrics": "I'm walking down the line"
-            },
-            {
-              "type": "strum",
-              "chordId": "G",
-              "patternId": "verse-interlude",
-              "lyrics": "That divides me somewhere in my mind"
-            },
-            {
-              "type": "strum",
-              "chordId": "D",
-              "patternId": "verse-interlude",
-              "lyrics": "On the border line of the edge"
-            },
-            {
-              "type": "strum",
-              "chordId": "A",
-              "patternId": "verse-interlude",
-              "lyrics": "And where I walk alone"
-            }
-          ]
-        },
-        {
-          "section": "Verse 4",
-          "measures": [
-            {
-              "type": "strum",
-              "chordId": "Em",
-              "patternId": "verse-interlude",
-              "lyrics": "Read between the lines"
-            },
-            {
-              "type": "strum",
-              "chordId": "G",
-              "patternId": "verse-interlude",
-              "lyrics": "What's fucked up and everything's alright"
-            },
-            {
-              "type": "strum",
-              "chordId": "D",
-              "patternId": "verse-interlude",
-              "lyrics": "Check my vital signs, to know I'm still alive"
-            },
-            {
-              "type": "strum",
-              "chordId": "A",
-              "patternId": "verse-interlude",
-              "lyrics": "And I walk alone"
-            }
-          ]
-        },
-        {
-          "section": "Solo",
-          "measures": [
-            {
-              "type": "strum",
-              "chordId": "C",
-              "patternId": "chorus-strum",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "G",
-              "patternId": "chorus-strum",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "D",
-              "patternId": "chorus-strum",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "Em",
-              "patternId": "chorus-strum",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "C",
-              "patternId": "chorus-strum",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "G",
-              "patternId": "chorus-strum",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "B",
-              "patternId": "chorus-strum",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "B7",
-              "patternId": "chorus-strum",
-              "lyrics": ""
-            }
-          ]
-        },
-        {
-          "section": "Outro",
-          "measures": [
-            {
-              "type": "strum",
-              "chordId": "Em",
-              "patternId": "verse-interlude",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "C",
-              "patternId": "verse-interlude",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "D",
-              "patternId": "verse-interlude",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "A/C#",
-              "patternId": "verse-interlude",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "G",
-              "patternId": "verse-interlude",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "D#5",
-              "patternId": "verse-interlude",
-              "lyrics": ""
-            }
-          ]
-        }
-      ]
-    },
-    {
       "id": "lonely-day",
       "title": "Lonely Day",
       "artist": "System of a Down",
@@ -740,6 +261,255 @@
               "patternId": "lonely-day-strum",
               "lyrics": "life"
             }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "boulevard-of-broken-dreams",
+      "title": "Boulevard Of Broken Dreams",
+      "artist": "Green Day",
+      "album": "American Idiot",
+      "difficulty": "beginner",
+      "capo": 1,
+      "bpm": 167,
+      "beatsPerMeasure": 4,
+      "ticksPerBeat": 2,
+      "description": "Iconic punk rock anthem played with a capo on fret 1. Uses simple open chords with a driving strumming pattern.",
+      "tips": [
+        "Place capo on fret 1 to match the original recording.",
+        "The verse progression is Em - G - D - A, repeating throughout.",
+        "The chorus switches to C - G - D - Em, ending on G - B.",
+        "Keep the strumming steady — accented downstrokes on beats 1, 3, and 4 with a soft upstroke on the '+' of 4.",
+        "The B chord in the chorus can be played as a barre chord or simplified to B7 if needed."
+      ],
+      "library": {
+        "chords": {
+          "Em": {
+            "name": "Em",
+            "fingers": [[5, 2, 2], [4, 2, 3]],
+            "muted": [],
+            "open": [6, 3, 2, 1]
+          },
+          "G": {
+            "name": "G",
+            "fingers": [[6, 3, 3], [5, 2, 2], [1, 3, 4]],
+            "muted": [],
+            "open": [4, 3, 2]
+          },
+          "D": {
+            "name": "D",
+            "fingers": [[3, 2, 1], [2, 3, 3], [1, 2, 2]],
+            "muted": [6, 5],
+            "open": [4]
+          },
+          "A": {
+            "name": "A",
+            "fingers": [[4, 2, 1], [3, 2, 2], [2, 2, 3]],
+            "muted": [6],
+            "open": [5, 1]
+          },
+          "C": {
+            "name": "C",
+            "fingers": [[5, 3, 3], [4, 2, 2], [2, 1, 1]],
+            "muted": [6],
+            "open": [3, 1]
+          },
+          "B": {
+            "name": "B",
+            "fingers": [[5, 2, 1], [4, 4, 3], [3, 4, 4], [2, 4, 4]],
+            "muted": [6],
+            "open": []
+          }
+        },
+        "patterns": {
+          "boulevard-strum": {
+            "id": "boulevard-strum",
+            "name": "Boulevard Strum",
+            "ticks": ["D", null, "D", null, "D", null, "D", "u"]
+          }
+        },
+        "pickingPatterns": {},
+        "riffs": {}
+      },
+      "timeline": [
+        {
+          "section": "Verse 1",
+          "measures": [
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "I walk a" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "lonely road, the" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "only one that" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "I have ever" },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "known" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "Don't know where it goes," },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "But it's home to" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "me and I walk" },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "alone" }
+          ]
+        },
+        {
+          "section": "Verse 2",
+          "measures": [
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "I walk this" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "empty street," },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "On the" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "Boulevard of broken" },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "dreams" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "Where the city sleeps, And" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "I'm the only" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "one and I walk" },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "alone" }
+          ]
+        },
+        {
+          "section": "Interlude",
+          "measures": [
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "I" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "walk" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "alone, I walk" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "alone." },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "I" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "walk" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "alone, I walk" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "a...." }
+          ]
+        },
+        {
+          "section": "Chorus",
+          "measures": [
+            { "type": "strum", "chordId": "C", "patternId": "boulevard-strum", "lyrics": "My" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "shadow's the only" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "one that walks" },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "beside me" },
+            { "type": "strum", "chordId": "C", "patternId": "boulevard-strum", "lyrics": "My" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "shallow hearts" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "the only thing" },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "that's beating" },
+            { "type": "strum", "chordId": "C", "patternId": "boulevard-strum", "lyrics": "Sometimes" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "I wish" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "someone out there" },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "will find me" },
+            { "type": "strum", "chordId": "C", "patternId": "boulevard-strum", "lyrics": "Till then" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "I walk" },
+            { "type": "strum", "chordId": "B", "patternId": "boulevard-strum", "lyrics": "alone" }
+          ]
+        },
+        {
+          "section": "Interlude 2",
+          "measures": [
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "Ah-Ah" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "Ah-Ah" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "Ah-Ah" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "Ahhh-Ah" },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "haaa-ah" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "Ah-Ah" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "Ah-Ah" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "Ah-Ah" }
+          ]
+        },
+        {
+          "section": "Verse 3",
+          "measures": [
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "I'm walking" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "down the line" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "That divides me" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "somewhere in my" },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "mind" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "On the border line" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "of the edge" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "And where I walk alone" }
+          ]
+        },
+        {
+          "section": "Verse 4",
+          "measures": [
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "Read" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "between the lines" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "What's fucked up and" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "everything's all" },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "right" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "Check my vital signs, to" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "know I'm still" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "alive and I walk alone" }
+          ]
+        },
+        {
+          "section": "Interlude 3",
+          "measures": [
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "I" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "walk" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "alone, I walk" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "alone." },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "I" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "walk" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "alone, I walk" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "a...." }
+          ]
+        },
+        {
+          "section": "Chorus 2",
+          "measures": [
+            { "type": "strum", "chordId": "C", "patternId": "boulevard-strum", "lyrics": "My" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "shadow's the only" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "one that walks" },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "beside me" },
+            { "type": "strum", "chordId": "C", "patternId": "boulevard-strum", "lyrics": "My" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "shallow hearts" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "the only thing" },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "that's beating" },
+            { "type": "strum", "chordId": "C", "patternId": "boulevard-strum", "lyrics": "Sometimes" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "I wish" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "someone out there" },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "will find me" },
+            { "type": "strum", "chordId": "C", "patternId": "boulevard-strum", "lyrics": "Till then" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "I walk" },
+            { "type": "strum", "chordId": "B", "patternId": "boulevard-strum", "lyrics": "alone" }
+          ]
+        },
+        {
+          "section": "Interlude 4",
+          "measures": [
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "Ah-Ah" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "Ah-Ah" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "Ah-Ah I" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "walk alone, I walk a..." },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "haaa-ah" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "Ah-Ah" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "Ah-Ah" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "Ah-Ah" }
+          ]
+        },
+        {
+          "section": "Verse 5",
+          "measures": [
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "I walk this" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "empty street," },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "On the" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "Boulevard of broken" },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "dreams" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "Where the city sleeps, And" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "I'm the only" },
+            { "type": "strum", "chordId": "A", "patternId": "boulevard-strum", "lyrics": "one and I walk a..." }
+          ]
+        },
+        {
+          "section": "Chorus 3",
+          "measures": [
+            { "type": "strum", "chordId": "C", "patternId": "boulevard-strum", "lyrics": "My" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "shadow's the only" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "one that walks" },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "beside me" },
+            { "type": "strum", "chordId": "C", "patternId": "boulevard-strum", "lyrics": "My" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "shallow hearts" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "the only thing" },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "that's beating" },
+            { "type": "strum", "chordId": "C", "patternId": "boulevard-strum", "lyrics": "Sometimes" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "I wish" },
+            { "type": "strum", "chordId": "D", "patternId": "boulevard-strum", "lyrics": "someone out there" },
+            { "type": "strum", "chordId": "Em", "patternId": "boulevard-strum", "lyrics": "will find me" },
+            { "type": "strum", "chordId": "C", "patternId": "boulevard-strum", "lyrics": "Till then" },
+            { "type": "strum", "chordId": "G", "patternId": "boulevard-strum", "lyrics": "I walk" },
+            { "type": "strum", "chordId": "B", "patternId": "boulevard-strum", "lyrics": "alone" }
           ]
         }
       ]
