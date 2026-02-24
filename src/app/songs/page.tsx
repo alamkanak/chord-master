@@ -1,11 +1,19 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
 import Navigation from "@/components/Navigation";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import DrillHeader from "@/components/DrillHeader";
 import PatternVisualizer from "@/components/PatternVisualizer";
+import PickingPatternVisualizer from "@/components/PickingPatternVisualizer";
+import type { PickingPattern } from "@/components/PickingPatternVisualizer";
 import RiffDiagram from "@/components/RiffDiagram";
 import songsData from "@/data/songs.json";
 import { createChordSVG, type ChordData } from "@/utils/chordSvg";
@@ -35,6 +43,17 @@ interface SongPattern {
   id: string;
   name: string;
   ticks: Tick[];
+}
+
+interface PickingBeat {
+  strings: number[];
+  fingers?: string[];
+}
+
+interface SongPickingPattern {
+  id: string;
+  name: string;
+  beats: PickingBeat[];
 }
 
 interface RiffNote {
@@ -86,6 +105,7 @@ interface Song {
   library: {
     chords: Record<string, SongChord>;
     patterns: Record<string, SongPattern>;
+    pickingPatterns?: Record<string, SongPickingPattern>;
     riffs: Record<string, SongRiff>;
   };
   timeline: TimelineSection[];
@@ -350,13 +370,12 @@ export default function SongsPage() {
                       </p>
                     </div>
                     <span
-                      className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold border ${
-                        song.difficulty === "beginner"
+                      className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold border ${song.difficulty === "beginner"
                           ? "bg-green-50 text-green-700 border-green-200"
                           : song.difficulty === "intermediate"
-                          ? "bg-amber-50 text-amber-700 border-amber-200"
-                          : "bg-red-50 text-red-700 border-red-200"
-                      }`}
+                            ? "bg-amber-50 text-amber-700 border-amber-200"
+                            : "bg-red-50 text-red-700 border-red-200"
+                        }`}
                     >
                       {song.difficulty}
                     </span>
@@ -415,12 +434,14 @@ export default function SongsPage() {
 
   const chordLib = selectedSong.library.chords;
   const patternLib = selectedSong.library.patterns;
+  const pickingPatternLib = selectedSong.library.pickingPatterns ?? {};
   const riffLib = selectedSong.library.riffs;
 
   // ============= READY MODE =============
   if (mode === "ready") {
     const uniqueChords = Object.values(chordLib);
     const uniquePatterns = Object.values(patternLib);
+    const uniquePickingPatterns = Object.values(pickingPatternLib);
     const uniqueRiffs = Object.values(riffLib);
     const sections = selectedSong.timeline.map((s) => s.section);
 
@@ -454,11 +475,10 @@ export default function SongsPage() {
                   <button
                     key={opt.value}
                     onClick={() => setPlaybackSpeed(opt.value)}
-                    className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer ${
-                      playbackSpeed === opt.value
+                    className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer ${playbackSpeed === opt.value
                         ? "bg-blue-600 text-white shadow-lg"
                         : "bg-slate-700/50 text-slate-300 hover:bg-slate-700"
-                    }`}
+                      }`}
                   >
                     {opt.label}
                   </button>
@@ -527,6 +547,31 @@ export default function SongsPage() {
                       </h4>
                       <PatternVisualizer
                         ticks={pattern.ticks as Tick[]}
+                        size="md"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Picking Patterns Used */}
+            {uniquePickingPatterns.length > 0 && (
+              <div>
+                <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                  Picking Patterns
+                </h3>
+                <div className="grid gap-3">
+                  {uniquePickingPatterns.map((pattern) => (
+                    <div
+                      key={pattern.id}
+                      className="rounded-xl bg-white text-slate-900 p-4"
+                    >
+                      <h4 className="text-sm font-bold text-center mb-3">
+                        {pattern.name}
+                      </h4>
+                      <PickingPatternVisualizer
+                        pattern={pattern as PickingPattern}
                         size="md"
                       />
                     </div>
@@ -632,9 +677,15 @@ export default function SongsPage() {
     const currentChord = isStrum
       ? chordLib[currentMeasure.chordId!]
       : null;
-    const currentPattern = isStrum
-      ? patternLib[currentMeasure.patternId!]
+    const currentStrumPattern = isStrum && currentMeasure.patternId
+      ? patternLib[currentMeasure.patternId]
       : null;
+    const currentPickingPattern = isStrum && currentMeasure.patternId
+      ? pickingPatternLib[currentMeasure.patternId]
+      : null;
+    // A "strum" measure is either a strum pattern or a picking pattern
+    const isPicking = isStrum && !currentStrumPattern && !!currentPickingPattern;
+    const currentPattern = currentStrumPattern;
     const currentRiff =
       !isStrum && currentMeasure.riffId
         ? riffLib[currentMeasure.riffId]
@@ -650,10 +701,11 @@ export default function SongsPage() {
         ? riffLib[nextMeasure.riffId]
         : null;
 
-    // Active beat for riff highlighting
+    // Active beat for riff or picking highlighting
     const activeBeat = !isStrum
       ? (currentTick / selectedSong.ticksPerBeat) + 1
       : null;
+    const activePickingBeat = isPicking ? currentTick : null;
 
     return (
       <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
@@ -711,7 +763,73 @@ export default function SongsPage() {
             </div>
 
             {/* Performance Content */}
-            {isStrum && currentChord && currentPattern ? (
+            {isPicking && currentChord && currentPickingPattern ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Current Chord */}
+                <div className="rounded-2xl bg-white text-slate-900 p-4 md:p-6">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2 text-center">
+                    Current Chord
+                  </div>
+                  <div
+                    className="max-w-48 mx-auto"
+                    dangerouslySetInnerHTML={{
+                      __html: createChordSVG(
+                        currentChord as ChordData,
+                        true
+                      ),
+                    }}
+                  />
+                </div>
+
+                {/* Next Chord */}
+                <div className="rounded-2xl bg-white text-slate-900 p-4 md:p-6 flex flex-col">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2 text-center">
+                    {nextMeasure ? "Up Next" : "Last Measure"}
+                  </div>
+                  {nextChord ? (
+                    <div className="max-w-48 mx-auto">
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: createChordSVG(
+                            nextChord as ChordData,
+                            true
+                          ),
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex-1 flex items-center justify-center">
+                      <span className="text-sm text-slate-400 italic">
+                        End of song
+                      </span>
+                    </div>
+                  )}
+
+                  {nextMeasure && (
+                    <div className="mt-auto pt-3 border-t border-slate-200 flex items-center justify-between">
+                      <span className="text-[10px] font-bold uppercase text-slate-400">
+                        Change in
+                      </span>
+                      <span className="text-sm font-mono font-bold text-blue-600">
+                        {ticksPerMeasure - currentTick} ticks
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Picking Pattern — full width below */}
+                <div className="md:col-span-2 rounded-2xl bg-white text-slate-900 p-4 md:p-6">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-3 text-center">
+                    Picking Pattern — {currentPickingPattern.name}
+                  </div>
+                  <PickingPatternVisualizer
+                    pattern={currentPickingPattern as PickingPattern}
+                    size="lg"
+                    activeBeat={activePickingBeat}
+                  />
+                </div>
+              </div>
+            ) : isStrum && currentChord && currentPattern ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Current Chord */}
                 <div className="rounded-2xl bg-white text-slate-900 p-4 md:p-6">
@@ -873,7 +991,7 @@ export default function SongsPage() {
                 </select>
                 <button
                   onClick={() => {
-                    setPlaybackPos({ measure: 0, tick: 0 });
+                    restartDrill();
                   }}
                   className="p-2 rounded-full hover:bg-slate-700/50 transition-colors cursor-pointer"
                   aria-label="Restart from beginning"
@@ -893,11 +1011,10 @@ export default function SongsPage() {
                 </button>
                 <button
                   onClick={togglePlayPause}
-                  className={`p-3.5 rounded-full transition-all cursor-pointer ${
-                    isPlaying
+                  className={`p-3.5 rounded-full transition-all cursor-pointer ${isPlaying
                       ? "bg-amber-500/20 text-amber-400 hover:bg-amber-500/30"
                       : "bg-blue-600 text-white hover:bg-blue-700"
-                  }`}
+                    }`}
                   aria-label={isPlaying ? "Pause" : "Play"}
                 >
                   {isPlaying ? (

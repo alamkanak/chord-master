@@ -889,18 +889,6 @@
           }
         },
         "patterns": {
-          "arpeggio-picking": {
-            "id": "arpeggio-picking",
-            "name": "Standard Picking",
-            "ticks": [
-              "1",
-              "2",
-              "3",
-              "4",
-              "5",
-              "6"
-            ]
-          },
           "strum-pattern": {
             "id": "strum-pattern",
             "name": "Main Strum",
@@ -911,6 +899,20 @@
               "D",
               "u",
               "D"
+            ]
+          }
+        },
+        "pickingPatterns": {
+          "arpeggio-picking": {
+            "id": "arpeggio-picking",
+            "name": "Standard Picking",
+            "beats": [
+              { "strings": [5], "fingers": ["p"] },
+              { "strings": [3], "fingers": ["i"] },
+              { "strings": [2], "fingers": ["m"] },
+              { "strings": [1], "fingers": ["a"] },
+              { "strings": [2], "fingers": ["m"] },
+              { "strings": [3], "fingers": ["i"] }
             ]
           }
         },

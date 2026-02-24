@@ -22,6 +22,10 @@ src/
 │       └── page.tsx          # Chord selection & drill UI (5-phase state machine)
 ├── components/               # Reusable UI components
 │   ├── ...
+│   ├── PatternVisualizer.tsx # Strum pattern visualizer (D/u/rest)
+│   ├── PickingPatternVisualizer.tsx # Fingerpicking/arpeggio pattern visualizer (PIMA + strings)
+│   ├── RiffDiagram.tsx       # Tab-style riff notation
+│   ├── ...
 ├── data/
 │   └── chords.json           # Chord definitions (16 chords: G, D, C, E, A, Am, Em, Dm, G7, D7, A7, C7, E7, Am7, Dm7, B7)
 └── utils/
@@ -123,6 +127,40 @@ If necessary, you can add more utility functions in `src/utils/`, but keep them 
 - `"D"` = downstroke, `"u"` = upstroke, `null` = rest/skip (shown as `·`).
 - Beat labels are generated dynamically: `1 + 2 + 3 + ...` based on array length.
 - Rendered by `PatternVisualizer` with color-coding: blue for D, green for u, amber when active.
+
+### Picking Pattern Schema (in `data/songs.json` → `library.pickingPatterns`)
+
+```jsonc
+{
+  "arpeggio-picking": {
+    "id": "arpeggio-picking",                   // Unique identifier
+    "name": "Standard Picking",                 // Display name
+    "beats": [                                   // Array of beats (one per tick)
+      { "strings": [5], "fingers": ["p"] },     // Beat 1: thumb plucks A string
+      { "strings": [3], "fingers": ["i"] },     // Beat 2: index plucks G string
+      { "strings": [2], "fingers": ["m"] },     // Beat 3: middle plucks B string
+      { "strings": [1], "fingers": ["a"] },     // Beat 4: ring plucks high e string
+      { "strings": [2], "fingers": ["m"] },     // Beat 5: middle plucks B string
+      { "strings": [3], "fingers": ["i"] }      // Beat 6: index plucks G string
+    ]
+  }
+}
+```
+
+**`beats` array** — each entry is a beat/tick specifying which strings are plucked:
+- `strings`: Array of string numbers (1=high e, 6=low E). Multiple strings = simultaneous pluck.
+- `fingers`: Optional PIMA notation for right-hand fingers (`"p"` = thumb, `"i"` = index, `"m"` = middle, `"a"` = ring).
+
+**Rendering rules** (see `PickingPatternVisualizer`):
+- Displayed as a mini-tablature: 6 horizontal string lines with colored dots at pluck positions.
+- PIMA fingers are color-coded: blue (p/thumb), green (i/index), violet (m/middle), rose (a/ring).
+- Active beat highlighted in amber during playback.
+- Used for arpeggio/fingerpicking patterns instead of `PatternVisualizer` (which is for strumming).
+
+**When to use picking vs strumming patterns:**
+- **Strumming** (`patterns`): Chord is strummed as a whole — direction matters (D/u). Use `PatternVisualizer`.
+- **Picking** (`pickingPatterns`): Individual strings are plucked in sequence — string order and finger assignment matter. Use `PickingPatternVisualizer`.
+- In `songs.json` timeline measures, `patternId` can reference either a strum pattern or a picking pattern. The code checks `pickingPatterns` first to determine which visualizer to use.
 
 ## Design System
 
