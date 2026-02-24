@@ -15,11 +15,13 @@ function tickToDisplay(tick: Tick): string {
 interface PatternVisualizerProps {
   ticks: Tick[];
   size?: "sm" | "md" | "lg";
+  activeTick?: number | null;
 }
 
 export default function PatternVisualizer({
   ticks,
   size = "md",
+  activeTick = null,
 }: PatternVisualizerProps) {
   const sizeClasses = {
     sm: "text-base sm:text-lg",
@@ -51,14 +53,19 @@ export default function PatternVisualizer({
     <div className="flex items-end justify-center gap-0 sm:gap-0.5 w-full max-w-full">
       {ticks.map((tick, i) => {
         const isDownbeat = i % 2 === 0;
+        const isActive = activeTick !== null && activeTick === i;
         return (
           <div
             key={i}
-            className={`flex flex-col items-center justify-end ${tickSizeClasses[size]}`}
+            className={`flex flex-col items-center justify-end ${tickSizeClasses[size]} ${
+              isActive ? "scale-110 transition-transform duration-100" : "transition-transform duration-100"
+            }`}
           >
             <span
               className={`${sizeClasses[size]} font-bold leading-none ${
-                tick === "D"
+                isActive
+                  ? "text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.6)]"
+                  : tick === "D"
                   ? "text-blue-600"
                   : tick === "u"
                   ? "text-emerald-500"
@@ -75,17 +82,19 @@ export default function PatternVisualizer({
               {tick &&
                 (tick === "D" ? (
                   <ChevronDownIcon
-                    className="text-blue-400 w-full h-full"
+                    className={`w-full h-full ${isActive ? "text-amber-400" : "text-blue-400"}`}
                   />
                 ) : (
                   <ChevronUpIcon
-                    className="text-emerald-400 w-full h-full"
+                    className={`w-full h-full ${isActive ? "text-amber-400" : "text-emerald-400"}`}
                   />
                 ))}
             </div>
             <span
               className={`${labelSize[size]} mt-0.5 font-mono ${
-                isDownbeat
+                isActive
+                  ? "text-amber-400 font-bold"
+                  : isDownbeat
                   ? "text-slate-500 font-semibold"
                   : "text-slate-400"
               }`}

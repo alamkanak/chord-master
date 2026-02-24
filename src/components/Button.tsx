@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, ReactNode } from "react";
 import Link from "next/link";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "secondary-gray" | "danger" | "pill" | "chord-selector" | "icon" | "ghost" | "filter" | "pattern-selector" | "duration";
+  variant?: "primary" | "secondary" | "secondary-dark" | "secondary-gray" | "danger" | "pill" | "chord-selector" | "icon" | "ghost" | "filter" | "pattern-selector" | "duration";
   size?: "sm" | "md" | "lg";
   href?: string;
   icon?: ReactNode;
@@ -25,6 +25,7 @@ export default function Button({
   const variantClasses = {
     primary: "bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-lg hover:shadow-xl",
     secondary: "rounded-lg border border-slate-300 text-slate-900 hover:bg-slate-50 hover:border-slate-400 transition-colors",
+    "secondary-dark": "rounded-lg border border-slate-500 text-slate-200 hover:bg-slate-700/50 hover:border-slate-400 transition-colors",
     "secondary-gray": "bg-slate-200 hover:bg-slate-300 text-slate-900 rounded-lg",
     danger: "bg-red-600/20 hover:bg-red-600/40 border border-red-500/50 text-red-300 hover:text-red-200 rounded-lg",
     pill: `rounded-full border transition-all ${

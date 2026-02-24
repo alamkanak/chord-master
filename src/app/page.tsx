@@ -31,7 +31,7 @@ export default function Home() {
             </h1>
             
             <p className="mx-auto max-w-3xl text-xl text-slate-600 leading-relaxed">
-              Practice drills designed to build muscle memory faster. Master chord transitions, strumming patterns, and more with our intelligent practice system. Perfect for absolute beginners.
+              Practice drills designed to build muscle memory faster. Master chord transitions, strumming patterns, and real songs with our intelligent practice system. Perfect for absolute beginners.
             </p>
           </div>
 
@@ -60,7 +60,7 @@ export default function Home() {
             <p className="text-slate-600 mt-2">Pick an exercise and start building your skills</p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {/* Chord Changes Exercise */}
             <div className="group relative rounded-2xl border border-slate-200/60 bg-white/80 backdrop-blur p-8 hover:border-blue-300 hover:bg-white hover:shadow-xl transition-all duration-300">
               <div className="flex items-start justify-between mb-4">
@@ -71,7 +71,7 @@ export default function Home() {
               </div>
               <h3 className="mb-2 text-xl font-bold text-slate-900">Chord Changes</h3>
               <p className="text-slate-600 leading-relaxed mb-6">
-                Select 2–8 chords and practice smooth transitions in a timed 60-second drill. Build muscle memory for switching between chords quickly.
+                Select 2–8 chords and practice smooth transitions in a timed 60-second drill. Build muscle memory for chords switching.
               </p>
               <div className="flex flex-wrap gap-2 mb-6">
                 <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">16 Chords</span>
@@ -102,6 +102,28 @@ export default function Home() {
               </div>
               <Button href="/strumming" variant="primary" size="md">
                 Practice Strumming
+              </Button>
+            </div>
+
+            {/* Song Practice Exercise */}
+            <div className="group relative rounded-2xl border border-slate-200/60 bg-white/80 backdrop-blur p-8 hover:border-blue-300 hover:bg-white hover:shadow-xl transition-all duration-300">
+              <div className="flex items-start justify-between mb-4">
+                <div className="text-5xl group-hover:scale-110 transition-transform duration-300">🎶</div>
+                <span className="inline-flex items-center rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700 border border-green-200">
+                  Available
+                </span>
+              </div>
+              <h3 className="mb-2 text-xl font-bold text-slate-900">Song Practice</h3>
+              <p className="text-slate-600 leading-relaxed mb-6">
+                Learn real songs with guided chord changes, strumming patterns, riffs, and lyrics. Play along at your own speed.
+              </p>
+              <div className="flex flex-wrap gap-2 mb-6">
+                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">Real Songs</span>
+                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">Speed Control</span>
+                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">Lyrics & Riffs</span>
+              </div>
+              <Button href="/songs" variant="primary" size="md">
+                Practice Songs
               </Button>
             </div>
           </div>
@@ -137,7 +159,7 @@ export default function Home() {
         <div className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-6 rounded-2xl bg-white border border-slate-200/50 p-8 shadow-sm">
           <StatCard value="16" label="Chords" />
           <StatCard value="12" label="Strum Patterns" />
-          <StatCard value="2" label="Exercises" />
+          <StatCard value="3" label="Exercises" />
           <StatCard value="∞" label="Free Practice" />
         </div>
 
@@ -163,8 +185,8 @@ export default function Home() {
             />
             <FeatureCard
               icon="🎶"
-              title="Song Practice"
-              description="Learn chords in real songs"
+              title="More Songs"
+              description="Expanding the song library"
               size="md"
             />
             <FeatureCard
