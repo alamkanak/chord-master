@@ -581,7 +581,7 @@ export default function SongsPage() {
                       key={pattern.id}
                       className="rounded-xl bg-white text-slate-900 p-4"
                     >
-                      <h4 className="text-sm font-bold text-center mb-3">
+                      <h4 className="hidden sm:block text-sm font-bold text-center mb-3">
                         {pattern.name}
                       </h4>
                       <PickingPatternVisualizer
