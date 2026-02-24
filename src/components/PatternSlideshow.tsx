@@ -116,7 +116,7 @@ export default function PatternSlideshow({
                 )}
 
                 {/* Content */}
-                <div className="p-2 sm:p-3 md:p-4">{item.content}</div>
+                <div className="p-1 sm:p-3 md:p-4">{item.content}</div>
               </div>
             </div>
           );

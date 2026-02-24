@@ -64,7 +64,7 @@ export default function PickingPatternVisualizer({
       colGap: "",
     },
     lg: {
-      container: "p-3 md:p-6",
+      container: "pt-1 pl-1 pr-3 pb-3 md:pt-3 md:pl-3 md:pr-6 md:pb-6",
       label: "text-xs md:text-sm",
       labelWidth: "w-5 md:w-6",
       dot: "w-4 h-4 md:w-6 md:h-6 text-xs md:text-sm",
