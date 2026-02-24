@@ -45,7 +45,7 @@ export default function PickingPatternVisualizer({
       container: "p-3",
       label: "text-[10px]",
       labelWidth: "w-4",
-      dot: "w-3.5 h-3.5 text-[8px]",
+      dot: "w-3.5 h-3.5 text-[10px]",
       stringHeight: "h-5",
       fingerLabel: "text-[8px]",
       beatLabel: "text-[9px]",
@@ -56,7 +56,7 @@ export default function PickingPatternVisualizer({
       container: "p-4",
       label: "text-xs",
       labelWidth: "w-5",
-      dot: "w-4.5 h-4.5 text-[10px]",
+      dot: "w-6 h-6 text-sm",
       stringHeight: "h-6",
       fingerLabel: "text-[9px]",
       beatLabel: "text-[10px]",
@@ -67,7 +67,7 @@ export default function PickingPatternVisualizer({
       container: "p-5 md:p-6",
       label: "text-sm",
       labelWidth: "w-6",
-      dot: "w-5 h-5 md:w-6 md:h-6 text-xs",
+      dot: "w-5 h-5 md:w-6 md:h-6 text-sm",
       stringHeight: "h-7 md:h-8",
       fingerLabel: "text-[10px] md:text-xs",
       beatLabel: "text-xs md:text-sm",
@@ -211,11 +211,11 @@ export default function PickingPatternVisualizer({
         ].map(({ finger, label, color }) => (
           <div key={finger} className="flex items-center gap-1">
             <span
-              className={`w-3 h-3 rounded-full ${color} inline-flex items-center justify-center text-[7px] font-bold text-white`}
+              className={`w-6 h-6 rounded-full ${color} inline-flex items-center justify-center text-sm font-bold text-white font-mono`}
             >
               {finger}
             </span>
-            <span className="text-[10px] text-slate-400">{label}</span>
+            <span className="text-sm text-slate-400">{label}</span>
           </div>
         ))}
       </div>
