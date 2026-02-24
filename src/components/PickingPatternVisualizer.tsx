@@ -64,14 +64,14 @@ export default function PickingPatternVisualizer({
       colGap: "",
     },
     lg: {
-      container: "p-5 md:p-6",
-      label: "text-sm",
-      labelWidth: "w-6",
-      dot: "w-5 h-5 md:w-6 md:h-6 text-sm",
-      stringHeight: "h-7 md:h-8",
-      fingerLabel: "text-[10px] md:text-xs",
-      beatLabel: "text-xs md:text-sm",
-      gap: "gap-0.5",
+      container: "p-3 md:p-6",
+      label: "text-xs md:text-sm",
+      labelWidth: "w-5 md:w-6",
+      dot: "w-4 h-4 md:w-6 md:h-6 text-xs md:text-sm",
+      stringHeight: "h-5 md:h-8",
+      fingerLabel: "text-[9px] md:text-xs",
+      beatLabel: "text-[10px] md:text-sm",
+      gap: "gap-0",
       colGap: "",
     },
   };
@@ -202,7 +202,7 @@ export default function PickingPatternVisualizer({
       </div>
 
       {/* PIMA Legend */}
-      <div className="mt-3 flex items-center justify-center gap-3 flex-wrap">
+      <div className="mt-2 md:mt-3 flex items-center justify-center gap-2 md:gap-3 flex-wrap">
         {[
           { finger: "p", label: "thumb", color: "bg-blue-500" },
           { finger: "i", label: "index", color: "bg-emerald-500" },
@@ -211,11 +211,11 @@ export default function PickingPatternVisualizer({
         ].map(({ finger, label, color }) => (
           <div key={finger} className="flex items-center gap-1">
             <span
-              className={`w-6 h-6 rounded-full ${color} inline-flex items-center justify-center text-sm font-bold text-white font-mono`}
+              className={`w-4 h-4 md:w-6 md:h-6 rounded-full ${color} inline-flex items-center justify-center text-[10px] md:text-sm font-bold text-white font-mono`}
             >
               {finger}
             </span>
-            <span className="text-sm text-slate-400">{label}</span>
+            <span className="text-xs md:text-sm text-slate-400">{label}</span>
           </div>
         ))}
       </div>

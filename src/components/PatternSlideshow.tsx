@@ -99,7 +99,7 @@ export default function PatternSlideshow({
                 {/* Label */}
                 {item.label && (
                   <div
-                    className={`px-4 py-2 text-center border-b ${
+                    className={`hidden sm:block px-4 py-2 text-center border-b ${
                       isActive
                         ? "border-blue-100 bg-blue-50/50"
                         : "border-slate-100 bg-slate-50/30"
