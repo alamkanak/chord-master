@@ -27,7 +27,6 @@ import {
   PauseIcon,
   ForwardIcon,
   BackwardIcon,
-  MusicalNoteIcon,
   ArrowPathIcon,
 } from "@heroicons/react/24/solid";
 
@@ -655,6 +654,15 @@ export default function SongsPage() {
 
   // ============= PREP MODE =============
   if (mode === "prep") {
+    // Get the first measure's chord/riff and pattern
+    const firstMeasure = flatTimeline[0] ?? null;
+    const firstIsStrum = firstMeasure && (firstMeasure.type === "strum" || firstMeasure.type === "picking");
+    const firstChord = firstIsStrum && firstMeasure.chordId ? chordLib[firstMeasure.chordId] : null;
+    const firstRiff = firstMeasure && !firstIsStrum && firstMeasure.riffId ? riffLib[firstMeasure.riffId] : null;
+    const firstStrumPattern = firstIsStrum && firstMeasure.patternId ? patternLib[firstMeasure.patternId] : null;
+    const firstPickingPattern = firstIsStrum && firstMeasure.patternId ? pickingPatternLib[firstMeasure.patternId] : null;
+    const isFirstPicking = firstIsStrum && !firstStrumPattern && !!firstPickingPattern;
+
     return (
       <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-b from-slate-950 via-slate-900 to-slate-950 text-white overflow-y-auto">
         <DrillHeader
@@ -664,19 +672,58 @@ export default function SongsPage() {
           onEnd={endDrill}
         />
 
-        <div className="flex-1 flex flex-col items-center justify-center p-6 gap-6">
+        <div className="flex-1 flex flex-col items-center justify-center px-3 py-3 sm:p-6 gap-3 sm:gap-6">
+          {/* Song info */}
           <div className="text-center">
-            <MusicalNoteIcon className="h-16 w-16 text-blue-400 mx-auto mb-4 animate-bounce" />
-            <h2 className="text-2xl md:text-3xl font-bold mb-2">
+            <h2 className="text-lg sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2">
               Get Ready!
             </h2>
-            <p className="text-slate-400">
+            <p className="text-sm sm:text-base text-slate-400">
               {selectedSong.title} — {selectedSong.artist}
             </p>
-            <p className="text-sm text-slate-500 mt-2">
+            <p className="text-xs sm:text-sm text-slate-500 mt-1 sm:mt-2">
               Speed: {playbackSpeed}x ({Math.round(selectedSong.bpm * playbackSpeed)} BPM)
             </p>
           </div>
+
+          {/* First measure chord/riff */}
+          {firstChord && (
+            <div className="rounded-xl sm:rounded-2xl bg-white text-slate-900 shadow-2xl p-2 sm:p-6 md:p-8 hover:shadow-blue-500/20 transition-all duration-300 w-full max-w-40 sm:max-w-xs">
+              <div
+                className="w-full [&>svg]:max-w-full [&>svg]:max-h-full"
+                dangerouslySetInnerHTML={{
+                  __html: createChordSVG(firstChord as ChordData, true),
+                }}
+              />
+            </div>
+          )}
+          {firstRiff && (
+            <div className="rounded-xl sm:rounded-2xl bg-white text-slate-900 shadow-2xl p-3 sm:p-6 md:p-8 hover:shadow-blue-500/20 transition-all duration-300 w-full max-w-lg">
+              <RiffDiagram riff={firstRiff as SongRiff} size="sm" activeBeat={null} />
+            </div>
+          )}
+
+          {/* First measure pattern */}
+          {firstStrumPattern && (
+            <div className="rounded-xl sm:rounded-2xl bg-white text-slate-900 shadow-2xl p-3 sm:p-6 md:p-8 hover:shadow-blue-500/20 transition-all duration-300 w-full max-w-lg overflow-hidden">
+              <h3 className="text-sm sm:text-lg font-bold text-center mb-2 sm:mb-4">
+                {firstStrumPattern.name}
+              </h3>
+              <PatternVisualizer ticks={firstStrumPattern.ticks as Tick[]} size="lg" />
+            </div>
+          )}
+          {isFirstPicking && firstPickingPattern && (
+            <div className="rounded-xl sm:rounded-2xl bg-white text-slate-900 shadow-2xl p-3 sm:p-6 md:p-8 hover:shadow-blue-500/20 transition-all duration-300 w-full max-w-lg overflow-hidden">
+              <h3 className="text-sm sm:text-lg font-bold text-center mb-2 sm:mb-4">
+                {firstPickingPattern.name}
+              </h3>
+              <PickingPatternVisualizer
+                pattern={firstPickingPattern as PickingPattern}
+                size="lg"
+                activeBeat={null}
+              />
+            </div>
+          )}
         </div>
       </div>
     );
