@@ -209,8 +209,8 @@ export default function StrummingPage() {
 
         <Container className="py-10">
           {/* Filter */}
-          <div className="flex items-center gap-4 mb-6">
-            <h2 className="text-lg font-semibold text-slate-900">
+          <div className="flex items-center justify-between md:justify-start gap-4 mb-6">
+            <h2 className="text-base lg:text-lg font-semibold text-slate-900">
               Pattern Library
             </h2>
             <div className="flex gap-1 bg-slate-100 rounded-lg p-1">
@@ -297,16 +297,24 @@ export default function StrummingPage() {
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {customPatterns.map((pattern) => (
-                  <Button
+                  <button
                     key={pattern.id}
                     onClick={() => togglePattern(pattern.id)}
-                    variant="pattern-selector"
-                    selected={selectedIds.includes(pattern.id)}
+                    className={`group text-left rounded-xl border-2 p-5 transition-all duration-200 cursor-pointer active:scale-[0.98] hover:scale-[1.02] ${
+                      selectedIds.includes(pattern.id)
+                        ? "border-blue-500 bg-blue-50 shadow-lg"
+                        : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-md"
+                    }`}
                   >
                     <div className="flex items-start justify-between mb-3">
-                      <h3 className="font-semibold text-slate-900 text-sm">
-                        {pattern.name}
-                      </h3>
+                      <div>
+                        <h3 className="font-semibold text-slate-900 text-sm">
+                          {pattern.name}
+                        </h3>
+                        <span className="inline-block mt-1 text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">
+                          Custom
+                        </span>
+                      </div>
                       <div
                         className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
                           selectedIds.includes(pattern.id)
@@ -331,11 +339,16 @@ export default function StrummingPage() {
                         )}
                       </div>
                     </div>
-                    <PatternVisualizer
-                      ticks={pattern.ticks as Tick[]}
-                      size="sm"
-                    />
-                  </Button>
+                    <div className="mb-3">
+                      <PatternVisualizer
+                        ticks={pattern.ticks as Tick[]}
+                        size="sm"
+                      />
+                    </div>
+                    <p className="text-xs text-slate-500 leading-relaxed">
+                      {pattern.description}
+                    </p>
+                  </button>
                 ))}
               </div>
             </div>

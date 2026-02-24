@@ -60,7 +60,7 @@ export default function Button({
     sm: variant === "pill" ? "px-3 py-1.5 text-sm"
       : variant === "icon" ? "h-10 w-10"
       : variant === "ghost" ? "p-0"
-      : variant === "filter" ? "px-3 py-1"
+      : variant === "filter" ? "px-2 py-1"
       : variant === "duration" ? "px-3 py-1.5"
       : "px-4 py-2 text-sm",
     md: variant === "icon" ? "h-12 w-12" : "px-6 py-3 text-base",
