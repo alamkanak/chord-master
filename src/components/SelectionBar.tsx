@@ -39,8 +39,8 @@ export default function SelectionBar({
   const canStart = selectedItems.length >= minSelections;
 
   return (
-    <div className="sticky top-16 z-30 border-b border-slate-200/50 bg-white/40 backdrop-blur-md">
-      <div className="mx-auto max-w-7xl px-6 py-4">
+    <div className="sticky top-14 sm:top-16 z-30 border-b border-slate-200/50 bg-white/40 backdrop-blur-md">
+      <div className="mx-auto max-w-7xl px-3 sm:px-6 py-3 sm:py-4">
         <div className="flex flex-col gap-3">
           {/* Row 1: Selected items */}
           <div className="flex flex-wrap items-center gap-2">

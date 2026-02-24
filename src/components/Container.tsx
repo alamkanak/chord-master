@@ -13,7 +13,7 @@ export default function Container({
 }: ContainerProps) {
   const variants = {
     page: "min-h-screen w-full bg-gradient-to-br from-slate-50 via-white to-slate-100",
-    content: "mx-auto max-w-7xl px-6",
+    content: "mx-auto max-w-7xl px-3 sm:px-6",
     fullscreen: "fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white",
   };
   
