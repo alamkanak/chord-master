@@ -177,12 +177,11 @@ export function playString(
   duration: number = 1.5,
   volume: number = 0.15
 ): void {
-  if (chord.muted.includes(stringNum)) return;
-
   const ctx = getAudioContext();
   let fret = 0;
 
-  if (chord.open.includes(stringNum)) {
+  if (chord.open.includes(stringNum) || chord.muted.includes(stringNum)) {
+    // Muted strings in picking context → play as open string
     fret = 0;
   } else {
     const fingerEntry = chord.fingers.find(([s]) => s === stringNum);
@@ -192,6 +191,53 @@ export function playString(
 
   const frequency = getStringFrequency(stringNum, fret);
   playGuitarNote(ctx, frequency, ctx.currentTime, duration, volume);
+}
+
+/**
+ * Play a single note by string number and fret position (for riffs).
+ */
+export function playRiffNote(
+  stringNum: number,
+  fret: number,
+  duration: number = 1.0,
+  volume: number = 0.15
+): void {
+  const ctx = getAudioContext();
+  const frequency = getStringFrequency(stringNum, fret);
+  if (frequency === 0) return;
+  playGuitarNote(ctx, frequency, ctx.currentTime, duration, volume);
+}
+
+/**
+ * Play a picking beat — one or more strings plucked simultaneously
+ * in the context of a chord.
+ */
+export function playPickingBeat(
+  chord: ChordData,
+  strings: number[],
+  duration: number = 1.0,
+  volume: number = 0.15
+): void {
+  const ctx = getAudioContext();
+  const fretMap = new Map<number, number>();
+  for (const [stringNum, fret] of chord.fingers) {
+    fretMap.set(stringNum, fret);
+  }
+
+  for (const s of strings) {
+    // Don't skip muted strings — picking pattern takes priority.
+    // If the chord has a fret for this string, use it; otherwise play open.
+    let fret = 0;
+    if (fretMap.has(s)) {
+      fret = fretMap.get(s)!;
+    } else if (!chord.open.includes(s) && !chord.muted.includes(s)) {
+      continue; // string not part of chord at all
+    }
+
+    const frequency = getStringFrequency(s, fret);
+    const noteVolume = volume * (0.9 + Math.random() * 0.1);
+    playGuitarNote(ctx, frequency, ctx.currentTime, duration, noteVolume);
+  }
 }
 
 type Tick = "D" | "u" | null;

@@ -21,6 +21,7 @@ import RiffDiagram from "@/components/RiffDiagram";
 import songsData from "@/data/songs.json";
 import { createChordSVG, type ChordData } from "@/utils/chordSvg";
 import { playBeep, initAudio } from "@/utils/audio";
+import { playChordStrum, playPickingBeat, playRiffNote } from "@/utils/guitarAudio";
 import { useWakeLock } from "@/utils/useWakeLock";
 import {
   PlayIcon,
@@ -28,6 +29,8 @@ import {
   ForwardIcon,
   BackwardIcon,
   ArrowPathIcon,
+  SpeakerWaveIcon,
+  SpeakerXMarkIcon,
 } from "@heroicons/react/24/solid";
 
 // ----- Types -----
@@ -151,6 +154,7 @@ export default function SongsPage() {
   const [prepCountdown, setPrepCountdown] = useState(5);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
   // Use a single position state to avoid nested setState bugs
   const [playbackPos, setPlaybackPos] = useState({ measure: 0, tick: 0 });
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -222,6 +226,10 @@ export default function SongsPage() {
 
   const togglePlayPause = useCallback(() => {
     setIsPlaying((prev) => !prev);
+  }, []);
+
+  const toggleMute = useCallback(() => {
+    setIsMuted((prev) => !prev);
   }, []);
 
   const skipForward = useCallback(() => {
@@ -317,6 +325,70 @@ export default function SongsPage() {
     totalMeasures,
     releaseWakeLock,
   ]);
+
+  // ----- Audio playback synchronized with ticks -----
+  useEffect(() => {
+    if (mode !== "drill" || !isPlaying || !selectedSong || isMuted) return;
+
+    const measure = flatTimeline[currentMeasureIdx];
+    if (!measure) return;
+
+    const chordLibRef = selectedSong.library.chords;
+    const patternLibRef = selectedSong.library.patterns;
+    const pickingPatternLibRef = selectedSong.library.pickingPatterns ?? {};
+    const riffLibRef = selectedSong.library.riffs;
+
+    const tickDuration = 60 / (selectedSong.bpm * playbackSpeed) / selectedSong.ticksPerBeat;
+
+    if (measure.type === "strum" && measure.chordId && measure.patternId) {
+      // Strum pattern: play chord strum on D/u ticks
+      const pattern = patternLibRef[measure.patternId];
+      const chord = chordLibRef[measure.chordId];
+      if (pattern && chord && currentTick < pattern.ticks.length) {
+        const tick = pattern.ticks[currentTick];
+        if (tick === "D" || tick === "u") {
+          const direction = tick === "D" ? "down" : "up";
+          playChordStrum(
+            chord as ChordData,
+            direction,
+            0.015,
+            Math.min(tickDuration * 3, 1.5),
+            0.12
+          );
+        }
+      }
+    } else if (measure.type === "picking" && measure.chordId && measure.patternId) {
+      // Picking pattern: play individual strings per beat
+      const pickingPattern = pickingPatternLibRef[measure.patternId];
+      const chord = chordLibRef[measure.chordId];
+      if (pickingPattern && chord && currentTick < pickingPattern.beats.length) {
+        const beat = pickingPattern.beats[currentTick];
+        playPickingBeat(
+          chord as ChordData,
+          beat.strings,
+          Math.min(tickDuration * 2, 1.0),
+          0.15
+        );
+      }
+    } else if (measure.type === "riff" && measure.riffId) {
+      // Riff: play notes whose beat aligns with the current tick
+      const riff = riffLibRef[measure.riffId];
+      if (riff) {
+        const currentBeat = (currentTick / selectedSong.ticksPerBeat) + 1;
+        const notesOnBeat = riff.notes.filter(
+          (n) => Math.abs(n.beat - currentBeat) < 0.01
+        );
+        for (const note of notesOnBeat) {
+          playRiffNote(
+            note.string,
+            note.fret,
+            Math.min(tickDuration * 2, 1.0),
+            0.15
+          );
+        }
+      }
+    }
+  }, [mode, isPlaying, selectedSong, isMuted, currentMeasureIdx, currentTick, flatTimeline, playbackSpeed]);
 
   // ----- Lyrics: derive text from current position -----
   const liveCurrent = flatTimeline[currentMeasureIdx]?.lyrics ?? "";
@@ -898,7 +970,7 @@ export default function SongsPage() {
 
             {/* Transport row */}
             <div className="grid grid-cols-3 items-center">
-              {/* Left: Speed + Restart */}
+              {/* Left: Speed + Restart + Mute */}
               <div className="flex items-center gap-1.5 justify-self-start">
                 <select
                   value={playbackSpeed}
@@ -917,6 +989,22 @@ export default function SongsPage() {
                   aria-label="Restart from beginning"
                 >
                   <ArrowPathIcon className="h-4 w-4 text-slate-500" />
+                </button>
+                <button
+                  onClick={toggleMute}
+                  className={`p-2 rounded-xl transition-colors cursor-pointer ${
+                    isMuted
+                      ? "bg-red-500/15 text-red-400 hover:bg-red-500/25"
+                      : "hover:bg-white/6 text-slate-500"
+                  }`}
+                  aria-label={isMuted ? "Unmute audio" : "Mute audio"}
+                  title={isMuted ? "Unmute" : "Mute"}
+                >
+                  {isMuted ? (
+                    <SpeakerXMarkIcon className="h-4 w-4" />
+                  ) : (
+                    <SpeakerWaveIcon className="h-4 w-4" />
+                  )}
                 </button>
               </div>
 
