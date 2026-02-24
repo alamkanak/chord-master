@@ -1,4 +1,5 @@
 import Button from "./Button";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 interface DrillHeaderProps {
   mode: "select" | "ready" | "prep" | "drill" | "finished";
@@ -28,76 +29,91 @@ export default function DrillHeader({
       const s = seconds % 60;
       return `${m}:${String(s).padStart(2, "0")}`;
     }
-    return `${String(seconds).padStart(2, "0")}s`;
+    return `0:${String(seconds).padStart(2, "0")}`;
   };
 
   return (
     <div className="sticky top-0 z-40 border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl">
-      <div className="px-6 py-6">
-        <div className="flex items-center justify-between gap-4 h-28">
-          {/* Left Section - Timer/Status */}
-          <div className="flex flex-col justify-center w-35">
+      <div className="px-4 py-3 md:px-6 md:py-4">
+        {/* Mobile-first: single compact row */}
+        <div className="flex items-center justify-between gap-3 min-h-12">
+          {/* Left: Back button or spacer */}
+          <div className="w-10 shrink-0">
+            {(mode === "ready" || mode === "finished") && onBack ? (
+              <button
+                onClick={onBack}
+                className="flex h-10 w-10 items-center justify-center rounded-full text-slate-400 hover:bg-white/10 hover:text-white transition-colors active:scale-90 cursor-pointer"
+                aria-label="Back to selection"
+              >
+                <ArrowLeftIcon className="h-5 w-5" />
+              </button>
+            ) : (mode === "prep" || mode === "drill") && onEnd ? (
+              <button
+                onClick={onEnd}
+                className="flex h-10 w-10 items-center justify-center rounded-full text-slate-400 hover:bg-white/10 hover:text-white transition-colors active:scale-90 cursor-pointer md:hidden"
+                aria-label="End drill"
+              >
+                <ArrowLeftIcon className="h-5 w-5" />
+              </button>
+            ) : null}
+          </div>
+
+          {/* Center: Status + Timer */}
+          <div className="flex flex-1 flex-col items-center justify-center min-w-0">
+            {mode === "ready" && (
+              <>
+                <span className="text-xs font-medium uppercase tracking-wider text-slate-500">
+                  Ready
+                </span>
+                <span className="text-sm font-semibold text-slate-200 truncate max-w-full">
+                  {title}
+                </span>
+              </>
+            )}
+
             {mode === "prep" && (
               <>
-                <div className="text-sm font-medium text-slate-400 uppercase tracking-wide mb-1">
-                  Starting In
-                </div>
-                <div className="text-5xl md:text-6xl font-black text-blue-400 tabular-nums animate-pulse leading-none">
-                  {String(countdown).padStart(2, "0")}s
-                </div>
+                <span className="text-xs font-medium uppercase tracking-wider text-slate-500">
+                  Starting in
+                </span>
+                <span className="text-2xl md:text-4xl font-black tabular-nums text-blue-400 leading-tight animate-pulse">
+                  {countdown}
+                </span>
               </>
             )}
+
             {mode === "drill" && (
               <>
-                <div className="text-sm font-medium text-slate-400 uppercase tracking-wide mb-1">
-                  Time Remaining
-                </div>
-                <div className="text-5xl md:text-6xl font-black text-blue-400 tabular-nums leading-none">
+                <span className="text-xs font-medium uppercase tracking-wider text-slate-500 hidden md:block">
+                  {title}
+                </span>
+                <span className={`text-2xl md:text-4xl font-black tabular-nums leading-tight ${timer <= 5 ? "text-red-400" : "text-blue-400"}`}>
                   {formatTimer(timer)}
-                </div>
+                </span>
               </>
             )}
-            {mode === "ready" && (
-              <div className="text-sm font-medium text-slate-400 uppercase tracking-wide">
-                Ready to Start
-              </div>
-            )}
+
             {mode === "finished" && (
               <>
-                <div className="text-sm font-medium text-slate-400 uppercase tracking-wide">
+                <span className="text-sm font-semibold text-green-400">
                   Drill Complete!
-                </div>
-                <div className="text-lg font-semibold text-green-400 mt-1">
-                  Great job!
-                </div>
+                </span>
+                <span className="text-xs text-slate-500 hidden md:block">
+                  {title}
+                </span>
               </>
             )}
           </div>
 
-          {/* Center Section - Title (hidden on mobile during prep/drill) */}
-          <div className={`flex flex-col items-center gap-2 flex-1 ${mode === "prep" || mode === "drill" ? "hidden md:flex" : "flex"}`}>
-            <div className="text-sm font-medium text-slate-400 uppercase tracking-wide">
-              Practice Mode
-            </div>
-            <div className="text-lg font-semibold text-slate-300">
-              {title}
-            </div>
-          </div>
-
-          {/* Right Section - Action Button */}
-          <div className="shrink-0">
-            {(mode === "ready" || mode === "finished") && onBack && (
-              <Button
-                onClick={onBack}
-                variant="secondary"
-                size="md"
-                className="bg-white/10 hover:bg-white/20 text-white border-white/30"
-              >
-                {mode === "finished" ? "Back to Selection" : "Back"}
-              </Button>
-            )}
+          {/* Right: Action button */}
+          <div className="w-10 shrink-0 flex justify-end">
             {(mode === "prep" || mode === "drill") && onEnd && (
-              <Button onClick={onEnd} variant="danger" size="md">
+              <Button
+                onClick={onEnd}
+                variant="danger"
+                size="sm"
+                className="hidden md:inline-flex"
+              >
                 End
               </Button>
             )}

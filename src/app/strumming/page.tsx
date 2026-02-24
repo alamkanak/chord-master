@@ -6,10 +6,11 @@ import Button from "@/components/Button";
 import Container from "@/components/Container";
 import DrillHeader from "@/components/DrillHeader";
 import SelectionBar from "@/components/SelectionBar";
+import PatternVisualizer from "@/components/PatternVisualizer";
+import PatternBuilder from "@/components/PatternBuilder";
 import strummingData from "@/data/strumming.json";
 import { playBeep, initAudio } from "@/utils/audio";
 import { useWakeLock } from "@/utils/useWakeLock";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 
 type Tick = "D" | "u" | null;
 
@@ -21,170 +22,11 @@ interface StrumPattern {
   ticks: Tick[];
 }
 
-const BEAT_LABELS = ["1", "+", "2", "+", "3", "+", "4", "+"];
-
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
   if (s === 0) return `${m} min`;
   return `${m}:${String(s).padStart(2, "0")}`;
-}
-
-function tickToDisplay(tick: Tick): string {
-  if (tick === "D") return "D";
-  if (tick === "u") return "u";
-  return "·";
-}
-
-function PatternVisualizer({
-  ticks,
-  size = "md",
-}: {
-  ticks: Tick[];
-  size?: "sm" | "md" | "lg";
-}) {
-  const sizeClasses = {
-    sm: "text-lg",
-    md: "text-2xl",
-    lg: "text-4xl md:text-5xl",
-  };
-
-  const tickSizeClasses = {
-    sm: "w-8 h-14",
-    md: "w-10 h-18",
-    lg: "w-14 h-24 md:w-18 md:h-28",
-  };
-
-  const labelSize = {
-    sm: "text-sm",
-    md: "text-base",
-    lg: "text-lg md:text-xl",
-  };
-
-  const arrowSizes = {
-    sm: { w: 15, h: 15 },
-    md: { w: 14, h: 14 },
-    lg: { w: 20, h: 20 },
-  };
-
-  return (
-    <div className="flex items-end justify-center gap-0.5">
-      {ticks.map((tick, i) => {
-        const isDownbeat = i % 2 === 0;
-        const arrow = arrowSizes[size];
-        return (
-          <div
-            key={i}
-            className={`flex flex-col items-center justify-end ${tickSizeClasses[size]}`}
-          >
-            <span
-              className={`${sizeClasses[size]} font-bold leading-none ${
-                tick === "D"
-                  ? "text-blue-600"
-                  : tick === "u"
-                  ? "text-emerald-500"
-                  : "text-slate-300"
-              }`}
-            >
-              {tickToDisplay(tick)}
-            </span>
-            {/* Always reserve space for arrow to keep labels aligned */}
-            <div className="mt-0.5 flex items-center justify-center" style={{ width: arrow.w, height: arrow.h }}>
-              {tick && (
-                tick === "D" ? (
-                  <ChevronDownIcon
-                    className="text-blue-400"
-                    style={{ width: arrow.w, height: arrow.h }}
-                  />
-                ) : (
-                  <ChevronUpIcon
-                    className="text-emerald-400"
-                    style={{ width: arrow.w, height: arrow.h }}
-                  />
-                )
-              )}
-            </div>
-            <span
-              className={`${labelSize[size]} mt-0.5 font-mono ${
-                isDownbeat
-                  ? "text-slate-500 font-semibold"
-                  : "text-slate-400"
-              }`}
-            >
-              {BEAT_LABELS[i]}
-            </span>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-function PatternBuilder({
-  ticks,
-  onChange,
-}: {
-  ticks: Tick[];
-  onChange: (ticks: Tick[]) => void;
-}) {
-  const cycleTick = (index: number) => {
-    const newTicks = [...ticks];
-    const current = newTicks[index];
-    // Cycle: D -> u -> miss -> D
-    if (current === "D") newTicks[index] = "u";
-    else if (current === "u") newTicks[index] = null;
-    else newTicks[index] = "D";
-    onChange(newTicks);
-  };
-
-  return (
-    <div className="rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 p-6">
-      <div className="text-sm font-medium text-slate-500 mb-4 text-center">
-        Tap each beat to cycle: <span className="text-blue-600 font-bold">D</span> →{" "}
-        <span className="text-emerald-500 font-bold">u</span> →{" "}
-        <span className="text-slate-400">miss</span>
-      </div>
-      <div className="flex items-end justify-center gap-1 md:gap-2">
-        {ticks.map((tick, i) => {
-          const isDownbeat = i % 2 === 0;
-          return (
-            <button
-              key={i}
-              onClick={() => cycleTick(i)}
-              className={`flex flex-col items-center justify-center w-10 h-18 md:w-14 md:h-22 rounded-lg border-2 transition-all duration-150 cursor-pointer active:scale-95 ${
-                tick === "D"
-                  ? "border-blue-400 bg-blue-50 hover:bg-blue-100"
-                  : tick === "u"
-                  ? "border-emerald-400 bg-emerald-50 hover:bg-emerald-100"
-                  : "border-slate-200 bg-white hover:bg-slate-100"
-              }`}
-            >
-              <span
-                className={`text-xl md:text-2xl font-bold leading-none ${
-                  tick === "D"
-                    ? "text-blue-600"
-                    : tick === "u"
-                    ? "text-emerald-500"
-                    : "text-slate-300"
-                }`}
-              >
-                {tickToDisplay(tick)}
-              </span>
-              <span
-                className={`text-sm md:text-base mt-1 font-mono ${
-                  isDownbeat
-                    ? "text-slate-500 font-semibold"
-                    : "text-slate-400"
-                }`}
-              >
-                {BEAT_LABELS[i]}
-              </span>
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
 }
 
 export default function StrummingPage() {
@@ -608,8 +450,8 @@ export default function StrummingPage() {
       <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-y-auto">
         <DrillHeader mode="ready" title="Strumming Patterns" onBack={backToSelect} />
 
-        <div className="flex-1 flex flex-col items-center justify-center p-6 gap-8">
-          <div className="text-center mb-4">
+        <div className="flex-1 flex flex-col items-center justify-center px-3 py-6 sm:p-6 gap-6 sm:gap-8">
+          <div className="text-center mb-2 sm:mb-4">
             <div className="text-sm font-medium text-slate-400 uppercase tracking-wide mb-1">
               Duration
             </div>
@@ -618,13 +460,13 @@ export default function StrummingPage() {
             </div>
           </div>
 
-          <div className="grid gap-4 w-full max-w-3xl">
+          <div className="grid gap-3 sm:gap-4 w-full max-w-3xl">
             {selectedPatterns.map((pattern) => (
               <div
                 key={pattern.id}
-                className="rounded-2xl bg-white text-slate-900 shadow-2xl p-6 md:p-8 hover:shadow-blue-500/20 transition-all duration-300"
+                className="rounded-2xl bg-white text-slate-900 shadow-2xl p-4 sm:p-6 md:p-8 hover:shadow-blue-500/20 transition-all duration-300 overflow-hidden"
               >
-                <h3 className="text-lg font-bold text-center mb-4">
+                <h3 className="text-base sm:text-lg font-bold text-center mb-3 sm:mb-4">
                   {pattern.name}
                 </h3>
                 <PatternVisualizer
@@ -658,14 +500,14 @@ export default function StrummingPage() {
       <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-y-auto">
         <DrillHeader mode="prep" title="Strumming Patterns" countdown={prepCountdown} onEnd={endDrill} />
 
-        <div className="flex-1 flex items-center justify-center p-6">
-          <div className="grid gap-4 w-full max-w-3xl">
+        <div className="flex-1 flex items-center justify-center px-3 py-6 sm:p-6">
+          <div className="grid gap-3 sm:gap-4 w-full max-w-3xl">
             {selectedPatterns.map((pattern) => (
               <div
                 key={pattern.id}
-                className="rounded-2xl bg-white text-slate-900 shadow-2xl p-6 md:p-8 hover:shadow-blue-500/20 transition-all duration-300"
+                className="rounded-2xl bg-white text-slate-900 shadow-2xl p-4 sm:p-6 md:p-8 hover:shadow-blue-500/20 transition-all duration-300 overflow-hidden"
               >
-                <h3 className="text-lg font-bold text-center mb-4">
+                <h3 className="text-base sm:text-lg font-bold text-center mb-3 sm:mb-4">
                   {pattern.name}
                 </h3>
                 <PatternVisualizer
@@ -690,14 +532,14 @@ export default function StrummingPage() {
       <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-y-auto">
         <DrillHeader mode="drill" title="Strumming Patterns" timer={drillTime} onEnd={endDrill} />
 
-        <div className="flex-1 flex items-center justify-center p-6">
-          <div className="grid gap-4 w-full max-w-3xl">
+        <div className="flex-1 flex items-center justify-center px-3 py-6 sm:p-6">
+          <div className="grid gap-3 sm:gap-4 w-full max-w-3xl">
             {selectedPatterns.map((pattern) => (
               <div
                 key={pattern.id}
-                className="rounded-2xl bg-white text-slate-900 shadow-2xl p-6 md:p-8 hover:shadow-blue-500/20 transition-all duration-300"
+                className="rounded-2xl bg-white text-slate-900 shadow-2xl p-4 sm:p-6 md:p-8 hover:shadow-blue-500/20 transition-all duration-300 overflow-hidden"
               >
-                <h3 className="text-lg font-bold text-center mb-4">
+                <h3 className="text-base sm:text-lg font-bold text-center mb-3 sm:mb-4">
                   {pattern.name}
                 </h3>
                 <PatternVisualizer
@@ -722,14 +564,14 @@ export default function StrummingPage() {
       <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-y-auto">
         <DrillHeader mode="finished" title="Strumming Patterns" onBack={backToSelect} />
 
-        <div className="flex-1 flex flex-col items-center justify-center p-6 gap-8">
-          <div className="grid gap-4 w-full max-w-3xl">
+        <div className="flex-1 flex flex-col items-center justify-center px-3 py-6 sm:p-6 gap-6 sm:gap-8">
+          <div className="grid gap-3 sm:gap-4 w-full max-w-3xl">
             {selectedPatterns.map((pattern) => (
               <div
                 key={pattern.id}
-                className="rounded-2xl bg-white text-slate-900 shadow-2xl p-6 md:p-8 hover:shadow-blue-500/20 transition-all duration-300"
+                className="rounded-2xl bg-white text-slate-900 shadow-2xl p-4 sm:p-6 md:p-8 hover:shadow-blue-500/20 transition-all duration-300 overflow-hidden"
               >
-                <h3 className="text-lg font-bold text-center mb-4">
+                <h3 className="text-base sm:text-lg font-bold text-center mb-3 sm:mb-4">
                   {pattern.name}
                 </h3>
                 <PatternVisualizer
