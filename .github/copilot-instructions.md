@@ -64,6 +64,66 @@ You must use existing reusable components where applicable. If you need a new co
 
 If necessary, you can add more utility functions in `src/utils/`, but keep them focused and reusable.
 
+## Data Schemas
+
+### Chord Schema (`data/chords.json`)
+
+```jsonc
+{
+  "chords": [
+    {
+      "name": "G",                          // Display name on the diagram
+      "fingers": [[6, 3, 3], [5, 2, 2]],   // [stringNumber, fretNumber, fingerNumber][]
+      "muted": [6],                          // Strings NOT played (shown as × above nut)
+      "open": [4, 3, 2]                     // Strings played open (shown as ○ above nut)
+    }
+  ]
+}
+```
+
+**`fingers` tuple: `[string, fret, finger]`**
+- `string`: 1-6 (1 = high E / thinnest, 6 = low E / thickest)
+- `fret`: 1-based fret position on the neck
+- `finger`: 1 = index, 2 = middle, 3 = ring, 4 = pinky
+
+**Rendering rules** (see `chordSvg.ts`):
+- Diagram shows 5 frets. If `maxFret > 5`, a fret offset is applied and a fret number label is shown instead of the nut.
+- **Barre detection**: multiple `fingers` entries sharing the same `(fret, finger)` are rendered as a single barre bar spanning those strings.
+- Strings in neither `muted`, `open`, nor `fingers` are implicitly fretted (no extra marker shown).
+
+### Strumming Pattern Schema (`data/strumming.json`)
+
+```jsonc
+{
+  "patterns": [
+    {
+      "id": "island-strum",                   // Unique identifier
+      "name": "Island Strum",                 // Display name
+      "difficulty": "beginner",               // "beginner" | "intermediate"
+      "description": "The classic island...", // Short description
+      "ticks": ["D", null, "D", "u", null, "u", "D", "u"]  // Variable-length array (2 ticks per beat)
+    }
+  ]
+}
+```
+
+**`ticks` array** — each measure split into eighth-note slots (2 per beat). The array length is `beatsPerMeasure × 2` and can vary by time signature:
+
+- **4/4 time** → 8 ticks (e.g., `["D", null, "D", "u", null, "u", "D", "u"]`)
+- **3/4 time** → 6 ticks (e.g., `["D", null, "D", "u", "D", "u"]`)
+- **6/8 time** → 12 ticks
+- **5/4 time** → 10 ticks
+- Any even number of ticks is valid (minimum 2)
+
+| Position  | Even indices (0,2,4,...) | Odd indices (1,3,5,...) |
+|-----------|-------------------------|------------------------|
+| Type      | Downbeats (1, 2, 3...)  | Upbeats ("+" / "and")  |
+| Direction | ↓                       | ↑                      |
+
+- `"D"` = downstroke, `"u"` = upstroke, `null` = rest/skip (shown as `·`).
+- Beat labels are generated dynamically: `1 + 2 + 3 + ...` based on array length.
+- Rendered by `PatternVisualizer` with color-coding: blue for D, green for u, amber when active.
+
 ## Design System
 
 The design system is inspired by linear.app's clean, modern aesthetic:

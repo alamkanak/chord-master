@@ -83,6 +83,34 @@
       "difficulty": "intermediate",
       "description": "Flowing pattern for acoustic singer-songwriter style.",
       "ticks": ["D", null, "D", null, "u", null, "D", "u"]
+    },
+    {
+      "id": "waltz-basic",
+      "name": "Waltz (3/4)",
+      "difficulty": "beginner",
+      "description": "Classic 3/4 time waltz pattern. Great for songs like Amazing Grace.",
+      "ticks": ["D", null, "D", "u", "D", "u"]
+    },
+    {
+      "id": "waltz-bass-strum",
+      "name": "Waltz Bass-Strum",
+      "difficulty": "intermediate",
+      "description": "Bass note on beat 1, upstrokes on beats 2 and 3. Elegant waltz feel.",
+      "ticks": ["D", null, "u", null, "u", null]
+    },
+    {
+      "id": "six-eight-feel",
+      "name": "6/8 Feel",
+      "difficulty": "intermediate",
+      "description": "Flowing 6/8 compound time feel. Used in ballads like Nothing Else Matters.",
+      "ticks": ["D", null, "u", "D", null, "u", "D", null, "u", "D", null, "u"]
+    },
+    {
+      "id": "five-four-groove",
+      "name": "5/4 Groove",
+      "difficulty": "intermediate",
+      "description": "Odd-time 5/4 pattern. Think Take Five or the Mission Impossible theme.",
+      "ticks": ["D", null, "D", "u", "D", null, "D", "u", "D", "u"]
     }
   ]
 }

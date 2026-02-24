@@ -19,26 +19,305 @@
       ],
       "library": {
         "chords": {
-          "Em": { "name": "Em", "fingers": [[5, 2, 2], [4, 2, 3]], "muted": [], "open": [6, 3, 2, 1] },
-          "G": { "name": "G", "fingers": [[6, 3, 3], [5, 2, 2], [1, 3, 4]], "muted": [], "open": [4, 3, 2] },
-          "D": { "name": "D", "fingers": [[3, 2, 1], [2, 3, 3], [1, 2, 2]], "muted": [6, 5], "open": [4] },
-          "A": { "name": "A", "fingers": [[4, 2, 1], [3, 2, 2], [2, 2, 3]], "muted": [6], "open": [5, 1] },
-          "C": { "name": "C", "fingers": [[5, 3, 3], [4, 2, 2], [2, 1, 1]], "muted": [6], "open": [3, 1] },
-          "B7": { "name": "B7", "fingers": [[5, 2, 2], [4, 1, 1], [3, 2, 3], [1, 2, 4]], "muted": [6], "open": [2] },
-          "B": { "name": "B", "fingers": [[5, 2, 1], [4, 2, 1], [3, 2, 1], [2, 2, 1], [1, 2, 1], [4, 4, 2], [3, 4, 3], [2, 4, 4]], "muted": [6], "open": [] },
-          "A/C#": { "name": "A/C#", "fingers": [[5, 4, 3], [4, 2, 1], [3, 2, 1], [2, 2, 1], [1, 2, 1], [1, 5, 4]], "muted": [6], "open": [] },
-          "D#5": { "name": "D#5", "fingers": [[4, 1, 1], [3, 3, 3]], "muted": [6, 5, 2, 1], "open": [] }
+          "Em": {
+            "name": "Em",
+            "fingers": [
+              [
+                5,
+                2,
+                2
+              ],
+              [
+                4,
+                2,
+                3
+              ]
+            ],
+            "muted": [],
+            "open": [
+              6,
+              3,
+              2,
+              1
+            ]
+          },
+          "G": {
+            "name": "G",
+            "fingers": [
+              [
+                6,
+                3,
+                3
+              ],
+              [
+                5,
+                2,
+                2
+              ],
+              [
+                1,
+                3,
+                4
+              ]
+            ],
+            "muted": [],
+            "open": [
+              4,
+              3,
+              2
+            ]
+          },
+          "D": {
+            "name": "D",
+            "fingers": [
+              [
+                3,
+                2,
+                1
+              ],
+              [
+                2,
+                3,
+                3
+              ],
+              [
+                1,
+                2,
+                2
+              ]
+            ],
+            "muted": [
+              6,
+              5
+            ],
+            "open": [
+              4
+            ]
+          },
+          "A": {
+            "name": "A",
+            "fingers": [
+              [
+                4,
+                2,
+                1
+              ],
+              [
+                3,
+                2,
+                2
+              ],
+              [
+                2,
+                2,
+                3
+              ]
+            ],
+            "muted": [
+              6
+            ],
+            "open": [
+              5,
+              1
+            ]
+          },
+          "C": {
+            "name": "C",
+            "fingers": [
+              [
+                5,
+                3,
+                3
+              ],
+              [
+                4,
+                2,
+                2
+              ],
+              [
+                2,
+                1,
+                1
+              ]
+            ],
+            "muted": [
+              6
+            ],
+            "open": [
+              3,
+              1
+            ]
+          },
+          "B7": {
+            "name": "B7",
+            "fingers": [
+              [
+                5,
+                2,
+                2
+              ],
+              [
+                4,
+                1,
+                1
+              ],
+              [
+                3,
+                2,
+                3
+              ],
+              [
+                1,
+                2,
+                4
+              ]
+            ],
+            "muted": [
+              6
+            ],
+            "open": [
+              2
+            ]
+          },
+          "B": {
+            "name": "B",
+            "fingers": [
+              [
+                5,
+                2,
+                1
+              ],
+              [
+                4,
+                2,
+                1
+              ],
+              [
+                3,
+                2,
+                1
+              ],
+              [
+                2,
+                2,
+                1
+              ],
+              [
+                1,
+                2,
+                1
+              ],
+              [
+                4,
+                4,
+                2
+              ],
+              [
+                3,
+                4,
+                3
+              ],
+              [
+                2,
+                4,
+                4
+              ]
+            ],
+            "muted": [
+              6
+            ],
+            "open": []
+          },
+          "A/C#": {
+            "name": "A/C#",
+            "fingers": [
+              [
+                5,
+                4,
+                3
+              ],
+              [
+                4,
+                2,
+                1
+              ],
+              [
+                3,
+                2,
+                1
+              ],
+              [
+                2,
+                2,
+                1
+              ],
+              [
+                1,
+                2,
+                1
+              ],
+              [
+                1,
+                5,
+                4
+              ]
+            ],
+            "muted": [
+              6
+            ],
+            "open": []
+          },
+          "D#5": {
+            "name": "D#5",
+            "fingers": [
+              [
+                4,
+                1,
+                1
+              ],
+              [
+                3,
+                3,
+                3
+              ]
+            ],
+            "muted": [
+              6,
+              5,
+              2,
+              1
+            ],
+            "open": []
+          }
         },
         "patterns": {
           "verse-interlude": {
             "id": "verse-interlude",
             "name": "Verses & Interludes",
-            "ticks": ["D", null, "D", null, "D", "u", "D", "u"]
+            "ticks": [
+              "D",
+              null,
+              "D",
+              null,
+              "D",
+              "u",
+              "D",
+              "u"
+            ]
           },
           "chorus-strum": {
             "id": "chorus-strum",
             "name": "Chorus Strum",
-            "ticks": ["D", null, "D", "u", null, "u", "D", "u"]
+            "ticks": [
+              "D",
+              null,
+              "D",
+              "u",
+              null,
+              "u",
+              "D",
+              "u"
+            ]
           }
         },
         "riffs": {}
@@ -47,96 +326,878 @@
         {
           "section": "Intro",
           "measures": [
-            { "type": "strum", "chordId": "Em", "patternId": "verse-interlude", "lyrics": "" },
-            { "type": "strum", "chordId": "G", "patternId": "verse-interlude", "lyrics": "" },
-            { "type": "strum", "chordId": "D", "patternId": "verse-interlude", "lyrics": "" },
-            { "type": "strum", "chordId": "A", "patternId": "verse-interlude", "lyrics": "" },
-            { "type": "strum", "chordId": "Em", "patternId": "verse-interlude", "lyrics": "" },
-            { "type": "strum", "chordId": "G", "patternId": "verse-interlude", "lyrics": "" },
-            { "type": "strum", "chordId": "D", "patternId": "verse-interlude", "lyrics": "" },
-            { "type": "strum", "chordId": "A", "patternId": "verse-interlude", "lyrics": "" }
+            {
+              "type": "strum",
+              "chordId": "Em",
+              "patternId": "verse-interlude",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "G",
+              "patternId": "verse-interlude",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "D",
+              "patternId": "verse-interlude",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "A",
+              "patternId": "verse-interlude",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "Em",
+              "patternId": "verse-interlude",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "G",
+              "patternId": "verse-interlude",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "D",
+              "patternId": "verse-interlude",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "A",
+              "patternId": "verse-interlude",
+              "lyrics": ""
+            }
           ]
         },
         {
           "section": "Verse 1",
           "measures": [
-            { "type": "strum", "chordId": "Em", "patternId": "verse-interlude", "lyrics": "I walk a lonely road, the only one that I have" },
-            { "type": "strum", "chordId": "G", "patternId": "verse-interlude", "lyrics": "ever known" },
-            { "type": "strum", "chordId": "D", "patternId": "verse-interlude", "lyrics": "Don't know where it goes" },
-            { "type": "strum", "chordId": "A", "patternId": "verse-interlude", "lyrics": "But it's home to me and I walk alone" }
+            {
+              "type": "strum",
+              "chordId": "Em",
+              "patternId": "verse-interlude",
+              "lyrics": "I walk a lonely road, the only one that I have"
+            },
+            {
+              "type": "strum",
+              "chordId": "G",
+              "patternId": "verse-interlude",
+              "lyrics": "ever known"
+            },
+            {
+              "type": "strum",
+              "chordId": "D",
+              "patternId": "verse-interlude",
+              "lyrics": "Don't know where it goes"
+            },
+            {
+              "type": "strum",
+              "chordId": "A",
+              "patternId": "verse-interlude",
+              "lyrics": "But it's home to me and I walk alone"
+            }
           ]
         },
         {
           "section": "Verse 2",
           "measures": [
-            { "type": "strum", "chordId": "Em", "patternId": "verse-interlude", "lyrics": "I walk this empty street, on the boulevard of" },
-            { "type": "strum", "chordId": "G", "patternId": "verse-interlude", "lyrics": "broken dreams" },
-            { "type": "strum", "chordId": "D", "patternId": "verse-interlude", "lyrics": "Where the city sleeps, and I'm the" },
-            { "type": "strum", "chordId": "A", "patternId": "verse-interlude", "lyrics": "only one and I walk alone" }
+            {
+              "type": "strum",
+              "chordId": "Em",
+              "patternId": "verse-interlude",
+              "lyrics": "I walk this empty street, on the boulevard of"
+            },
+            {
+              "type": "strum",
+              "chordId": "G",
+              "patternId": "verse-interlude",
+              "lyrics": "broken dreams"
+            },
+            {
+              "type": "strum",
+              "chordId": "D",
+              "patternId": "verse-interlude",
+              "lyrics": "Where the city sleeps, and I'm the"
+            },
+            {
+              "type": "strum",
+              "chordId": "A",
+              "patternId": "verse-interlude",
+              "lyrics": "only one and I walk alone"
+            }
           ]
         },
         {
           "section": "Pre-Chorus",
           "measures": [
-            { "type": "strum", "chordId": "Em", "patternId": "verse-interlude", "lyrics": "I walk alone, I walk alone" },
-            { "type": "strum", "chordId": "G", "patternId": "verse-interlude", "lyrics": "" },
-            { "type": "strum", "chordId": "D", "patternId": "verse-interlude", "lyrics": "I walk alone, I walk a..." },
-            { "type": "strum", "chordId": "A", "patternId": "verse-interlude", "lyrics": "" }
+            {
+              "type": "strum",
+              "chordId": "Em",
+              "patternId": "verse-interlude",
+              "lyrics": "I walk alone, I walk alone"
+            },
+            {
+              "type": "strum",
+              "chordId": "G",
+              "patternId": "verse-interlude",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "D",
+              "patternId": "verse-interlude",
+              "lyrics": "I walk alone, I walk a..."
+            },
+            {
+              "type": "strum",
+              "chordId": "A",
+              "patternId": "verse-interlude",
+              "lyrics": ""
+            }
           ]
         },
         {
           "section": "Chorus",
           "measures": [
-            { "type": "strum", "chordId": "C", "patternId": "chorus-strum", "lyrics": "My shadow's the only one that walks beside me" },
-            { "type": "strum", "chordId": "G", "patternId": "chorus-strum", "lyrics": "" },
-            { "type": "strum", "chordId": "D", "patternId": "chorus-strum", "lyrics": "My shallow heart's the only thing that's beating" },
-            { "type": "strum", "chordId": "Em", "patternId": "chorus-strum", "lyrics": "" },
-            { "type": "strum", "chordId": "C", "patternId": "chorus-strum", "lyrics": "Sometimes I wish someone out there will find me" },
-            { "type": "strum", "chordId": "G", "patternId": "chorus-strum", "lyrics": "" },
-            { "type": "strum", "chordId": "D", "patternId": "chorus-strum", "lyrics": "Till then I walk alone" },
-            { "type": "strum", "chordId": "B7", "patternId": "chorus-strum", "lyrics": "" }
+            {
+              "type": "strum",
+              "chordId": "C",
+              "patternId": "chorus-strum",
+              "lyrics": "My shadow's the only one that walks beside me"
+            },
+            {
+              "type": "strum",
+              "chordId": "G",
+              "patternId": "chorus-strum",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "D",
+              "patternId": "chorus-strum",
+              "lyrics": "My shallow heart's the only thing that's beating"
+            },
+            {
+              "type": "strum",
+              "chordId": "Em",
+              "patternId": "chorus-strum",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "C",
+              "patternId": "chorus-strum",
+              "lyrics": "Sometimes I wish someone out there will find me"
+            },
+            {
+              "type": "strum",
+              "chordId": "G",
+              "patternId": "chorus-strum",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "D",
+              "patternId": "chorus-strum",
+              "lyrics": "Till then I walk alone"
+            },
+            {
+              "type": "strum",
+              "chordId": "B7",
+              "patternId": "chorus-strum",
+              "lyrics": ""
+            }
           ]
         },
         {
           "section": "Verse 3",
           "measures": [
-            { "type": "strum", "chordId": "Em", "patternId": "verse-interlude", "lyrics": "I'm walking down the line" },
-            { "type": "strum", "chordId": "G", "patternId": "verse-interlude", "lyrics": "That divides me somewhere in my mind" },
-            { "type": "strum", "chordId": "D", "patternId": "verse-interlude", "lyrics": "On the border line of the edge" },
-            { "type": "strum", "chordId": "A", "patternId": "verse-interlude", "lyrics": "And where I walk alone" }
+            {
+              "type": "strum",
+              "chordId": "Em",
+              "patternId": "verse-interlude",
+              "lyrics": "I'm walking down the line"
+            },
+            {
+              "type": "strum",
+              "chordId": "G",
+              "patternId": "verse-interlude",
+              "lyrics": "That divides me somewhere in my mind"
+            },
+            {
+              "type": "strum",
+              "chordId": "D",
+              "patternId": "verse-interlude",
+              "lyrics": "On the border line of the edge"
+            },
+            {
+              "type": "strum",
+              "chordId": "A",
+              "patternId": "verse-interlude",
+              "lyrics": "And where I walk alone"
+            }
           ]
         },
         {
           "section": "Verse 4",
           "measures": [
-            { "type": "strum", "chordId": "Em", "patternId": "verse-interlude", "lyrics": "Read between the lines" },
-            { "type": "strum", "chordId": "G", "patternId": "verse-interlude", "lyrics": "What's fucked up and everything's alright" },
-            { "type": "strum", "chordId": "D", "patternId": "verse-interlude", "lyrics": "Check my vital signs, to know I'm still alive" },
-            { "type": "strum", "chordId": "A", "patternId": "verse-interlude", "lyrics": "And I walk alone" }
+            {
+              "type": "strum",
+              "chordId": "Em",
+              "patternId": "verse-interlude",
+              "lyrics": "Read between the lines"
+            },
+            {
+              "type": "strum",
+              "chordId": "G",
+              "patternId": "verse-interlude",
+              "lyrics": "What's fucked up and everything's alright"
+            },
+            {
+              "type": "strum",
+              "chordId": "D",
+              "patternId": "verse-interlude",
+              "lyrics": "Check my vital signs, to know I'm still alive"
+            },
+            {
+              "type": "strum",
+              "chordId": "A",
+              "patternId": "verse-interlude",
+              "lyrics": "And I walk alone"
+            }
           ]
         },
         {
           "section": "Solo",
           "measures": [
-            { "type": "strum", "chordId": "C", "patternId": "chorus-strum", "lyrics": "" },
-            { "type": "strum", "chordId": "G", "patternId": "chorus-strum", "lyrics": "" },
-            { "type": "strum", "chordId": "D", "patternId": "chorus-strum", "lyrics": "" },
-            { "type": "strum", "chordId": "Em", "patternId": "chorus-strum", "lyrics": "" },
-            { "type": "strum", "chordId": "C", "patternId": "chorus-strum", "lyrics": "" },
-            { "type": "strum", "chordId": "G", "patternId": "chorus-strum", "lyrics": "" },
-            { "type": "strum", "chordId": "B", "patternId": "chorus-strum", "lyrics": "" },
-            { "type": "strum", "chordId": "B7", "patternId": "chorus-strum", "lyrics": "" }
+            {
+              "type": "strum",
+              "chordId": "C",
+              "patternId": "chorus-strum",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "G",
+              "patternId": "chorus-strum",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "D",
+              "patternId": "chorus-strum",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "Em",
+              "patternId": "chorus-strum",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "C",
+              "patternId": "chorus-strum",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "G",
+              "patternId": "chorus-strum",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "B",
+              "patternId": "chorus-strum",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "B7",
+              "patternId": "chorus-strum",
+              "lyrics": ""
+            }
           ]
         },
         {
           "section": "Outro",
           "measures": [
-            { "type": "strum", "chordId": "Em", "patternId": "verse-interlude", "lyrics": "" },
-            { "type": "strum", "chordId": "C", "patternId": "verse-interlude", "lyrics": "" },
-            { "type": "strum", "chordId": "D", "patternId": "verse-interlude", "lyrics": "" },
-            { "type": "strum", "chordId": "A/C#", "patternId": "verse-interlude", "lyrics": "" },
-            { "type": "strum", "chordId": "G", "patternId": "verse-interlude", "lyrics": "" },
-            { "type": "strum", "chordId": "D#5", "patternId": "verse-interlude", "lyrics": "" }
+            {
+              "type": "strum",
+              "chordId": "Em",
+              "patternId": "verse-interlude",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "C",
+              "patternId": "verse-interlude",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "D",
+              "patternId": "verse-interlude",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "A/C#",
+              "patternId": "verse-interlude",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "G",
+              "patternId": "verse-interlude",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "D#5",
+              "patternId": "verse-interlude",
+              "lyrics": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lonely-day",
+      "title": "Lonely Day",
+      "artist": "System of a Down",
+      "album": "Hypnotize",
+      "difficulty": "intermediate",
+      "capo": 0,
+      "bpm": 115,
+      "beatsPerMeasure": 3,
+      "ticksPerBeat": 2,
+      "description": "Official arrangement in Abm. Note the specific Dbm6/E chord which gives the verse its unique character.",
+      "tips": [
+        "The song is in 6/8 time (3 beats per measure in this schema).",
+        "The Dbm6/E chord is played as 0-4-2-3-2-x or simplified as an E chord with added notes.",
+        "Pay attention to the Bridge; it shifts to a sequence of Eb, Gb, E, and Abm.",
+        "The Solo rhythm follows the Chorus progression: B, Eb, Abm, E."
+      ],
+      "library": {
+        "chords": {
+          "Abm": {
+            "name": "Abm",
+            "fingers": [
+              [
+                4,
+                2,
+                2
+              ],
+              [
+                3,
+                2,
+                3
+              ],
+              [
+                2,
+                1,
+                1
+              ]
+            ],
+            "muted": [
+              6,
+              1
+            ],
+            "open": [
+              5
+            ]
+          },
+          "Dbm6/E": {
+            "name": "Dbm6/E",
+            "fingers": [
+              [
+                6,
+                3,
+                2
+              ],
+              [
+                3,
+                2,
+                1
+              ]
+            ],
+            "muted": [
+              1
+            ],
+            "open": [
+              5,
+              4,
+              2
+            ]
+          },
+          "B": {
+            "name": "B",
+            "fingers": [
+              [
+                5,
+                3,
+                3
+              ],
+              [
+                4,
+                2,
+                2
+              ],
+              [
+                2,
+                1,
+                1
+              ]
+            ],
+            "muted": [
+              6,
+              1
+            ],
+            "open": [
+              3
+            ]
+          },
+          "Eb7": {
+            "name": "Eb7",
+            "fingers": [
+              [
+                6,
+                2,
+                2
+              ],
+              [
+                5,
+                2,
+                3
+              ],
+              [
+                3,
+                1,
+                1
+              ]
+            ],
+            "muted": [
+              1
+            ],
+            "open": [
+              4,
+              2
+            ]
+          },
+          "E": {
+            "name": "E",
+            "fingers": [
+              [
+                6,
+                3,
+                3
+              ],
+              [
+                4,
+                3,
+                4
+              ],
+              [
+                3,
+                2,
+                2
+              ],
+              [
+                2,
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                1
+              ]
+            ],
+            "muted": [],
+            "open": [
+              5
+            ]
+          },
+          "Eb": {
+            "name": "Eb",
+            "fingers": [
+              [
+                6,
+                2,
+                2
+              ],
+              [
+                5,
+                2,
+                3
+              ],
+              [
+                4,
+                2,
+                4
+              ],
+              [
+                3,
+                1,
+                1
+              ]
+            ],
+            "muted": [],
+            "open": [
+              2,
+              1
+            ]
+          },
+          "Gb": {
+            "name": "Gb",
+            "fingers": [
+              [
+                6,
+                5,
+                2
+              ],
+              [
+                5,
+                5,
+                3
+              ],
+              [
+                4,
+                5,
+                4
+              ],
+              [
+                3,
+                4,
+                1
+              ]
+            ],
+            "muted": [
+              2,
+              1
+            ],
+            "open": []
+          }
+        },
+        "patterns": {
+          "arpeggio-picking": {
+            "id": "arpeggio-picking",
+            "name": "Standard Picking",
+            "ticks": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ]
+          },
+          "strum-pattern": {
+            "id": "strum-pattern",
+            "name": "Main Strum",
+            "ticks": [
+              "D",
+              null,
+              null,
+              "D",
+              "u",
+              "D"
+            ]
+          }
+        },
+        "riffs": {}
+      },
+      "timeline": [
+        {
+          "section": "Intro",
+          "measures": [
+            {
+              "type": "strum",
+              "chordId": "Abm",
+              "patternId": "arpeggio-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "Dbm6/E",
+              "patternId": "arpeggio-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "B",
+              "patternId": "arpeggio-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "Eb7",
+              "patternId": "arpeggio-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "Abm",
+              "patternId": "arpeggio-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "Dbm6/E",
+              "patternId": "arpeggio-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "B",
+              "patternId": "arpeggio-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "Eb7",
+              "patternId": "arpeggio-picking",
+              "lyrics": ""
+            }
+          ]
+        },
+        {
+          "section": "Verse 1",
+          "measures": [
+            {
+              "type": "strum",
+              "chordId": "Abm",
+              "patternId": "arpeggio-picking",
+              "lyrics": "Such a lonely day"
+            },
+            {
+              "type": "strum",
+              "chordId": "B",
+              "patternId": "arpeggio-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "Dbm6/E",
+              "patternId": "arpeggio-picking",
+              "lyrics": "And it's mine"
+            },
+            {
+              "type": "strum",
+              "chordId": "Eb7",
+              "patternId": "arpeggio-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "Abm",
+              "patternId": "arpeggio-picking",
+              "lyrics": "The most loneliest"
+            },
+            {
+              "type": "strum",
+              "chordId": "Dbm6/E",
+              "patternId": "arpeggio-picking",
+              "lyrics": "day of my life"
+            },
+            {
+              "type": "strum",
+              "chordId": "B",
+              "patternId": "arpeggio-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "Eb7",
+              "patternId": "arpeggio-picking",
+              "lyrics": ""
+            }
+          ]
+        },
+        {
+          "section": "Chorus",
+          "measures": [
+            {
+              "type": "strum",
+              "chordId": "Abm",
+              "patternId": "strum-pattern",
+              "lyrics": "The most loneliest"
+            },
+            {
+              "type": "strum",
+              "chordId": "E",
+              "patternId": "strum-pattern",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "B",
+              "patternId": "strum-pattern",
+              "lyrics": "day of my life"
+            },
+            {
+              "type": "strum",
+              "chordId": "Eb",
+              "patternId": "strum-pattern",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "Abm",
+              "patternId": "strum-pattern",
+              "lyrics": "The most loneliest"
+            },
+            {
+              "type": "strum",
+              "chordId": "E",
+              "patternId": "strum-pattern",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "B",
+              "patternId": "strum-pattern",
+              "lyrics": "day of my life"
+            },
+            {
+              "type": "strum",
+              "chordId": "Eb",
+              "patternId": "strum-pattern",
+              "lyrics": ""
+            }
+          ]
+        },
+        {
+          "section": "Bridge",
+          "measures": [
+            {
+              "type": "strum",
+              "chordId": "Eb",
+              "patternId": "strum-pattern",
+              "lyrics": "And if you go,"
+            },
+            {
+              "type": "strum",
+              "chordId": "Gb",
+              "patternId": "strum-pattern",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "E",
+              "patternId": "strum-pattern",
+              "lyrics": "I wanna go with you"
+            },
+            {
+              "type": "strum",
+              "chordId": "Abm",
+              "patternId": "strum-pattern",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "Eb",
+              "patternId": "strum-pattern",
+              "lyrics": "And if you die,"
+            },
+            {
+              "type": "strum",
+              "chordId": "Gb",
+              "patternId": "strum-pattern",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "E",
+              "patternId": "strum-pattern",
+              "lyrics": "I wanna die with you"
+            },
+            {
+              "type": "strum",
+              "chordId": "Abm",
+              "patternId": "strum-pattern",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "Eb",
+              "patternId": "strum-pattern",
+              "lyrics": "Take your hand"
+            },
+            {
+              "type": "strum",
+              "chordId": "Abm",
+              "patternId": "strum-pattern",
+              "lyrics": "And walk away"
+            }
+          ]
+        },
+        {
+          "section": "Outro",
+          "measures": [
+            {
+              "type": "strum",
+              "chordId": "Abm",
+              "patternId": "arpeggio-picking",
+              "lyrics": "Such a lonely day"
+            },
+            {
+              "type": "strum",
+              "chordId": "B",
+              "patternId": "arpeggio-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "Dbm6/E",
+              "patternId": "arpeggio-picking",
+              "lyrics": "And it's mine"
+            },
+            {
+              "type": "strum",
+              "chordId": "Eb7",
+              "patternId": "arpeggio-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "Abm",
+              "patternId": "arpeggio-picking",
+              "lyrics": "It's a day that I'm glad"
+            },
+            {
+              "type": "strum",
+              "chordId": "Dbm6/E",
+              "patternId": "arpeggio-picking",
+              "lyrics": "I survived"
+            },
+            {
+              "type": "strum",
+              "chordId": "B",
+              "patternId": "arpeggio-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "Eb7",
+              "patternId": "arpeggio-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "strum",
+              "chordId": "Abm",
+              "patternId": "arpeggio-picking",
+              "lyrics": ""
+            }
           ]
         }
       ]

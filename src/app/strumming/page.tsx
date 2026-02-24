@@ -29,6 +29,16 @@ function formatTime(seconds: number): string {
   return `${m}:${String(s).padStart(2, "0")}`;
 }
 
+function generateDefaultTicks(beatCount: number): Tick[] {
+  const ticks: Tick[] = [];
+  for (let i = 0; i < beatCount; i++) {
+    ticks.push("D", null);
+  }
+  return ticks;
+}
+
+const DEFAULT_BEAT_COUNT = 4;
+
 export default function StrummingPage() {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [mode, setMode] = useState<
@@ -38,16 +48,7 @@ export default function StrummingPage() {
   const [drillDuration, setDrillDuration] = useState(120); // 2 minutes default
   const [drillTime, setDrillTime] = useState(120);
   const [showBuilder, setShowBuilder] = useState(false);
-  const [customTicks, setCustomTicks] = useState<Tick[]>([
-    "D",
-    null,
-    "D",
-    null,
-    "D",
-    null,
-    "D",
-    null,
-  ]);
+  const [customTicks, setCustomTicks] = useState<Tick[]>(generateDefaultTicks(DEFAULT_BEAT_COUNT));
   const [customPatterns, setCustomPatterns] = useState<StrumPattern[]>([]);
   const [filterDifficulty, setFilterDifficulty] = useState<
     "all" | "beginner" | "intermediate"
@@ -126,7 +127,7 @@ export default function StrummingPage() {
     setCustomPatterns((prev) => [...prev, newPattern]);
     setSelectedIds((prev) => [...prev, id]);
     setShowBuilder(false);
-    setCustomTicks(["D", null, "D", null, "D", null, "D", null]);
+    setCustomTicks(generateDefaultTicks(DEFAULT_BEAT_COUNT));
   }, [customTicks]);
 
   // Prep phase countdown
@@ -416,16 +417,7 @@ export default function StrummingPage() {
                   <div className="flex gap-2">
                     <Button
                       onClick={() =>
-                        setCustomTicks([
-                          "D",
-                          null,
-                          "D",
-                          null,
-                          "D",
-                          null,
-                          "D",
-                          null,
-                        ])
+                        setCustomTicks(generateDefaultTicks(DEFAULT_BEAT_COUNT))
                       }
                       variant="secondary"
                       size="sm"

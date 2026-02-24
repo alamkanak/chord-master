@@ -4,7 +4,17 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 
 type Tick = "D" | "u" | null;
 
-const BEAT_LABELS = ["1", "+", "2", "+", "3", "+", "4", "+"];
+function generateBeatLabels(tickCount: number): string[] {
+  const labels: string[] = [];
+  for (let i = 0; i < tickCount; i++) {
+    if (i % 2 === 0) {
+      labels.push(String(Math.floor(i / 2) + 1));
+    } else {
+      labels.push("+");
+    }
+  }
+  return labels;
+}
 
 function tickToDisplay(tick: Tick): string {
   if (tick === "D") return "D";
@@ -48,6 +58,8 @@ export default function PatternVisualizer({
   };
 
   const arrow = arrowSizes[size];
+
+  const beatLabels = generateBeatLabels(ticks.length);
 
   return (
     <div className="flex items-end justify-center gap-0 sm:gap-0.5 w-full max-w-full">
@@ -99,7 +111,7 @@ export default function PatternVisualizer({
                   : "text-slate-400"
               }`}
             >
-              {BEAT_LABELS[i]}
+              {beatLabels[i]}
             </span>
           </div>
         );
