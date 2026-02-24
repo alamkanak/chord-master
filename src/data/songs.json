@@ -22,271 +22,98 @@
           "Em": {
             "name": "Em",
             "fingers": [
-              [
-                5,
-                2,
-                2
-              ],
-              [
-                4,
-                2,
-                3
-              ]
+              [5, 2, 2],
+              [4, 2, 3]
             ],
             "muted": [],
-            "open": [
-              6,
-              3,
-              2,
-              1
-            ]
+            "open": [6, 3, 2, 1]
           },
           "G": {
             "name": "G",
             "fingers": [
-              [
-                6,
-                3,
-                3
-              ],
-              [
-                5,
-                2,
-                2
-              ],
-              [
-                1,
-                3,
-                4
-              ]
+              [6, 3, 3],
+              [5, 2, 2],
+              [1, 3, 4]
             ],
             "muted": [],
-            "open": [
-              4,
-              3,
-              2
-            ]
+            "open": [4, 3, 2]
           },
           "D": {
             "name": "D",
             "fingers": [
-              [
-                3,
-                2,
-                1
-              ],
-              [
-                2,
-                3,
-                3
-              ],
-              [
-                1,
-                2,
-                2
-              ]
+              [3, 2, 1],
+              [2, 3, 3],
+              [1, 2, 2]
             ],
-            "muted": [
-              6,
-              5
-            ],
-            "open": [
-              4
-            ]
+            "muted": [6, 5],
+            "open": [4]
           },
           "A": {
             "name": "A",
             "fingers": [
-              [
-                4,
-                2,
-                1
-              ],
-              [
-                3,
-                2,
-                2
-              ],
-              [
-                2,
-                2,
-                3
-              ]
+              [4, 2, 1],
+              [3, 2, 2],
+              [2, 2, 3]
             ],
-            "muted": [
-              6
-            ],
-            "open": [
-              5,
-              1
-            ]
+            "muted": [6],
+            "open": [5, 1]
           },
           "C": {
             "name": "C",
             "fingers": [
-              [
-                5,
-                3,
-                3
-              ],
-              [
-                4,
-                2,
-                2
-              ],
-              [
-                2,
-                1,
-                1
-              ]
+              [5, 3, 3],
+              [4, 2, 2],
+              [2, 1, 1]
             ],
-            "muted": [
-              6
-            ],
-            "open": [
-              3,
-              1
-            ]
+            "muted": [6],
+            "open": [3, 1]
           },
           "B7": {
             "name": "B7",
             "fingers": [
-              [
-                5,
-                2,
-                2
-              ],
-              [
-                4,
-                1,
-                1
-              ],
-              [
-                3,
-                2,
-                3
-              ],
-              [
-                1,
-                2,
-                4
-              ]
+              [5, 2, 2],
+              [4, 1, 1],
+              [3, 2, 3],
+              [1, 2, 4]
             ],
-            "muted": [
-              6
-            ],
-            "open": [
-              2
-            ]
+            "muted": [6],
+            "open": [2]
           },
           "B": {
             "name": "B",
             "fingers": [
-              [
-                5,
-                2,
-                1
-              ],
-              [
-                4,
-                2,
-                1
-              ],
-              [
-                3,
-                2,
-                1
-              ],
-              [
-                2,
-                2,
-                1
-              ],
-              [
-                1,
-                2,
-                1
-              ],
-              [
-                4,
-                4,
-                2
-              ],
-              [
-                3,
-                4,
-                3
-              ],
-              [
-                2,
-                4,
-                4
-              ]
+              [5, 2, 1],
+              [4, 2, 1],
+              [3, 2, 1],
+              [2, 2, 1],
+              [1, 2, 1],
+              [4, 4, 2],
+              [3, 4, 3],
+              [2, 4, 4]
             ],
-            "muted": [
-              6
-            ],
+            "muted": [6],
             "open": []
           },
           "A/C#": {
             "name": "A/C#",
             "fingers": [
-              [
-                5,
-                4,
-                3
-              ],
-              [
-                4,
-                2,
-                1
-              ],
-              [
-                3,
-                2,
-                1
-              ],
-              [
-                2,
-                2,
-                1
-              ],
-              [
-                1,
-                2,
-                1
-              ],
-              [
-                1,
-                5,
-                4
-              ]
+              [5, 4, 3],
+              [4, 2, 1],
+              [3, 2, 1],
+              [2, 2, 1],
+              [1, 2, 1],
+              [1, 5, 4]
             ],
-            "muted": [
-              6
-            ],
+            "muted": [6],
             "open": []
           },
           "D#5": {
             "name": "D#5",
             "fingers": [
-              [
-                4,
-                1,
-                1
-              ],
-              [
-                3,
-                3,
-                3
-              ]
+              [4, 1, 1],
+              [3, 3, 3]
             ],
-            "muted": [
-              6,
-              5,
-              2,
-              1
-            ],
+            "muted": [6, 5, 2, 1],
             "open": []
           }
         },
@@ -294,30 +121,12 @@
           "verse-interlude": {
             "id": "verse-interlude",
             "name": "Verses & Interludes",
-            "ticks": [
-              "D",
-              null,
-              "D",
-              null,
-              "D",
-              "u",
-              "D",
-              "u"
-            ]
+            "ticks": ["D", null, "D", null, "D", "u", "D", "u"]
           },
           "chorus-strum": {
             "id": "chorus-strum",
             "name": "Chorus Strum",
-            "ticks": [
-              "D",
-              null,
-              "D",
-              "u",
-              null,
-              "u",
-              "D",
-              "u"
-            ]
+            "ticks": ["D", null, "D", "u", null, "u", "D", "u"]
           }
         },
         "riffs": {}
@@ -692,227 +501,74 @@
           "Abm": {
             "name": "Abm",
             "fingers": [
-              [
-                4,
-                2,
-                2
-              ],
-              [
-                3,
-                2,
-                3
-              ],
-              [
-                2,
-                1,
-                1
-              ]
+              [2, 1, 1],
+              [4, 2, 2],
+              [3, 2, 3]
             ],
-            "muted": [
-              6,
-              1
-            ],
-            "open": [
-              5
-            ]
-          },
-          "Dbm6/E": {
-            "name": "Dbm6/E",
-            "fingers": [
-              [
-                6,
-                3,
-                2
-              ],
-              [
-                3,
-                2,
-                1
-              ]
-            ],
-            "muted": [
-              1
-            ],
-            "open": [
-              5,
-              4,
-              2
-            ]
-          },
-          "B": {
-            "name": "B",
-            "fingers": [
-              [
-                5,
-                3,
-                3
-              ],
-              [
-                4,
-                2,
-                2
-              ],
-              [
-                2,
-                1,
-                1
-              ]
-            ],
-            "muted": [
-              6,
-              1
-            ],
-            "open": [
-              3
-            ]
-          },
-          "Eb7": {
-            "name": "Eb7",
-            "fingers": [
-              [
-                6,
-                2,
-                2
-              ],
-              [
-                5,
-                2,
-                3
-              ],
-              [
-                3,
-                1,
-                1
-              ]
-            ],
-            "muted": [
-              1
-            ],
-            "open": [
-              4,
-              2
-            ]
+            "muted": [6, 1],
+            "open": [5]
           },
           "E": {
             "name": "E",
             "fingers": [
-              [
-                6,
-                3,
-                3
-              ],
-              [
-                4,
-                3,
-                4
-              ],
-              [
-                3,
-                2,
-                2
-              ],
-              [
-                2,
-                1,
-                1
-              ],
-              [
-                1,
-                1,
-                1
-              ]
+              [5, 2, 2],
+              [4, 2, 3],
+              [3, 1, 1]
             ],
             "muted": [],
-            "open": [
-              5
-            ]
+            "open": [6, 2, 1]
           },
-          "Eb": {
-            "name": "Eb",
+          "B": {
+            "name": "B",
             "fingers": [
-              [
-                6,
-                2,
-                2
-              ],
-              [
-                5,
-                2,
-                3
-              ],
-              [
-                4,
-                2,
-                4
-              ],
-              [
-                3,
-                1,
-                1
-              ]
+              [5, 3, 3],
+              [4, 2, 2],
+              [2, 1, 1]
             ],
-            "muted": [],
-            "open": [
-              2,
-              1
-            ]
+            "muted": [6, 1],
+            "open": [3]
           },
-          "Gb": {
-            "name": "Gb",
+          "Eb7": {
+            "name": "Eb7",
             "fingers": [
-              [
-                6,
-                5,
-                2
-              ],
-              [
-                5,
-                5,
-                3
-              ],
-              [
-                4,
-                5,
-                4
-              ],
-              [
-                3,
-                4,
-                1
-              ]
+              [6, 2, 2],
+              [5, 2, 3],
+              [3, 1, 1]
             ],
-            "muted": [
-              2,
-              1
-            ],
-            "open": []
+            "muted": [1],
+            "open": [4, 2]
           }
         },
         "patterns": {
-          "strum-pattern": {
-            "id": "strum-pattern",
-            "name": "Main Strum",
-            "ticks": [
-              "D",
-              null,
-              null,
-              "D",
-              "u",
-              "D"
-            ]
+          "lonely-day-strum": {
+            "id": "lonely-day-strum",
+            "name": "Lonely Day Strum",
+            "ticks": ["D", null, null, "D", "u", "D"]
           }
         },
         "pickingPatterns": {
-          "arpeggio-picking": {
-            "id": "arpeggio-picking",
-            "name": "Standard Picking",
+          "verse-picking": {
+            "id": "verse-picking",
+            "name": "Verse Picking",
             "beats": [
               { "strings": [5], "fingers": ["p"] },
-              { "strings": [3], "fingers": ["i"] },
-              { "strings": [2], "fingers": ["m"] },
-              { "strings": [1], "fingers": ["a"] },
-              { "strings": [2], "fingers": ["m"] },
-              { "strings": [3], "fingers": ["i"] }
+              { "strings": [4], "fingers": ["i"] },
+              { "strings": [3], "fingers": ["m"] },
+              { "strings": [2], "fingers": ["a"] },
+              { "strings": [3], "fingers": ["m"] },
+              { "strings": [4], "fingers": ["i"] }
+            ]
+          },
+          "verse-picking-e": {
+            "id": "verse-picking-e",
+            "name": "Verse Picking (E Bass)",
+            "beats": [
+              { "strings": [6], "fingers": ["p"] },
+              { "strings": [4], "fingers": ["i"] },
+              { "strings": [3], "fingers": ["m"] },
+              { "strings": [2], "fingers": ["a"] },
+              { "strings": [3], "fingers": ["m"] },
+              { "strings": [4], "fingers": ["i"] }
             ]
           }
         },
@@ -923,282 +579,166 @@
           "section": "Intro",
           "measures": [
             {
-              "type": "strum",
+              "type": "picking",
               "chordId": "Abm",
-              "patternId": "arpeggio-picking",
+              "patternId": "verse-picking",
               "lyrics": ""
             },
             {
-              "type": "strum",
-              "chordId": "Dbm6/E",
-              "patternId": "arpeggio-picking",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "B",
-              "patternId": "arpeggio-picking",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "Eb7",
-              "patternId": "arpeggio-picking",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "Abm",
-              "patternId": "arpeggio-picking",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "Dbm6/E",
-              "patternId": "arpeggio-picking",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "B",
-              "patternId": "arpeggio-picking",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "Eb7",
-              "patternId": "arpeggio-picking",
-              "lyrics": ""
-            }
-          ]
-        },
-        {
-          "section": "Verse 1",
-          "measures": [
-            {
-              "type": "strum",
-              "chordId": "Abm",
-              "patternId": "arpeggio-picking",
-              "lyrics": "Such a lonely day"
-            },
-            {
-              "type": "strum",
-              "chordId": "B",
-              "patternId": "arpeggio-picking",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "Dbm6/E",
-              "patternId": "arpeggio-picking",
-              "lyrics": "And it's mine"
-            },
-            {
-              "type": "strum",
-              "chordId": "Eb7",
-              "patternId": "arpeggio-picking",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "Abm",
-              "patternId": "arpeggio-picking",
-              "lyrics": "The most loneliest"
-            },
-            {
-              "type": "strum",
-              "chordId": "Dbm6/E",
-              "patternId": "arpeggio-picking",
-              "lyrics": "day of my life"
-            },
-            {
-              "type": "strum",
-              "chordId": "B",
-              "patternId": "arpeggio-picking",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "Eb7",
-              "patternId": "arpeggio-picking",
-              "lyrics": ""
-            }
-          ]
-        },
-        {
-          "section": "Chorus",
-          "measures": [
-            {
-              "type": "strum",
-              "chordId": "Abm",
-              "patternId": "strum-pattern",
-              "lyrics": "The most loneliest"
-            },
-            {
-              "type": "strum",
+              "type": "picking",
               "chordId": "E",
-              "patternId": "strum-pattern",
+              "patternId": "verse-picking-e",
               "lyrics": ""
             },
             {
-              "type": "strum",
+              "type": "picking",
               "chordId": "B",
-              "patternId": "strum-pattern",
-              "lyrics": "day of my life"
+              "patternId": "verse-picking-e",
+              "lyrics": ""
             },
             {
-              "type": "strum",
-              "chordId": "Eb",
-              "patternId": "strum-pattern",
+              "type": "picking",
+              "chordId": "Eb7",
+              "patternId": "verse-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "picking",
+              "chordId": "Abm",
+              "patternId": "verse-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "picking",
+              "chordId": "E",
+              "patternId": "verse-picking-e",
+              "lyrics": ""
+            },
+            {
+              "type": "picking",
+              "chordId": "B",
+              "patternId": "verse-picking-e",
+              "lyrics": ""
+            },
+            {
+              "type": "picking",
+              "chordId": "Eb7",
+              "patternId": "verse-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "picking",
+              "chordId": "Abm",
+              "patternId": "verse-picking",
+              "lyrics": "Such a"
+            },
+            {
+              "type": "picking",
+              "chordId": "E",
+              "patternId": "verse-picking-e",
+              "lyrics": "lonely day"
+            },
+            {
+              "type": "picking",
+              "chordId": "B",
+              "patternId": "verse-picking-e",
+              "lyrics": "and it's"
+            },
+            {
+              "type": "picking",
+              "chordId": "Eb7",
+              "patternId": "verse-picking",
+              "lyrics": "mine"
+            },
+            {
+              "type": "picking",
+              "chordId": "Abm",
+              "patternId": "verse-picking",
+              "lyrics": "The most"
+            },
+            {
+              "type": "picking",
+              "chordId": "E",
+              "patternId": "verse-picking-e",
+              "lyrics": "loneliest day of my"
+            },
+            {
+              "type": "picking",
+              "chordId": "B",
+              "patternId": "verse-picking-e",
+              "lyrics": "life"
+            },
+            {
+              "type": "picking",
+              "chordId": "Eb7",
+              "patternId": "verse-picking",
+              "lyrics": ""
+            },
+            {
+              "type": "picking",
+              "chordId": "Abm",
+              "patternId": "verse-picking",
+              "lyrics": "Such a"
+            },
+            {
+              "type": "picking",
+              "chordId": "E",
+              "patternId": "verse-picking-e",
+              "lyrics": "lonely day"
+            },
+            {
+              "type": "picking",
+              "chordId": "B",
+              "patternId": "verse-picking-e",
+              "lyrics": "should be"
+            },
+            {
+              "type": "picking",
+              "chordId": "Eb7",
+              "patternId": "verse-picking",
+              "lyrics": "banned"
+            },
+            {
+              "type": "picking",
+              "chordId": "Abm",
+              "patternId": "verse-picking",
+              "lyrics": "It's a"
+            },
+            {
+              "type": "picking",
+              "chordId": "E",
+              "patternId": "verse-picking-e",
+              "lyrics": "day that I can't"
+            },
+            {
+              "type": "picking",
+              "chordId": "B",
+              "patternId": "verse-picking-e",
+              "lyrics": "stand"
+            },
+            {
+              "type": "picking",
+              "chordId": "Eb7",
+              "patternId": "verse-picking",
               "lyrics": ""
             },
             {
               "type": "strum",
               "chordId": "Abm",
-              "patternId": "strum-pattern",
-              "lyrics": "The most loneliest"
-            },
-            {
-              "type": "strum",
-              "chordId": "E",
-              "patternId": "strum-pattern",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "B",
-              "patternId": "strum-pattern",
-              "lyrics": "day of my life"
-            },
-            {
-              "type": "strum",
-              "chordId": "Eb",
-              "patternId": "strum-pattern",
-              "lyrics": ""
-            }
-          ]
-        },
-        {
-          "section": "Bridge",
-          "measures": [
-            {
-              "type": "strum",
-              "chordId": "Eb",
-              "patternId": "strum-pattern",
-              "lyrics": "And if you go,"
-            },
-            {
-              "type": "strum",
-              "chordId": "Gb",
-              "patternId": "strum-pattern",
+              "patternId": "lonely-day-strum",
               "lyrics": ""
             },
             {
               "type": "strum",
               "chordId": "E",
-              "patternId": "strum-pattern",
-              "lyrics": "I wanna go with you"
-            },
-            {
-              "type": "strum",
-              "chordId": "Abm",
-              "patternId": "strum-pattern",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "Eb",
-              "patternId": "strum-pattern",
-              "lyrics": "And if you die,"
-            },
-            {
-              "type": "strum",
-              "chordId": "Gb",
-              "patternId": "strum-pattern",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "E",
-              "patternId": "strum-pattern",
-              "lyrics": "I wanna die with you"
-            },
-            {
-              "type": "strum",
-              "chordId": "Abm",
-              "patternId": "strum-pattern",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "Eb",
-              "patternId": "strum-pattern",
-              "lyrics": "Take your hand"
-            },
-            {
-              "type": "strum",
-              "chordId": "Abm",
-              "patternId": "strum-pattern",
-              "lyrics": "And walk away"
-            }
-          ]
-        },
-        {
-          "section": "Outro",
-          "measures": [
-            {
-              "type": "strum",
-              "chordId": "Abm",
-              "patternId": "arpeggio-picking",
-              "lyrics": "Such a lonely day"
+              "patternId": "lonely-day-strum",
+              "lyrics": "The most loneliest day of my"
             },
             {
               "type": "strum",
               "chordId": "B",
-              "patternId": "arpeggio-picking",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "Dbm6/E",
-              "patternId": "arpeggio-picking",
-              "lyrics": "And it's mine"
-            },
-            {
-              "type": "strum",
-              "chordId": "Eb7",
-              "patternId": "arpeggio-picking",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "Abm",
-              "patternId": "arpeggio-picking",
-              "lyrics": "It's a day that I'm glad"
-            },
-            {
-              "type": "strum",
-              "chordId": "Dbm6/E",
-              "patternId": "arpeggio-picking",
-              "lyrics": "I survived"
-            },
-            {
-              "type": "strum",
-              "chordId": "B",
-              "patternId": "arpeggio-picking",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "Eb7",
-              "patternId": "arpeggio-picking",
-              "lyrics": ""
-            },
-            {
-              "type": "strum",
-              "chordId": "Abm",
-              "patternId": "arpeggio-picking",
-              "lyrics": ""
+              "patternId": "lonely-day-strum",
+              "lyrics": "life"
             }
           ]
         }

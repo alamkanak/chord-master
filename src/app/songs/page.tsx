@@ -77,13 +77,20 @@ interface StrumMeasure {
   lyrics: string;
 }
 
+interface PickingMeasure {
+  type: "picking";
+  chordId: string;
+  patternId: string;
+  lyrics: string;
+}
+
 interface RiffMeasure {
   type: "riff";
   riffId: string;
   lyrics: string;
 }
 
-type Measure = StrumMeasure | RiffMeasure;
+type Measure = StrumMeasure | PickingMeasure | RiffMeasure;
 
 interface TimelineSection {
   section: string;
@@ -114,7 +121,7 @@ interface Song {
 interface FlatMeasure {
   sectionName: string;
   sectionIdx: number;
-  type: "strum" | "riff";
+  type: "strum" | "picking" | "riff";
   chordId?: string;
   patternId?: string;
   riffId?: string;
@@ -315,8 +322,8 @@ export default function SongsPage() {
     const chordSet = new Set<string>();
     song.timeline.forEach((section) => {
       section.measures.forEach((m) => {
-        if (m.type === "strum" && (m as StrumMeasure).chordId) {
-          chordSet.add((m as StrumMeasure).chordId);
+        if ((m.type === "strum" || m.type === "picking") && (m as StrumMeasure | PickingMeasure).chordId) {
+          chordSet.add((m as StrumMeasure | PickingMeasure).chordId);
         }
       });
     });
@@ -673,7 +680,7 @@ export default function SongsPage() {
       100;
 
     // Current content
-    const isStrum = currentMeasure.type === "strum";
+    const isStrum = currentMeasure.type === "strum" || currentMeasure.type === "picking";
     const currentChord = isStrum
       ? chordLib[currentMeasure.chordId!]
       : null;
@@ -692,7 +699,7 @@ export default function SongsPage() {
         : null;
 
     // Next content
-    const nextIsStrum = nextMeasure?.type === "strum";
+    const nextIsStrum = nextMeasure?.type === "strum" || nextMeasure?.type === "picking";
     const nextChord = nextIsStrum && nextMeasure?.chordId
       ? chordLib[nextMeasure.chordId]
       : null;
