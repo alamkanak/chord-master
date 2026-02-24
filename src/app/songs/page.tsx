@@ -699,7 +699,7 @@ export default function SongsPage() {
         key: `chord-${i}`,
         content: mChord ? (
           <div
-            className="w-full max-w-45 [&>svg]:max-w-full"
+            className="w-full max-w-36 sm:max-w-45 [&>svg]:max-w-full [&>svg]:max-h-full"
             dangerouslySetInnerHTML={{
               __html: createChordSVG(mChord as ChordData, true),
             }}
@@ -803,11 +803,10 @@ export default function SongsPage() {
           />
 
           {/* Chord / Riff Carousel */}
-          <div className="shrink-0 py-1 md:py-3">
+          <div className="shrink-0 py-0 sm:py-1 md:py-3">
             <MeasureCarousel
               items={chordCarouselItems}
               activeIndex={currentMeasureIdx}
-              subtitle={`Measure ${currentMeasureIdx + 1} of ${totalMeasures}`}
             />
           </div>
 
@@ -851,9 +850,9 @@ export default function SongsPage() {
             </div>
 
             {/* Transport row */}
-            <div className="flex items-center justify-between">
+            <div className="grid grid-cols-3 items-center">
               {/* Left: Speed + Restart */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5 justify-self-start">
                 <select
                   value={playbackSpeed}
                   onChange={(e) => setPlaybackSpeed(Number(e.target.value))}
@@ -875,7 +874,7 @@ export default function SongsPage() {
               </div>
 
               {/* Center: Transport */}
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1 justify-self-center">
                 <button
                   onClick={skipBackward}
                   className="p-2.5 rounded-xl hover:bg-white/6 transition-colors cursor-pointer"
@@ -907,7 +906,7 @@ export default function SongsPage() {
               </div>
 
               {/* Right: Measure info */}
-              <div className="text-right min-w-14">
+              <div className="text-right justify-self-end min-w-14">
                 <div className="text-xs font-bold text-slate-600 uppercase tracking-wider">
                   Measure
                 </div>

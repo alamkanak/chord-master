@@ -117,7 +117,7 @@ export default function MeasureCarousel({
         >
           {items[activeIndex] && (
             <div className="rounded-2xl overflow-hidden">
-              <div className="p-3 md:p-4 flex items-center justify-center">
+              <div className="p-2 sm:p-3 md:p-4 flex items-center justify-center">
                 {items[activeIndex].content}
               </div>
             </div>
@@ -162,7 +162,7 @@ export default function MeasureCarousel({
                 }`}
               >
                 {/* Content */}
-                <div className="p-3 md:p-4 flex items-center justify-center">
+                <div className="p-2 sm:p-3 md:p-4 flex items-center justify-center">
                   {item.content}
                 </div>
               </div>
