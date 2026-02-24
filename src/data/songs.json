@@ -77,29 +77,29 @@
           "intro-riff": {
             "id": "intro-riff",
             "name": "Intro Riff",
-            "description": "The iconic opening riff — play on strings 4 and 5",
+            "description": "The iconic opening riff — play on strings 5 and 6 (A and low E)",
             "tuning": ["E", "A", "D", "G", "B", "e"],
             "notes": [
-              { "string": 5, "fret": 2, "beat": 1 },
-              { "string": 5, "fret": 2, "beat": 1.5 },
-              { "string": 4, "fret": 2, "beat": 2 },
-              { "string": 4, "fret": 0, "beat": 2.5 },
-              { "string": 5, "fret": 0, "beat": 3 },
+              { "string": 6, "fret": 0, "beat": 1 },
+              { "string": 6, "fret": 0, "beat": 1.5 },
+              { "string": 5, "fret": 2, "beat": 2 },
+              { "string": 5, "fret": 2, "beat": 2.5 },
+              { "string": 5, "fret": 2, "beat": 3 },
               { "string": 5, "fret": 0, "beat": 3.5 },
-              { "string": 4, "fret": 2, "beat": 4 },
-              { "string": 4, "fret": 0, "beat": 4.5 }
+              { "string": 6, "fret": 0, "beat": 4 },
+              { "string": 6, "fret": 3, "beat": 4.5 }
             ]
           },
           "interlude-riff": {
             "id": "interlude-riff",
             "name": "Interlude Riff",
-            "description": "Played between verse and chorus",
+            "description": "Played between verse and chorus — on strings 5 and 6",
             "tuning": ["E", "A", "D", "G", "B", "e"],
             "notes": [
-              { "string": 5, "fret": 2, "beat": 1 },
-              { "string": 5, "fret": 0, "beat": 2 },
-              { "string": 4, "fret": 2, "beat": 3 },
-              { "string": 4, "fret": 0, "beat": 4 }
+              { "string": 6, "fret": 0, "beat": 1 },
+              { "string": 5, "fret": 2, "beat": 2 },
+              { "string": 5, "fret": 0, "beat": 3 },
+              { "string": 6, "fret": 3, "beat": 4 }
             ]
           }
         }
@@ -150,10 +150,10 @@
             { "type": "strum", "chordId": "G", "patternId": "boulevard-chorus", "lyrics": "" },
             { "type": "strum", "chordId": "D", "patternId": "boulevard-chorus", "lyrics": "My shallow heart's the only thing that's beating" },
             { "type": "strum", "chordId": "Em", "patternId": "boulevard-chorus", "lyrics": "" },
-            { "type": "strum", "chordId": "C", "patternId": "boulevard-chorus", "lyrics": "Sometimes I wish someone out there will find me" },
+            { "type": "strum", "chordId": "C", "patternId": "boulevard-chorus", "lyrics": "Sometimes I wish someone up there will find me" },
             { "type": "strum", "chordId": "G", "patternId": "boulevard-chorus", "lyrics": "" },
             { "type": "strum", "chordId": "D", "patternId": "boulevard-chorus", "lyrics": "'Til then I walk alone" },
-            { "type": "strum", "chordId": "Em", "patternId": "boulevard-chorus", "lyrics": "" }
+            { "type": "strum", "chordId": "B7", "patternId": "boulevard-chorus", "lyrics": "" }
           ]
         },
         {
@@ -195,10 +195,10 @@
             { "type": "strum", "chordId": "G", "patternId": "boulevard-chorus", "lyrics": "" },
             { "type": "strum", "chordId": "D", "patternId": "boulevard-chorus", "lyrics": "My shallow heart's the only thing that's beating" },
             { "type": "strum", "chordId": "Em", "patternId": "boulevard-chorus", "lyrics": "" },
-            { "type": "strum", "chordId": "C", "patternId": "boulevard-chorus", "lyrics": "Sometimes I wish someone out there will find me" },
+            { "type": "strum", "chordId": "C", "patternId": "boulevard-chorus", "lyrics": "Sometimes I wish someone up there will find me" },
             { "type": "strum", "chordId": "G", "patternId": "boulevard-chorus", "lyrics": "" },
             { "type": "strum", "chordId": "D", "patternId": "boulevard-chorus", "lyrics": "'Til then I walk alone" },
-            { "type": "strum", "chordId": "Em", "patternId": "boulevard-chorus", "lyrics": "" }
+            { "type": "strum", "chordId": "B7", "patternId": "boulevard-chorus", "lyrics": "" }
           ]
         },
         {
