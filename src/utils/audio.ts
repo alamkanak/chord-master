@@ -21,12 +21,19 @@ export async function initAudio(): Promise<boolean> {
     }
     
     isAudioInitialized = audioContext.state === "running";
-    console.log(`Audio initialized: ${isAudioInitialized}, state: ${audioContext.state}`);
     return isAudioInitialized;
   } catch (error) {
     console.error("Failed to initialize audio:", error);
     return false;
   }
+}
+
+/**
+ * Returns the shared AudioContext singleton, or null if initAudio() hasn't been called.
+ * Used by guitarAudio.ts so both modules share the exact same context instance.
+ */
+export function getAudioContext(): AudioContext | null {
+  return audioContext;
 }
 
 /**

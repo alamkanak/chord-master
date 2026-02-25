@@ -5,6 +5,7 @@
  */
 
 import type { ChordData } from "@/utils/chordSvg";
+import { getAudioContext as getSharedCtx } from "@/utils/audio";
 
 // Standard tuning frequencies (Hz) for each string
 const STRING_FREQUENCIES: Record<number, number> = {
@@ -16,24 +17,20 @@ const STRING_FREQUENCIES: Record<number, number> = {
   1: 329.63, // E4
 };
 
-let audioContext: AudioContext | null = null;
+/**
+ * Get the shared AudioContext (same singleton as audio.ts).
+ * Returns null if initAudio() has not been called yet.
+ */
+function getAudioContext(): AudioContext | null {
+  return getSharedCtx();
+}
 
 /**
- * Get or create the shared AudioContext.
- * Must be called from a user gesture the first time on iOS.
+ * Export the shared AudioContext for external use (e.g. PlaybackEngine clock).
+ * Returns null if initAudio() has not been called yet.
  */
-function getAudioContext(): AudioContext {
-  if (!audioContext) {
-    const AudioCtx =
-      window.AudioContext ||
-      (window as unknown as { webkitAudioContext: typeof AudioContext })
-        .webkitAudioContext;
-    audioContext = new AudioCtx();
-  }
-  if (audioContext.state === "suspended") {
-    audioContext.resume();
-  }
-  return audioContext;
+export function getSharedAudioContext(): AudioContext | null {
+  return getSharedCtx();
 }
 
 /**
@@ -76,8 +73,18 @@ function getChordFrequencies(
   return notes;
 }
 
+// Pre-computed harmonic ratios/gains (avoid allocation inside hot path)
+const HARMONICS = [
+  { ratio: 1, gain: 1.0 },
+  { ratio: 2, gain: 0.5 },
+  { ratio: 3, gain: 0.25 },
+  { ratio: 4, gain: 0.12 },
+  { ratio: 5, gain: 0.06 },
+] as const;
+
 /**
  * Play a single guitar-like note using additive synthesis with harmonics.
+ * @param atTime - WebAudio absolute time to start; defaults to ctx.currentTime
  */
 function playGuitarNote(
   ctx: AudioContext,
@@ -86,14 +93,6 @@ function playGuitarNote(
   duration: number,
   volume: number
 ): void {
-  const harmonics = [
-    { ratio: 1, gain: 1.0 },
-    { ratio: 2, gain: 0.5 },
-    { ratio: 3, gain: 0.25 },
-    { ratio: 4, gain: 0.12 },
-    { ratio: 5, gain: 0.06 },
-  ];
-
   const masterGain = ctx.createGain();
   masterGain.gain.setValueAtTime(0, startTime);
   // Fast attack
@@ -106,14 +105,14 @@ function playGuitarNote(
   masterGain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
   masterGain.connect(ctx.destination);
 
-  for (const harmonic of harmonics) {
+  for (const harmonic of HARMONICS) {
     const osc = ctx.createOscillator();
     const hGain = ctx.createGain();
 
     osc.type = "triangle";
     osc.frequency.setValueAtTime(frequency * harmonic.ratio, startTime);
-    // Slight detune for warmth
-    osc.detune.setValueAtTime(Math.random() * 4 - 2, startTime);
+    // Fixed slight detune for warmth (no Math.random in hot path)
+    osc.detune.setValueAtTime(harmonic.ratio * 0.7 - 1.4, startTime);
 
     hGain.gain.setValueAtTime(harmonic.gain, startTime);
     // Higher harmonics decay faster
@@ -137,21 +136,26 @@ type StrumDirection = "down" | "up";
  *
  * @param chord      – Chord data from chords.json
  * @param direction  – "down" (low→high) or "up" (high→low)
- * @param strumSpeed – Seconds between each string hit (default 0.02)
+ * @param strumSpeed – Seconds between each string hit (default 0.015)
  * @param duration   – Note ring duration in seconds (default 2.0)
- * @param volume     – Master volume 0–1 (default 0.15)
+ * @param volume     – Master volume 0–1 (default 0.12)
+ * @param atTime     – WebAudio absolute time to schedule at (default: now)
  */
 export function playChordStrum(
   chord: ChordData,
   direction: StrumDirection = "down",
-  strumSpeed: number = 0.02,
+  strumSpeed: number = 0.015,
   duration: number = 2.0,
-  volume: number = 0.15
+  volume: number = 0.12,
+  atTime?: number
 ): void {
   const ctx = getAudioContext();
+  if (!ctx) return;
   const notes = getChordFrequencies(chord);
 
   if (notes.length === 0) return;
+
+  const startTime = atTime !== undefined ? atTime : ctx.currentTime;
 
   // down strum = 6→1 (low to high), up strum = 1→6
   const sorted =
@@ -159,12 +163,9 @@ export function playChordStrum(
       ? [...notes].sort((a, b) => b.string - a.string)
       : [...notes].sort((a, b) => a.string - b.string);
 
-  const now = ctx.currentTime;
-
   sorted.forEach((note, index) => {
     const offset = index * strumSpeed;
-    const noteVolume = volume * (0.85 + Math.random() * 0.15);
-    playGuitarNote(ctx, note.frequency, now + offset, duration, noteVolume);
+    playGuitarNote(ctx, note.frequency, startTime + offset, duration, volume);
   });
 }
 
@@ -178,6 +179,7 @@ export function playString(
   volume: number = 0.15
 ): void {
   const ctx = getAudioContext();
+  if (!ctx) return;
   let fret = 0;
 
   if (chord.open.includes(stringNum) || chord.muted.includes(stringNum)) {
@@ -195,30 +197,39 @@ export function playString(
 
 /**
  * Play a single note by string number and fret position (for riffs).
+ * @param atTime – WebAudio absolute time to schedule at (default: now)
  */
 export function playRiffNote(
   stringNum: number,
   fret: number,
   duration: number = 1.0,
-  volume: number = 0.15
+  volume: number = 0.15,
+  atTime?: number
 ): void {
   const ctx = getAudioContext();
+  if (!ctx) return;
   const frequency = getStringFrequency(stringNum, fret);
   if (frequency === 0) return;
-  playGuitarNote(ctx, frequency, ctx.currentTime, duration, volume);
+  const startTime = atTime !== undefined ? atTime : ctx.currentTime;
+  playGuitarNote(ctx, frequency, startTime, duration, volume);
 }
 
 /**
  * Play a picking beat — one or more strings plucked simultaneously
  * in the context of a chord.
+ * @param atTime – WebAudio absolute time to schedule at (default: now)
  */
 export function playPickingBeat(
   chord: ChordData,
   strings: number[],
   duration: number = 1.0,
-  volume: number = 0.15
+  volume: number = 0.15,
+  atTime?: number
 ): void {
   const ctx = getAudioContext();
+  if (!ctx) return;
+  const startTime = atTime !== undefined ? atTime : ctx.currentTime;
+
   const fretMap = new Map<number, number>();
   for (const [stringNum, fret] of chord.fingers) {
     fretMap.set(stringNum, fret);
@@ -235,8 +246,7 @@ export function playPickingBeat(
     }
 
     const frequency = getStringFrequency(s, fret);
-    const noteVolume = volume * (0.9 + Math.random() * 0.1);
-    playGuitarNote(ctx, frequency, ctx.currentTime, duration, noteVolume);
+    playGuitarNote(ctx, frequency, startTime, duration, volume);
   }
 }
 
@@ -262,6 +272,7 @@ export function playStrumPattern(
   volume: number = 0.18
 ): void {
   const ctx = getAudioContext();
+  if (!ctx) return;
   const eighthNoteDuration = 60 / bpm / 2; // seconds per eighth note
   const now = ctx.currentTime;
 
@@ -313,7 +324,6 @@ export function playStrumPattern(
     const h3Gain = ctx.createGain();
     osc3.type = "sine";
     osc3.frequency.setValueAtTime(baseFreq * 2, startTime);
-    osc3.detune.setValueAtTime(Math.random() * 6 - 3, startTime);
     h3Gain.gain.setValueAtTime(0.15, startTime);
     h3Gain.gain.exponentialRampToValueAtTime(
       0.001,
