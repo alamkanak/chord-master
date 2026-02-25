@@ -1132,6 +1132,75 @@
           ]
         }
       ]
+    },
+    {
+      "id": "come-as-you-are",
+      "title": "Come As You Are",
+      "artist": "Nirvana",
+      "album": "Nevermind",
+      "difficulty": "intermediate",
+      "capo": 0,
+      "bpm": 120,
+      "beatsPerMeasure": 4,
+      "ticksPerBeat": 2,
+      "description": "Classic grunge track from Nirvana's 1991 album Nevermind, featuring a hypnotic single-note riff and simple two-chord verse structure.",
+      "tips": [
+        "The song is in standard 4/4 time at around 120 BPM.",
+        "The intro riff is a single-note chromatic line on the low E and A strings — use your index and middle fingers.",
+        "Verses use just two chords: Em and G, with a clean tone.",
+        "The chorus shifts to heavier strumming on D and C chords.",
+        "Use a chorus/flanger effect if available to match the original tone."
+      ],
+      "library": {
+        "chords": {},
+        "patterns": {},
+        "pickingPatterns": {},
+        "riffs": {
+          "intro-riff": {
+            "id": "intro-riff",
+            "name": "Intro Riff",
+            "description": "Hypnotic chromatic riff on the low E and A strings with a clean, chorused tone.",
+            "tuning": ["E", "A", "D", "G", "B", "e"],
+            "notes": [
+              { "string": 6, "fret": 0, "beat": 1 },
+              { "string": 6, "fret": 0, "beat": 2 },
+              { "string": 6, "fret": 1, "beat": 3 },
+              { "string": 6, "fret": 2, "beat": 4 },
+              { "string": 5, "fret": 0, "beat": 5 },
+              { "string": 6, "fret": 2, "beat": 6 },
+              { "string": 5, "fret": 0, "beat": 7 },
+              { "string": 6, "fret": 2, "beat": 8 },
+              { "string": 6, "fret": 2, "beat": 9 },
+              { "string": 6, "fret": 1, "beat": 10 },
+              { "string": 6, "fret": 0, "beat": 11 },
+              { "string": 5, "fret": 2, "beat": 12 },
+              { "string": 6, "fret": 0, "beat": 13 },
+              { "string": 6, "fret": 0, "beat": 14 },
+              { "string": 6, "fret": 0, "beat": 15 },
+              { "string": 5, "fret": 2, "beat": 16 },
+              { "string": 6, "fret": 0, "beat": 17 },
+              { "string": 6, "fret": 1, "beat": 18 }
+            ]
+          }
+        }
+      },
+      "timeline": [
+        {
+          "section": "Intro",
+          "measures": [
+            {
+              "type": "riff",
+              "riffId": "intro-riff",
+              "lyrics": ""
+            },
+            {
+              "type": "riff",
+              "riffId": "intro-riff",
+              "lyrics": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

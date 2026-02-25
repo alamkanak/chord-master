@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef, useEffect } from "react";
+
 interface RiffNote {
   string: number; // 1=high e, 6=low E
   fret: number;
@@ -28,11 +30,13 @@ export default function RiffDiagram({
   activeBeat = null,
 }: RiffDiagramProps) {
   const strings = [1, 2, 3, 4, 5, 6];
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   // Find the range of beats to display
   const beats = riff.notes.map((n) => n.beat);
   const maxBeat = Math.max(...beats);
   const totalSlots = Math.ceil(maxBeat + 0.5);
+  const slotCount = totalSlots * 2;
 
   const sizeClasses = {
     sm: {
@@ -42,6 +46,7 @@ export default function RiffDiagram({
       note: "text-xs w-5 h-5",
       stringHeight: "h-5",
       gap: "gap-0",
+      minSlotWidth: 20,
     },
     md: {
       container: "p-4",
@@ -50,6 +55,7 @@ export default function RiffDiagram({
       note: "text-sm w-6 h-6",
       stringHeight: "h-6",
       gap: "gap-0.5",
+      minSlotWidth: 24,
     },
     lg: {
       container: "p-5 md:p-6",
@@ -58,10 +64,33 @@ export default function RiffDiagram({
       note: "text-base w-7 h-7 md:w-8 md:h-8",
       stringHeight: "h-7 md:h-8",
       gap: "gap-0.5",
+      minSlotWidth: 28,
     },
   };
 
   const s = sizeClasses[size];
+
+  // Use a fixed minimum width per slot so notes never overlap
+  const totalMinWidth = slotCount * s.minSlotWidth;
+
+  // Auto-scroll to keep active beat visible
+  useEffect(() => {
+    if (activeBeat === null || !scrollRef.current) return;
+    const container = scrollRef.current;
+    // Find which slot index corresponds to activeBeat
+    const slotIndex = Math.round(activeBeat * 2) - 1;
+    if (slotIndex < 0 || slotIndex >= slotCount) return;
+
+    const slotWidth = Math.max(container.scrollWidth / slotCount, s.minSlotWidth);
+    const targetCenter = slotIndex * slotWidth + slotWidth / 2;
+    const containerWidth = container.clientWidth;
+    const scrollTarget = targetCenter - containerWidth / 2;
+
+    container.scrollTo({
+      left: Math.max(0, scrollTarget),
+      behavior: "smooth",
+    });
+  }, [activeBeat, slotCount, s.minSlotWidth]);
 
   return (
     <div className={`${s.container} w-full`}>
@@ -71,91 +100,101 @@ export default function RiffDiagram({
         <span className={`${s.title} text-slate-800`}>{riff.name}</span>
       </div>
 
-      {/* Tab Grid */}
-      <div className={`flex flex-col ${s.gap} font-mono relative`}>
-        {strings.map((stringNum) => {
-          const stringNotes = riff.notes.filter(
-            (n) => n.string === stringNum
-          );
+      {/* Scrollable tab grid */}
+      <div
+        ref={scrollRef}
+        className="overflow-x-auto scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent"
+      >
+        <div
+          className={`flex flex-col ${s.gap} font-mono relative`}
+          style={{ minWidth: `${totalMinWidth}px` }}
+        >
+          {strings.map((stringNum) => {
+            const stringNotes = riff.notes.filter(
+              (n) => n.string === stringNum
+            );
 
-          return (
-            <div
-              key={stringNum}
-              className={`flex items-center ${s.stringHeight} relative`}
-            >
-              {/* String label */}
-              <span
-                className={`${s.label} text-slate-400 font-bold w-5 shrink-0 text-right mr-2`}
+            return (
+              <div
+                key={stringNum}
+                className={`flex items-center ${s.stringHeight} relative`}
               >
-                {STRING_LABELS[stringNum - 1]}
-              </span>
+                {/* String label */}
+                <span
+                  className={`${s.label} text-slate-400 font-bold w-5 shrink-0 text-right mr-2`}
+                >
+                  {STRING_LABELS[stringNum - 1]}
+                </span>
 
-              {/* String line + notes */}
-              <div className="flex-1 relative flex items-center">
-                {/* String line background */}
-                <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-px bg-slate-300" />
+                {/* String line + notes */}
+                <div className="flex-1 relative flex items-center">
+                  {/* String line background */}
+                  <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-px bg-slate-300" />
 
-                {/* Beat slots */}
-                <div className="flex-1 flex">
-                  {Array.from({ length: totalSlots * 2 }, (_, i) => {
-                    const slotBeat = (i + 1) * 0.5;
-                    const note = stringNotes.find(
-                      (n) => Math.abs(n.beat - slotBeat) < 0.01
-                    );
-                    const isActive =
-                      activeBeat !== null &&
-                      note &&
-                      Math.abs(note.beat - activeBeat) < 0.01;
+                  {/* Beat slots */}
+                  <div className="flex-1 flex">
+                    {Array.from({ length: slotCount }, (_, i) => {
+                      const slotBeat = (i + 1) * 0.5;
+                      const note = stringNotes.find(
+                        (n) => Math.abs(n.beat - slotBeat) < 0.01
+                      );
+                      const isActive =
+                        activeBeat !== null &&
+                        note &&
+                        Math.abs(note.beat - activeBeat) < 0.01;
 
-                    return (
-                      <div
-                        key={i}
-                        className="flex-1 flex items-center justify-center relative z-10"
-                      >
-                        {note ? (
-                          <span
-                            className={`${s.note} flex items-center justify-center rounded font-bold transition-colors duration-150 ${
-                              isActive
-                                ? "bg-amber-400 text-slate-900 ring-2 ring-amber-300 shadow-lg shadow-amber-400/40"
-                                : "bg-slate-800 text-white"
-                            }`}
-                          >
-                            {note.fret}
-                          </span>
-                        ) : (
-                          <span className={`${s.label} text-slate-200`}>
-                            —
-                          </span>
-                        )}
-                      </div>
-                    );
-                  })}
+                      return (
+                        <div
+                          key={i}
+                          className="flex-1 flex items-center justify-center relative z-10"
+                          style={{ minWidth: `${s.minSlotWidth}px` }}
+                        >
+                          {note ? (
+                            <span
+                              className={`${s.note} flex items-center justify-center rounded font-bold transition-colors duration-150 ${
+                                isActive
+                                  ? "bg-amber-400 text-slate-900 ring-2 ring-amber-300 shadow-lg shadow-amber-400/40"
+                                  : "bg-slate-800 text-white"
+                              }`}
+                            >
+                              {note.fret}
+                            </span>
+                          ) : (
+                            <span className={`${s.label} text-slate-200`}>
+                              —
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
 
-        {/* Beat numbers below */}
-        <div className="flex items-center mt-1">
-          <span className="w-5 shrink-0 mr-2" />
-          <div className="flex-1 flex">
-            {Array.from({ length: totalSlots * 2 }, (_, i) => {
-              const slotBeat = (i + 1) * 0.5;
-              const isWhole = slotBeat === Math.floor(slotBeat);
-              return (
-                <div
-                  key={i}
-                  className={`flex-1 text-center ${s.label} ${
-                    isWhole
-                      ? "text-slate-500 font-semibold"
-                      : "text-slate-300"
-                  }`}
-                >
-                  {isWhole ? slotBeat : "+"}
-                </div>
-              );
-            })}
+          {/* Beat numbers below */}
+          <div className="flex items-center mt-1">
+            <span className="w-5 shrink-0 mr-2" />
+            <div className="flex-1 flex">
+              {Array.from({ length: slotCount }, (_, i) => {
+                const slotBeat = (i + 1) * 0.5;
+                const isWhole = slotBeat === Math.floor(slotBeat);
+                return (
+                  <div
+                    key={i}
+                    className={`flex-1 text-center ${s.label} ${
+                      isWhole
+                        ? "text-slate-500 font-semibold"
+                        : "text-slate-300"
+                    }`}
+                    style={{ minWidth: `${s.minSlotWidth}px` }}
+                  >
+                    {isWhole ? slotBeat : "+"}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

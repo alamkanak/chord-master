@@ -180,9 +180,31 @@ export default function SongsPage() {
   const totalMeasures = flatTimeline.length;
   const currentMeasure = flatTimeline[currentMeasureIdx] ?? null;
 
-  const ticksPerMeasure = selectedSong
+  const defaultTicksPerMeasure = selectedSong
     ? selectedSong.beatsPerMeasure * selectedSong.ticksPerBeat
     : 8;
+
+  // Compute the number of ticks needed for a given measure.
+  // For strum/picking measures, use the song's standard ticksPerMeasure.
+  // For riff measures, derive from the riff's max beat * ticksPerBeat.
+  const getTicksForMeasure = useCallback(
+    (measureIdx: number): number => {
+      if (!selectedSong) return defaultTicksPerMeasure;
+      const m = flatTimeline[measureIdx];
+      if (!m) return defaultTicksPerMeasure;
+
+      if (m.type === "riff" && m.riffId) {
+        const riff = selectedSong.library.riffs[m.riffId];
+        if (riff && riff.notes.length > 0) {
+          const maxBeat = Math.max(...riff.notes.map((n: { beat: number }) => n.beat));
+          // Each beat gets ticksPerBeat ticks, so we need ceil(maxBeat) * ticksPerBeat ticks
+          return Math.ceil(maxBeat) * selectedSong.ticksPerBeat;
+        }
+      }
+      return defaultTicksPerMeasure;
+    },
+    [selectedSong, flatTimeline, defaultTicksPerMeasure]
+  );
 
   // ----- Callbacks -----
 
@@ -291,7 +313,8 @@ export default function SongsPage() {
     intervalRef.current = setInterval(() => {
       setPlaybackPos((prev) => {
         const nextTick = prev.tick + 1;
-        if (nextTick >= ticksPerMeasure) {
+        const currentMeasureTicks = getTicksForMeasure(prev.measure);
+        if (nextTick >= currentMeasureTicks) {
           // Move to next measure
           const nextMeasure = prev.measure + 1;
           if (nextMeasure >= totalMeasures) {
@@ -321,7 +344,7 @@ export default function SongsPage() {
     isPlaying,
     selectedSong,
     playbackSpeed,
-    ticksPerMeasure,
+    getTicksForMeasure,
     totalMeasures,
     releaseWakeLock,
   ]);
@@ -803,10 +826,16 @@ export default function SongsPage() {
 
   // ============= DRILL MODE =============
   if (mode === "drill" && currentMeasure) {
-    const progressPercent =
-      ((currentMeasureIdx * ticksPerMeasure + currentTick) /
-        (totalMeasures * ticksPerMeasure)) *
-      100;
+    // Compute progress accounting for variable ticks per measure
+    let totalTicks = 0;
+    let elapsedTicks = 0;
+    for (let i = 0; i < totalMeasures; i++) {
+      const mt = getTicksForMeasure(i);
+      totalTicks += mt;
+      if (i < currentMeasureIdx) elapsedTicks += mt;
+    }
+    elapsedTicks += currentTick;
+    const progressPercent = totalTicks > 0 ? (elapsedTicks / totalTicks) * 100 : 0;
 
     // Build carousel items for chord/riff display
     const chordCarouselItems = flatTimeline.map((m, i) => {
