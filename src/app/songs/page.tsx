@@ -553,7 +553,7 @@ export default function SongsPage() {
     const sections = selectedSong.timeline.map((s) => s.section);
 
     return (
-      <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-b from-slate-950 via-slate-900 to-slate-950 text-white overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex flex-col bg-linear-to-b from-slate-950 via-slate-900 to-slate-950 text-white overflow-y-auto overflow-x-hidden">
         <DrillHeader
           mode="ready"
           title={selectedSong.title}
@@ -648,7 +648,7 @@ export default function SongsPage() {
                   {uniquePatterns.map((pattern) => (
                     <div
                       key={pattern.id}
-                      className="rounded-xl bg-white text-slate-900 p-4"
+                      className="rounded-xl bg-white text-slate-900 p-4 overflow-hidden"
                     >
                       <h4 className="text-sm font-bold text-center mb-3">
                         {pattern.name}
@@ -673,7 +673,7 @@ export default function SongsPage() {
                   {uniquePickingPatterns.map((pattern) => (
                     <div
                       key={pattern.id}
-                      className="rounded-xl bg-white text-slate-900 p-4"
+                      className="rounded-xl bg-white text-slate-900 p-4 overflow-hidden"
                     >
                       <h4 className="hidden sm:block text-sm font-bold text-center mb-3">
                         {pattern.name}
@@ -698,7 +698,7 @@ export default function SongsPage() {
                   {uniqueRiffs.map((riff) => (
                     <div
                       key={riff.id}
-                      className="rounded-xl bg-white text-slate-900"
+                      className="rounded-xl bg-white text-slate-900 overflow-hidden"
                     >
                       <RiffDiagram
                         riff={riff as SongRiff}
@@ -853,12 +853,18 @@ export default function SongsPage() {
             }}
           />
         ) : mRiff ? (
-          <div className="w-full">
-            <RiffDiagram
-              riff={mRiff as SongRiff}
-              size="sm"
-              activeBeat={i === currentMeasureIdx ? (currentTick / selectedSong.ticksPerBeat) + 1 : null}
-            />
+          <div className="flex flex-col items-center justify-center py-4 sm:py-6 gap-2">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-amber-100 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 sm:w-7 sm:h-7 text-amber-600">
+                <path d="M19.952 1.651a.75.75 0 0 1 .298.599V16.303a3 3 0 0 1-2.176 2.884l-1.32.377a2.553 2.553 0 1 1-1.403-4.909l2.311-.66a1.5 1.5 0 0 0 1.088-1.442V6.994l-9 2.572v9.737a3 3 0 0 1-2.176 2.884l-1.32.377a2.553 2.553 0 1 1-1.402-4.909l2.31-.66a1.5 1.5 0 0 0 1.088-1.442V5.25a.75.75 0 0 1 .544-.721l10.5-3a.75.75 0 0 1 .456.122Z" />
+              </svg>
+            </div>
+            <span className="text-sm sm:text-base font-bold text-slate-800 text-center leading-tight">
+              {mRiff.name}
+            </span>
+            <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">
+              Riff
+            </span>
           </div>
         ) : (
           <div className="py-8 text-center text-slate-400 text-sm italic">

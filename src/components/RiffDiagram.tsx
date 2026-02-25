@@ -93,7 +93,7 @@ export default function RiffDiagram({
   }, [activeBeat, slotCount, s.minSlotWidth]);
 
   return (
-    <div className={`${s.container} w-full`}>
+    <div className={`${s.container} w-full min-w-0`}>
       {/* Title */}
       <div className="flex items-center gap-2 mb-3">
         <div className="w-2 h-2 rounded-full bg-amber-400" />
