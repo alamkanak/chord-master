@@ -54,21 +54,24 @@ export function createChordSVG(chord: ChordData, isLarge = false): string {
     }
   }
 
-  // Strings (Vertical lines)
-  for (let i = 0; i < 6; i++) {
-    const x = marginX + i * stringSpacing;
-    svg += `<line x1="${x}" y1="${fretTop}" x2="${x}" y2="${fretBottom}" stroke="#94a3b8" stroke-width="${stringWidth}" />`;
-  }
-
-  // Frets (Horizontal lines)
+  // Frets (Horizontal lines) — drawn first so strings render on top
   for (let i = 1; i <= 5; i++) {
     const y = fretTop + i * fretSpacing;
     svg += `<line x1="${firstStringX}" y1="${y}" x2="${lastStringX}" y2="${y}" stroke="#e2e8f0" stroke-width="2" />`;
   }
 
+  // Strings (Vertical lines) — drawn after frets so they appear in front
+  for (let i = 0; i < 6; i++) {
+    const x = marginX + i * stringSpacing;
+    const sNum = 6 - i;
+    const isMuted = chord.muted.includes(sNum);
+    const strokeColor = isMuted ? "#e2e8f0" : "#334155";
+    svg += `<line x1="${x}" y1="${fretTop}" x2="${x}" y2="${fretBottom}" stroke="${strokeColor}" stroke-width="${stringWidth}" />`;
+  }
+
   if (showNut) {
     // The Nut (Top bar) — only shown when starting from fret 1
-    svg += `<line x1="${firstStringX - halfString}" y1="${fretTop}" x2="${lastStringX + halfString}" y2="${fretTop}" stroke="#545454" stroke-width="${nutWidth}" stroke-linecap="butt" />`;
+    svg += `<line x1="${firstStringX - halfString}" y1="${fretTop}" x2="${lastStringX + halfString}" y2="${fretTop}" stroke="#334155" stroke-width="${nutWidth}" stroke-linecap="butt" />`;
   } else {
     // Thin top line when not at the nut position
     svg += `<line x1="${firstStringX - halfString}" y1="${fretTop}" x2="${lastStringX + halfString}" y2="${fretTop}" stroke="#94a3b8" stroke-width="2" stroke-linecap="butt" />`;
