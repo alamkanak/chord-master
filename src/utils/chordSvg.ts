@@ -5,6 +5,12 @@ export interface ChordData {
   open: number[];
 }
 
+export interface ChordGroup {
+  title: string;
+  subtitle: string;
+  chords: ChordData[];
+}
+
 export function createChordSVG(chord: ChordData, isLarge = false): string {
   const width = 240;
   const height = 300;

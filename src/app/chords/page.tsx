@@ -7,7 +7,7 @@ import Container from "@/components/Container";
 import DrillHeader from "@/components/DrillHeader";
 import SelectionBar from "@/components/SelectionBar";
 import chordsData from "@/data/chords.json";
-import { createChordSVG, type ChordData } from "@/utils/chordSvg";
+import { createChordSVG, type ChordData, type ChordGroup } from "@/utils/chordSvg";
 import { playBeep, initAudio } from "@/utils/audio";
 import { playChordStrum } from "@/utils/guitarAudio";
 import { useWakeLock } from "@/utils/useWakeLock";
@@ -19,7 +19,7 @@ export default function ChordsPage() {
   const [prepCountdown, setPrepCountdown] = useState(5);
   const [drillDuration, setDrillDuration] = useState(60);
   const [drillTime, setDrillTime] = useState(60);
-  const groups = chordsData.groups as { title: string; chords: ChordData[] }[];
+  const groups = chordsData.groups as ChordGroup[];
   const chords = groups.flatMap((g) => g.chords);
   const { requestWakeLock, releaseWakeLock } = useWakeLock();
 
@@ -133,8 +133,9 @@ export default function ChordsPage() {
   }, [mode, drillTime, endDrill]);
 
   const handlePlayChord = useCallback(
-    (e: React.MouseEvent, chord: ChordData) => {
+    async (e: React.MouseEvent, chord: ChordData) => {
       e.stopPropagation(); // Don't toggle selection when clicking play
+      await initAudio();
       playChordStrum(chord, "down");
     },
     []
@@ -181,9 +182,12 @@ export default function ChordsPage() {
           <div className="space-y-10">
             {groups.map((group) => (
               <section key={group.title}>
-                <h2 className="text-lg font-semibold text-slate-500 uppercase tracking-wider mb-4">
+                <h2 className="text-lg font-semibold text-slate-500 uppercase tracking-wider mb-1">
                   {group.title}
                 </h2>
+                <p className="text-slate-500 mb-4 leading-relaxed">
+                  {group.subtitle}
+                </p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                   {group.chords.map((chord) => (
                     <div

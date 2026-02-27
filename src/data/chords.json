@@ -2,6 +2,7 @@
   "groups": [
     {
       "title": "Major",
+      "subtitle": "The foundation of Western music — major chords produce a bright, happy sound. These open-position shapes are the first chords every guitarist learns and appear in virtually every genre from pop and rock to country and folk. Mastering these unlocks thousands of songs.",
       "chords": [
         {
           "name": "C",
@@ -49,6 +50,7 @@
     },
     {
       "title": "Minor",
+      "subtitle": "Minor chords deliver a darker, more melancholic tone compared to their major counterparts. Essential for creating emotional depth in music, they are used extensively in rock ballads, blues, folk, and classical guitar. Every songwriter reaches for minor chords to convey sadness, tension, or introspection.",
       "chords": [
         {
           "name": "Am",
@@ -78,6 +80,7 @@
     },
     {
       "title": "Dominant 7th",
+      "subtitle": "Born in jazz and blues, dominant 7th chords add a bluesy tension that wants to resolve. They're the secret sauce behind 12-bar blues progressions and are heard in jazz standards, funk, R&B, and classic rock. Adding the flatted 7th note gives these chords their characteristic 'unfinished' quality.",
       "chords": [
         {
           "name": "A7",
@@ -119,6 +122,7 @@
     },
     {
       "title": "Minor 7th",
+      "subtitle": "Minor 7th chords blend the moodiness of minor chords with the sophistication of the 7th, creating a smooth, jazzy sound. They're staples in neo-soul, R&B, bossa nova, and lo-fi music. These chords add warmth and complexity without sounding harsh.",
       "chords": [
         {
           "name": "Am7",
@@ -148,6 +152,7 @@
     },
     {
       "title": "Power Chords",
+      "subtitle": "Power chords contain only the root and fifth — no third — making them neither major nor minor. This ambiguity is what makes them perfect for rock, punk, metal, and grunge where heavy distortion would turn a full chord into mush. Movable up and down the neck, they're the backbone of electric guitar.",
       "chords": [
         {
           "name": "E5",
@@ -219,6 +224,66 @@
           "name": "D#5",
           "fingers": [[5, 6, 1], [4, 8, 3], [3, 8, 4]],
           "muted": [6, 2, 1],
+          "open": []
+        }
+      ]
+    },
+    {
+      "title": "Stuck 3&4",
+      "subtitle": "Named because fingers 3 and 4 stay 'stuck' on the thinnest two strings at the 3rd fret, these chord shapes produce a beautiful drone effect — two notes ringing out together throughout chord changes. Popularized in songs like Wonderwall, they give acoustic guitar a rich, shimmering quality. Expect your pinky to get a workout!",
+      "chords": [
+        {
+          "name": "G (4-finger)",
+          "fingers": [[6, 3, 2], [5, 2, 1], [2, 3, 3], [1, 3, 4]],
+          "muted": [],
+          "open": [4, 3]
+        },
+        {
+          "name": "G5 (open)",
+          "fingers": [[6, 3, 2], [2, 3, 3], [1, 3, 4]],
+          "muted": [5],
+          "open": [4, 3]
+        },
+        {
+          "name": "Cadd9",
+          "fingers": [[5, 3, 2], [4, 2, 1], [2, 3, 3], [1, 3, 4]],
+          "muted": [6],
+          "open": [3]
+        },
+        {
+          "name": "Dsus4",
+          "fingers": [[3, 2, 1], [2, 3, 3], [1, 3, 4]],
+          "muted": [6, 5],
+          "open": [4]
+        },
+        {
+          "name": "A7sus4",
+          "fingers": [[4, 2, 1], [3, 2, 2], [2, 3, 3], [1, 3, 4]],
+          "muted": [6],
+          "open": [5]
+        },
+        {
+          "name": "A7sus4 (var)",
+          "fingers": [[4, 2, 1], [2, 3, 3], [1, 3, 4]],
+          "muted": [6],
+          "open": [5, 3]
+        },
+        {
+          "name": "Em7 (full)",
+          "fingers": [[5, 2, 1], [4, 2, 2], [2, 3, 3], [1, 3, 4]],
+          "muted": [],
+          "open": [6, 3]
+        },
+        {
+          "name": "Dadd11/F#",
+          "fingers": [[6, 2, 1], [3, 2, 2], [2, 3, 3], [1, 3, 4]],
+          "muted": [5],
+          "open": [4]
+        },
+        {
+          "name": "F6/9",
+          "fingers": [[4, 3, 2], [3, 2, 1], [2, 3, 3], [1, 3, 4]],
+          "muted": [6, 5],
           "open": []
         }
       ]
