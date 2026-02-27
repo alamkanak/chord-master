@@ -6,12 +6,16 @@ import Button from "@/components/Button";
 import Container from "@/components/Container";
 import DrillHeader from "@/components/DrillHeader";
 import SelectionBar from "@/components/SelectionBar";
+import ChordExplainer from "@/components/ChordExplainer";
 import chordsData from "@/data/chords.json";
-import { createChordSVG, type ChordData, type ChordGroup } from "@/utils/chordSvg";
+import { createChordSVG, type ChordData, type ChordGroup, type ChordsDataFile } from "@/utils/chordSvg";
 import { playBeep, initAudio } from "@/utils/audio";
 import { playChordStrum } from "@/utils/guitarAudio";
 import { useWakeLock } from "@/utils/useWakeLock";
 import { SpeakerWaveIcon } from "@heroicons/react/24/solid";
+
+const typedData = chordsData as unknown as ChordsDataFile;
+const terminology = typedData.terminology;
 
 export default function ChordsPage() {
   const [selectedNames, setSelectedNames] = useState<string[]>([]);
@@ -19,7 +23,7 @@ export default function ChordsPage() {
   const [prepCountdown, setPrepCountdown] = useState(5);
   const [drillDuration, setDrillDuration] = useState(60);
   const [drillTime, setDrillTime] = useState(60);
-  const groups = chordsData.groups as ChordGroup[];
+  const groups = typedData.groups as ChordGroup[];
   const chords = groups.flatMap((g) => g.chords);
   const { requestWakeLock, releaseWakeLock } = useWakeLock();
 
@@ -189,31 +193,57 @@ export default function ChordsPage() {
                   {group.subtitle}
                 </p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                  {group.chords.map((chord) => (
-                    <div
-                      key={chord.name}
-                      onClick={() => toggleChord(chord.name)}
-                      className={`relative block w-full group rounded-xl border-2 p-4 transition-all duration-200 cursor-pointer ${
-                        selectedNames.includes(chord.name)
-                          ? "border-blue-500 bg-blue-50 shadow-lg"
-                          : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-md"
-                      }`}
-                    >
+                  {group.chords.map((chord) => {
+                    const tags = chord.tags ?? [];
+                    const entries = tags
+                      .map((t) => terminology[t])
+                      .filter(Boolean);
+
+                    return (
                       <div
-                        dangerouslySetInnerHTML={{
-                          __html: createChordSVG(chord),
-                        }}
-                      />
-                      <button
-                        onClick={(e) => handlePlayChord(e, chord)}
-                        className="absolute top-2 right-2 p-1.5 rounded-full bg-slate-100 hover:bg-blue-100 text-slate-400 hover:text-blue-600 transition-all duration-200 cursor-pointer group/play"
-                        aria-label={`Play ${chord.name} chord`}
-                        title={`Play ${chord.name}`}
+                        key={chord.name}
+                        onClick={() => toggleChord(chord.name)}
+                        className={`relative block w-full group rounded-xl border-2 p-4 transition-all duration-200 cursor-pointer ${
+                          selectedNames.includes(chord.name)
+                            ? "border-blue-500 bg-blue-50 shadow-lg"
+                            : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-md"
+                        }`}
                       >
-                        <SpeakerWaveIcon className="h-4 w-4" />
-                      </button>
-                    </div>
-                  ))}
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: createChordSVG(chord),
+                          }}
+                        />
+
+                        {/* Tag pills below diagram */}
+                        {entries.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mt-2 justify-center">
+                            {entries.map((entry) => (
+                              <span
+                                key={entry.label}
+                                className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-500 border border-slate-200"
+                              >
+                                {entry.label}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Action buttons — top corners */}
+                        <div className="absolute top-2 left-2">
+                          <ChordExplainer chordName={chord.name} entries={entries} />
+                        </div>
+                        <button
+                          onClick={(e) => handlePlayChord(e, chord)}
+                          className="absolute top-2 right-2 p-1.5 rounded-full bg-slate-100 hover:bg-blue-100 text-slate-400 hover:text-blue-600 transition-all duration-200 cursor-pointer group/play"
+                          aria-label={`Play ${chord.name} chord`}
+                          title={`Play ${chord.name}`}
+                        >
+                          <SpeakerWaveIcon className="h-5 w-5" />
+                        </button>
+                      </div>
+                    );
+                  })}
                 </div>
               </section>
             ))}

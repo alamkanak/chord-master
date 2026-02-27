@@ -1,5 +1,12 @@
+export interface TerminologyEntry {
+  symbol: string;
+  label: string;
+  description: string;
+}
+
 export interface ChordData {
   name: string;
+  tags?: string[];
   fingers: [number, number, number][];
   muted: number[];
   open: number[];
@@ -9,6 +16,11 @@ export interface ChordGroup {
   title: string;
   subtitle: string;
   chords: ChordData[];
+}
+
+export interface ChordsDataFile {
+  terminology: Record<string, TerminologyEntry>;
+  groups: ChordGroup[];
 }
 
 export function createChordSVG(chord: ChordData, isLarge = false): string {
@@ -44,7 +56,7 @@ export function createChordSVG(chord: ChordData, isLarge = false): string {
 
   // Chord Name
   svg += `<text x="${width / 2}" y="45" text-anchor="middle" font-weight="900" font-size="${
-    isLarge ? 52 : 44
+    isLarge ? 52 : 34
   }" fill="#1e293b">${chord.name}</text>`;
 
   // Muted/Open markers

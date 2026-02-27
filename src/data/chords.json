@@ -1,4 +1,86 @@
 {
+  "terminology": {
+    "major": {
+      "symbol": "",
+      "label": "Major",
+      "description": "Built on the 1st, 3rd, and 5th notes of the major scale, major chords have a bright, happy sound. When you see just a letter name like \"C\" or \"G\" with no suffix, it's a major chord."
+    },
+    "m": {
+      "symbol": "m",
+      "label": "Minor",
+      "description": "The 3rd note is lowered by one half step, giving minor chords a darker, sadder sound compared to major chords. The \"m\" after the letter means the middle note is lowered, creating a melancholic feel."
+    },
+    "7": {
+      "symbol": "7",
+      "label": "Dominant 7th",
+      "description": "A major chord with a flatted 7th note added, creating a bluesy tension that wants to resolve. It's the foundation of blues and jazz — a chord that sounds \"unfinished\" on purpose."
+    },
+    "m7": {
+      "symbol": "m7",
+      "label": "Minor 7th",
+      "description": "A minor chord with a flatted 7th note added, combining the sadness of minor with the sophistication of the 7th. The result is a smooth, jazzy, warm sound used in neo-soul, R&B, and lo-fi music."
+    },
+    "5": {
+      "symbol": "5",
+      "label": "Power Chord",
+      "description": "Contains only the root and 5th — no 3rd — making it neither major nor minor. Power chords are the backbone of rock and punk guitar, perfect for heavy distortion where full chords would sound muddy."
+    },
+    "sus4": {
+      "symbol": "sus4",
+      "label": "Suspended 4th",
+      "description": "The 3rd is replaced by the 4th note, creating a tense, open sound that's neither happy nor sad. \"Sus\" stands for \"suspended\" — the chord hangs in the air, wanting to resolve."
+    },
+    "add9": {
+      "symbol": "add9",
+      "label": "Added 9th",
+      "description": "A major chord with the 9th note (the 2nd note up an octave) layered on top without replacing anything. The 9th adds a shimmering, dreamy quality — like a richer version of the major chord."
+    },
+    "add11": {
+      "symbol": "add11",
+      "label": "Added 11th",
+      "description": "A chord with the 11th note (the 4th up an octave) layered on top. The 11th adds an ethereal, open quality that's popular in modern acoustic and ambient music."
+    },
+    "6/9": {
+      "symbol": "6/9",
+      "label": "Six-Nine",
+      "description": "A chord with both the 6th and 9th notes added, creating a lush, jazzy voicing that sounds complete and sophisticated. Popular in bossa nova and R&B."
+    },
+    "7sus4": {
+      "symbol": "7sus4",
+      "label": "Dominant 7th Suspended 4th",
+      "description": "A dominant 7th chord where the 3rd is replaced by the 4th, combining bluesy 7th tension with the unresolved floating quality of a sus4. Double the tension, double the drama."
+    },
+    "slash": {
+      "symbol": "/",
+      "label": "Slash Chord",
+      "description": "The note after the \"/\" is played as the bass note instead of the root. The letter before the slash is the chord, and the letter after is the lowest note, creating smooth bass line movement between chords."
+    },
+    "stuck34": {
+      "symbol": "3&4",
+      "label": "Stuck 3 & 4",
+      "description": "Fingers 3 (ring) and 4 (pinky) stay \"stuck\" on strings 1 & 2 at fret 3 while other fingers change shape. This creates a beautiful drone effect — two notes ringing throughout chord changes."
+    },
+    "4finger": {
+      "symbol": "4-finger",
+      "label": "4-Finger Voicing",
+      "description": "An alternate voicing that uses all four fretting fingers instead of three, adding an extra note for a richer, more complete sound."
+    },
+    "open": {
+      "symbol": "open",
+      "label": "Open Voicing",
+      "description": "A voicing that leaves extra strings ringing open, creating a spacious, airy sound. The open strings act as drones that add harmonic richness."
+    },
+    "var": {
+      "symbol": "var",
+      "label": "Variation",
+      "description": "An alternate fingering of the same chord that may use fewer fingers, different positions, or omit notes to create a slightly different tone color or make transitions easier."
+    },
+    "full": {
+      "symbol": "full",
+      "label": "Full Voicing",
+      "description": "A voicing that includes more notes than the basic shape, producing a thicker, more resonant sound with more strings ringing."
+    }
+  },
   "groups": [
     {
       "title": "Major",
@@ -6,42 +88,49 @@
       "chords": [
         {
           "name": "C",
+          "tags": ["major"],
           "fingers": [[5, 3, 3], [4, 2, 2], [2, 1, 1]],
           "muted": [6],
           "open": [3, 1]
         },
         {
           "name": "D",
+          "tags": ["major"],
           "fingers": [[3, 2, 1], [2, 3, 3], [1, 2, 2]],
           "muted": [6, 5],
           "open": [4]
         },
         {
           "name": "E",
+          "tags": ["major"],
           "fingers": [[5, 2, 2], [4, 2, 3], [3, 1, 1]],
           "muted": [],
           "open": [6, 2, 1]
         },
         {
           "name": "F",
+          "tags": ["major"],
           "fingers": [[6, 1, 1], [5, 3, 3], [4, 3, 4], [3, 2, 2], [2, 1, 1], [1, 1, 1]],
           "muted": [],
           "open": []
         },
         {
           "name": "G",
+          "tags": ["major"],
           "fingers": [[6, 3, 3], [5, 2, 2], [1, 3, 4]],
           "muted": [],
           "open": [4, 3, 2]
         },
         {
           "name": "A",
+          "tags": ["major"],
           "fingers": [[4, 2, 1], [3, 2, 2], [2, 2, 3]],
           "muted": [6],
           "open": [5, 1]
         },
         {
           "name": "B",
+          "tags": ["major"],
           "fingers": [[5, 2, 1], [4, 4, 3], [3, 4, 4], [2, 4, 4]],
           "muted": [6],
           "open": []
@@ -54,24 +143,28 @@
       "chords": [
         {
           "name": "Am",
+          "tags": ["m"],
           "fingers": [[4, 2, 2], [3, 2, 3], [2, 1, 1]],
           "muted": [6],
           "open": [5, 1]
         },
         {
           "name": "Bm",
+          "tags": ["m"],
           "fingers": [[5, 2, 1], [4, 4, 3], [3, 4, 4], [2, 3, 2]],
           "muted": [6],
           "open": []
         },
         {
           "name": "Dm",
+          "tags": ["m"],
           "fingers": [[3, 2, 2], [2, 3, 3], [1, 1, 1]],
           "muted": [6, 5],
           "open": [4]
         },
         {
           "name": "Em",
+          "tags": ["m"],
           "fingers": [[5, 2, 2], [4, 2, 3]],
           "muted": [],
           "open": [6, 3, 2, 1]
@@ -84,36 +177,42 @@
       "chords": [
         {
           "name": "A7",
+          "tags": ["7"],
           "fingers": [[4, 2, 2], [2, 2, 3]],
           "muted": [6],
           "open": [5, 3, 1]
         },
         {
           "name": "B7",
+          "tags": ["7"],
           "fingers": [[5, 2, 2], [4, 1, 1], [3, 2, 3], [1, 2, 4]],
           "muted": [6],
           "open": [2]
         },
         {
           "name": "C7",
+          "tags": ["7"],
           "fingers": [[5, 3, 3], [4, 2, 2], [3, 3, 4], [2, 1, 1]],
           "muted": [6],
           "open": [1]
         },
         {
           "name": "D7",
+          "tags": ["7"],
           "fingers": [[3, 2, 2], [2, 1, 1], [1, 2, 3]],
           "muted": [6, 5],
           "open": [4]
         },
         {
           "name": "E7",
+          "tags": ["7"],
           "fingers": [[4, 1, 1], [3, 1, 2], [2, 2, 3]],
           "muted": [],
           "open": [6, 5, 1]
         },
         {
           "name": "G7",
+          "tags": ["7"],
           "fingers": [[6, 3, 3], [5, 2, 2], [1, 1, 1]],
           "muted": [],
           "open": [4, 3, 2]
@@ -126,24 +225,28 @@
       "chords": [
         {
           "name": "Am7",
+          "tags": ["m7"],
           "fingers": [[4, 2, 2], [2, 1, 1]],
           "muted": [6],
           "open": [5, 3, 1]
         },
         {
           "name": "Bm7",
+          "tags": ["m7"],
           "fingers": [[5, 2, 1], [4, 4, 3], [3, 2, 1], [2, 3, 2], [1, 2, 1]],
           "muted": [6],
           "open": []
         },
         {
           "name": "Dm7",
+          "tags": ["m7"],
           "fingers": [[3, 2, 2], [2, 1, 1], [1, 1, 1]],
           "muted": [6, 5],
           "open": [4]
         },
         {
           "name": "Em7",
+          "tags": ["m7"],
           "fingers": [[5, 2, 1]],
           "muted": [],
           "open": [6, 4, 3, 2, 1]
@@ -156,72 +259,84 @@
       "chords": [
         {
           "name": "E5",
+          "tags": ["5"],
           "fingers": [[5, 2, 2], [4, 2, 3]],
           "muted": [3, 2, 1],
           "open": [6]
         },
         {
           "name": "F5",
+          "tags": ["5"],
           "fingers": [[6, 1, 1], [5, 3, 3], [4, 3, 4]],
           "muted": [3, 2, 1],
           "open": []
         },
         {
           "name": "F#5",
+          "tags": ["5"],
           "fingers": [[6, 2, 1], [5, 4, 3], [4, 4, 4]],
           "muted": [3, 2, 1],
           "open": []
         },
         {
           "name": "G5",
+          "tags": ["5"],
           "fingers": [[6, 3, 1], [5, 5, 3], [4, 5, 4]],
           "muted": [3, 2, 1],
           "open": []
         },
         {
           "name": "G#5",
+          "tags": ["5"],
           "fingers": [[6, 4, 1], [5, 6, 3], [4, 6, 4]],
           "muted": [3, 2, 1],
           "open": []
         },
         {
           "name": "A5",
+          "tags": ["5"],
           "fingers": [[4, 2, 2], [3, 2, 3]],
           "muted": [6, 2, 1],
           "open": [5]
         },
         {
           "name": "Bb5",
+          "tags": ["5"],
           "fingers": [[5, 1, 1], [4, 3, 3], [3, 3, 4]],
           "muted": [6, 2, 1],
           "open": []
         },
         {
           "name": "B5",
+          "tags": ["5"],
           "fingers": [[5, 2, 1], [4, 4, 3], [3, 4, 4]],
           "muted": [6, 2, 1],
           "open": []
         },
         {
           "name": "C5",
+          "tags": ["5"],
           "fingers": [[5, 3, 1], [4, 5, 3], [3, 5, 4]],
           "muted": [6, 2, 1],
           "open": []
         },
         {
           "name": "C#5",
+          "tags": ["5"],
           "fingers": [[5, 4, 1], [4, 6, 3], [3, 6, 4]],
           "muted": [6, 2, 1],
           "open": []
         },
         {
           "name": "D5",
+          "tags": ["5"],
           "fingers": [[5, 5, 1], [4, 7, 3], [3, 7, 4]],
           "muted": [6, 2, 1],
           "open": []
         },
         {
           "name": "D#5",
+          "tags": ["5"],
           "fingers": [[5, 6, 1], [4, 8, 3], [3, 8, 4]],
           "muted": [6, 2, 1],
           "open": []
@@ -234,54 +349,63 @@
       "chords": [
         {
           "name": "G (4-finger)",
+          "tags": ["major", "4finger", "stuck34"],
           "fingers": [[6, 3, 2], [5, 2, 1], [2, 3, 3], [1, 3, 4]],
           "muted": [],
           "open": [4, 3]
         },
         {
           "name": "G5 (open)",
+          "tags": ["5", "open", "stuck34"],
           "fingers": [[6, 3, 2], [2, 3, 3], [1, 3, 4]],
           "muted": [5],
           "open": [4, 3]
         },
         {
           "name": "Cadd9",
+          "tags": ["add9", "stuck34"],
           "fingers": [[5, 3, 2], [4, 2, 1], [2, 3, 3], [1, 3, 4]],
           "muted": [6],
           "open": [3]
         },
         {
           "name": "Dsus4",
+          "tags": ["sus4", "stuck34"],
           "fingers": [[3, 2, 1], [2, 3, 3], [1, 3, 4]],
           "muted": [6, 5],
           "open": [4]
         },
         {
           "name": "A7sus4",
+          "tags": ["7sus4", "stuck34"],
           "fingers": [[4, 2, 1], [3, 2, 2], [2, 3, 3], [1, 3, 4]],
           "muted": [6],
           "open": [5]
         },
         {
           "name": "A7sus4 (var)",
+          "tags": ["7sus4", "var", "stuck34"],
           "fingers": [[4, 2, 1], [2, 3, 3], [1, 3, 4]],
           "muted": [6],
           "open": [5, 3]
         },
         {
           "name": "Em7 (full)",
+          "tags": ["m7", "full", "stuck34"],
           "fingers": [[5, 2, 1], [4, 2, 2], [2, 3, 3], [1, 3, 4]],
           "muted": [],
           "open": [6, 3]
         },
         {
           "name": "Dadd11/F#",
+          "tags": ["add11", "slash", "stuck34"],
           "fingers": [[6, 2, 1], [3, 2, 2], [2, 3, 3], [1, 3, 4]],
           "muted": [5],
           "open": [4]
         },
         {
           "name": "F6/9",
+          "tags": ["6/9", "stuck34"],
           "fingers": [[4, 3, 2], [3, 2, 1], [2, 3, 3], [1, 3, 4]],
           "muted": [6, 5],
           "open": []
