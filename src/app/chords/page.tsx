@@ -19,7 +19,8 @@ export default function ChordsPage() {
   const [prepCountdown, setPrepCountdown] = useState(5);
   const [drillDuration, setDrillDuration] = useState(60);
   const [drillTime, setDrillTime] = useState(60);
-  const chords = chordsData.chords as ChordData[];
+  const groups = chordsData.groups as { title: string; chords: ChordData[] }[];
+  const chords = groups.flatMap((g) => g.chords);
   const { requestWakeLock, releaseWakeLock } = useWakeLock();
 
   const endDrill = useCallback(() => {
@@ -177,31 +178,40 @@ export default function ChordsPage() {
 
         {/* Chord Grid */}
         <Container className="py-10">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {chords.map((chord) => (
-              <div
-                key={chord.name}
-                onClick={() => toggleChord(chord.name)}
-                className={`relative block w-full group rounded-xl border-2 p-4 transition-all duration-200 cursor-pointer ${
-                  selectedNames.includes(chord.name)
-                    ? "border-blue-500 bg-blue-50 shadow-lg"
-                    : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-md"
-                }`}
-              >
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: createChordSVG(chord),
-                  }}
-                />
-                <button
-                  onClick={(e) => handlePlayChord(e, chord)}
-                  className="absolute top-2 right-2 p-1.5 rounded-full bg-slate-100 hover:bg-blue-100 text-slate-400 hover:text-blue-600 transition-all duration-200 cursor-pointer group/play"
-                  aria-label={`Play ${chord.name} chord`}
-                  title={`Play ${chord.name}`}
-                >
-                  <SpeakerWaveIcon className="h-4 w-4" />
-                </button>
-              </div>
+          <div className="space-y-10">
+            {groups.map((group) => (
+              <section key={group.title}>
+                <h2 className="text-lg font-semibold text-slate-500 uppercase tracking-wider mb-4">
+                  {group.title}
+                </h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                  {group.chords.map((chord) => (
+                    <div
+                      key={chord.name}
+                      onClick={() => toggleChord(chord.name)}
+                      className={`relative block w-full group rounded-xl border-2 p-4 transition-all duration-200 cursor-pointer ${
+                        selectedNames.includes(chord.name)
+                          ? "border-blue-500 bg-blue-50 shadow-lg"
+                          : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-md"
+                      }`}
+                    >
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: createChordSVG(chord),
+                        }}
+                      />
+                      <button
+                        onClick={(e) => handlePlayChord(e, chord)}
+                        className="absolute top-2 right-2 p-1.5 rounded-full bg-slate-100 hover:bg-blue-100 text-slate-400 hover:text-blue-600 transition-all duration-200 cursor-pointer group/play"
+                        aria-label={`Play ${chord.name} chord`}
+                        title={`Play ${chord.name}`}
+                      >
+                        <SpeakerWaveIcon className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </section>
             ))}
           </div>
         </Container>
